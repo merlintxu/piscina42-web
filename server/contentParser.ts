@@ -1,116 +1,9 @@
-// scripts/md-to-json.ts
-//
-// Pipeline Markdown -> JSON para Piscina42-web.
-// Recorre content/ y construye un ContentJSON con el schema refinado:
-//   { phases, modules, challenges, resources, habits, exams }
-//
-// Decisiones de parseo (ver meta/CONTENT-PLAN.md - ANEXO):
-//  - La entidad se infiere por carpeta + `type` de frontmatter.
-//  - Las colecciones (challenge-collection / resource-collection) contienen
-//    varios bloques `## <id>` con su propio frontmatter; se expanden.
-//  - exam-simulations.md es una colección de 6 ExamSimulation sin envoltura.
-//  - Parser de frontmatter propio (no js-yaml) para tolerar `:` en valores
-//    sin comillas y mezcla CRLF/LF del repo.
-//
-// Ejecución:
-//   node dist/md-to-json.js   (tras: cd scripts && ./node_modules/.bin/tsc -p tsconfig.json)
-//   Dependencias en scripts/ (typescript, solo build-time).
-
 import * as fs from "fs";
 import * as path from "path";
+import { ContentJSON, GraphData, GraphNode, GraphEdge, Phase, Module, Challenge, Resource, Habit, ExamSimulation } from "../src/types";
 
-const repoRoot = path.resolve(__dirname, "..", ".."); // scripts/dist -> repo
+const repoRoot = process.cwd();
 const contentRoot = path.join(repoRoot, "content");
-
-// ---------------------------------------------------------------------------
-// Tipos del schema (espejo de app/src/models)
-// ---------------------------------------------------------------------------
-export type Phase = {
-  id: string;
-  slug: string;
-  title: string;
-  summary?: string;
-  order?: number;
-  modules: string[];
-  challenges: string[];
-  resources: string[];
-  habits: string[];
-  body: string;
-};
-
-export type Module = {
-  id: string;
-  slug: string;
-  title: string;
-  phase: string;
-  order?: number;
-  level: "basic" | "intermediate" | "advanced";
-  concepts: string[];
-  cognitive_difficulties: string[];
-  challenges: string[];
-  resources: string[];
-  body: string;
-};
-
-export type Challenge = {
-  id: string;
-  slug: string;
-  title: string;
-  module: string;
-  phase?: string;
-  difficulty: "easy" | "medium" | "hard";
-  estimated_time_minutes?: number;
-  tags: string[];
-  norminette_focus?: boolean;
-  body: string;
-};
-
-export type Resource = {
-  id: string;
-  title: string;
-  type: "course" | "article" | "repository" | "tool" | "book";
-  url: string;
-  description?: string;
-  modules: string[];
-  phases: string[];
-  language?: string;
-  cost?: "free" | "paid" | "mixed";
-};
-
-export type Habit = {
-  id: string;
-  slug: string;
-  title: string;
-  description?: string;
-  phases: string[];
-  frequency?: string;
-  metrics: string[];
-};
-
-export type ExamSimulation = {
-  id: string;
-  slug: string;
-  title: string;
-  description?: string;
-  phase?: string;
-  duration_minutes: number;
-  levels: string[];
-  rules: string[];
-};
-
-export type ContentJSON = {
-  phases: Phase[];
-  modules: Module[];
-  challenges: Challenge[];
-  resources: Resource[];
-  habits: Habit[];
-  exams: ExamSimulation[];
-};
-
-// ---------------------------------------------------------------------------
-// Parser de frontmatter propio
-// ---------------------------------------------------------------------------
-// Normalizamos BOM y CRLF antes de aplicar un regex LF-puro.
 const FM_REGEX = /^---\n([\s\S]*?)\n---\n?([\s\S]*)$/;
 
 function parseFrontmatter(raw: string): { data: Record<string, any>; content: string } {
@@ -170,12 +63,6 @@ function coerce(v: string): any {
   return v;
 }
 
-/**
- * Parsea un documento de nota de content/.
- * 1) Nota individual: `---` fm `---` body.
- * 2) Colección: fm de envoltura (type: *-collection) + en el body bloques
- *    `## <id>` cada uno con su propio frontmatter.
- */
 function parseNote(raw: string): { data: any; content: string }[] {
   const wrapped = parseFrontmatter(raw);
   const wrapData = wrapped.data || {};
@@ -204,7 +91,6 @@ function parseNote(raw: string): { data: any; content: string }[] {
 
   const docs: { data: any; content: string }[] = [];
   for (const blk of blocks) {
-    // El bloque es `## <id>\n\n---\nfm\n---\nbody`; el fm arranca en el primer `---`.
     const fmStart = blk.indexOf("---");
     const subRaw = fmStart >= 0 ? blk.slice(fmStart) : blk;
     const sub = parseFrontmatter(subRaw);
@@ -227,7 +113,6 @@ function readDirDocs(subdir: string): { data: any; content: string }[] {
     });
 }
 
-// Helpers de normalización
 const asArray = (v: any): string[] => (Array.isArray(v) ? v : v ? [v] : []);
 const asStr = (v: any, fallback = ""): string => (v == null ? fallback : String(v));
 const asNum = (v: any): number | undefined => {
@@ -242,6 +127,9 @@ const asBool = (v: any): boolean | undefined => {
   return undefined;
 };
 
+/**
+ * Strips citation tokens like [web:...], [file:...], [cite:...], [web:110], [file:34]
+ */
 export function removeCitations(text: string): string {
   if (!text) return "";
   return text
@@ -250,12 +138,20 @@ export function removeCitations(text: string): string {
     .replace(/[ \t]{2,}/g, " ");
 }
 
+/**
+ * Cleans module body:
+ * 1. Removes citation tokens ([web:...], [file:...], [cite:...]).
+ * 2. Excludes sections: "## Conceptos clave" and "## Dificultades cognitivas".
+ * 3. Treats body exclusively as the module's "Descripción" (extracting description text
+ *    and omitting redundant metadata sections like ## Retos vinculados / ## Recursos recomendados).
+ */
 export function cleanModuleBody(rawBody: string): string {
   if (!rawBody) return "";
 
   const cleaned = removeCitations(rawBody);
   const lines = cleaned.split("\n");
 
+  // If there is an explicit "## Descripción" section, extract its content up to the next "## "
   const descIdx = lines.findIndex((l) => /^##\s+Descripci[oó]n/i.test(l.trim()));
   if (descIdx !== -1) {
     const descLines: string[] = [];
@@ -272,6 +168,7 @@ export function cleanModuleBody(rawBody: string): string {
     }
   }
 
+  // Otherwise, filter out Conceptos clave, Dificultades cognitivas, Retos vinculados, Recursos recomendados and H1
   const outputLines: string[] = [];
   let skipping = false;
 
@@ -306,6 +203,11 @@ export function cleanModuleBody(rawBody: string): string {
   return outputLines.join("\n").replace(/\n{3,}/g, "\n\n").trim();
 }
 
+/**
+ * Cleans phase body:
+ * 1. Strips all citation markers ([web:...], [file:...], [cite:...]).
+ * 2. Excludes "## Conceptos clave" and "## Dificultades cognitivas" if present.
+ */
 export function cleanPhaseBody(rawBody: string): string {
   if (!rawBody) return "";
 
@@ -335,11 +237,8 @@ export function cleanPhaseBody(rawBody: string): string {
   return outputLines.join("\n").replace(/\n{3,}/g, "\n\n").trim();
 }
 
-// ---------------------------------------------------------------------------
-// Build por tipo
-// ---------------------------------------------------------------------------
-function buildPhases(): Phase[] {
-  return readDirDocs("phases")
+export function loadContent(): ContentJSON {
+  const phases: Phase[] = readDirDocs("phases")
     .filter((d) => d.data.type === "phase")
     .map((d) => ({
       id: asStr(d.data.id),
@@ -352,11 +251,10 @@ function buildPhases(): Phase[] {
       resources: asArray(d.data.resources),
       habits: asArray(d.data.habits),
       body: cleanPhaseBody(d.content),
-    }));
-}
+    }))
+    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 
-function buildModules(): Module[] {
-  return readDirDocs("modules")
+  const modules: Module[] = readDirDocs("modules")
     .filter((d) => d.data.type === "module")
     .map((d) => ({
       id: asStr(d.data.id),
@@ -370,11 +268,10 @@ function buildModules(): Module[] {
       challenges: asArray(d.data.challenges),
       resources: asArray(d.data.resources),
       body: cleanModuleBody(d.content),
-    }));
-}
+    }))
+    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 
-function buildChallenges(): Challenge[] {
-  return readDirDocs("retos")
+  const challenges: Challenge[] = readDirDocs("retos")
     .filter((d) => d.data.type === "challenge")
     .map((d) => ({
       id: asStr(d.data.id),
@@ -388,10 +285,8 @@ function buildChallenges(): Challenge[] {
       norminette_focus: asBool(d.data.norminette_focus),
       body: removeCitations(d.content),
     }));
-}
 
-function buildResources(): Resource[] {
-  return readDirDocs("recursos")
+  const resources: Resource[] = readDirDocs("recursos")
     .filter((d) => d.data.type)
     .map((d) => ({
       id: asStr(d.data.id),
@@ -404,10 +299,8 @@ function buildResources(): Resource[] {
       language: asStr(d.data.language) || undefined,
       cost: (asStr(d.data.cost) || undefined) as Resource["cost"],
     }));
-}
 
-function buildHabits(): Habit[] {
-  return readDirDocs("habits")
+  const habits: Habit[] = readDirDocs("habits")
     .filter((d) => d.data.type === "habit")
     .map((d) => ({
       id: asStr(d.data.id),
@@ -418,77 +311,106 @@ function buildHabits(): Habit[] {
       frequency: asStr(d.data.frequency) || undefined,
       metrics: asArray(d.data.metrics),
     }));
-}
 
-function buildExams(): ExamSimulation[] {
-  const raw = fs.readFileSync(
-    path.join(contentRoot, "retos", "exam-simulations.md"),
-    "utf8"
-  );
-  // El archivo es una colección de ExamSimulation donde cada entidad tiene su
-  // propio bloque `---` fm `---`. Tomamos el fm de envoltura (exam-sim-1) y
-  // luego dividimos el resto por delimitadores `---` para extraer los demás.
-  const wrapped = parseFrontmatter(raw);
-  const blocks: string[] = [];
-  // El cuerpo tras el primer fm puede contener más bloques `--- fm ---`.
-  const rest = wrapped.content || "";
-  const parts = rest.split(/\n---\n/);
-  for (const part of parts) {
-    if (part.trim()) blocks.push("---\n" + part + "\n---");
+  let exams: ExamSimulation[] = [];
+  const examFile = path.join(contentRoot, "retos", "exam-simulations.md");
+  if (fs.existsSync(examFile)) {
+    const raw = fs.readFileSync(examFile, "utf8");
+    const wrapped = parseFrontmatter(raw);
+    const parts = (wrapped.content || "").split(/\n---\n/);
+    const blocks: string[] = [];
+    for (const part of parts) {
+      if (part.trim()) blocks.push("---\n" + part + "\n---");
+    }
+    if (wrapped.data && (wrapped.data.type === "ExamSimulation" || wrapped.data.type === "exam")) {
+      blocks.unshift("---\n" + raw.replace(FM_REGEX, "$1") + "\n---");
+    }
+    const parsed = blocks
+      .map((blk) => parseFrontmatter(blk))
+      .filter((p) => p.data && (p.data.type === "ExamSimulation" || p.data.type === "exam"));
+
+    exams = parsed.map((d) => ({
+      id: asStr(d.data.id),
+      slug: asStr(d.data.slug, d.data.id),
+      title: asStr(d.data.title),
+      description: removeCitations(asStr(d.data.description)) || undefined,
+      phase: asStr(d.data.phase) || undefined,
+      duration_minutes: asNum(d.data.duration_minutes) ?? 0,
+      levels: asArray(d.data.levels),
+      rules: asArray(d.data.rules).map(removeCitations),
+    }));
   }
-  // También incluimos el fm de envoltura como bloque propio.
-  if (wrapped.data && wrapped.data.type === "ExamSimulation") {
-    blocks.unshift("---\n" + raw.replace(FM_REGEX, "$1") + "\n---");
+
+  return { phases, modules, challenges, resources, habits, exams };
+}
+
+export function loadGraph(): GraphData {
+  const nodes: GraphNode[] = [];
+  const edges: GraphEdge[] = [];
+  const seen = new Set<string>();
+
+  function addNode(n: GraphNode) {
+    if (seen.has(n.id)) return;
+    seen.add(n.id);
+    nodes.push(n);
   }
 
-  const parsed = blocks
-    .map((blk) => parseFrontmatter(blk))
-    .filter((p) => p.data && p.data.type === "ExamSimulation");
+  for (const d of readDirDocs("phases")) {
+    if (d.data.type !== "phase") continue;
+    addNode({ id: d.data.id, type: "phase", label: d.data.title, slug: d.data.slug });
+    for (const m of asArray(d.data.modules)) edges.push({ source: d.data.id, target: m, rel: "has-module" });
+    for (const c of asArray(d.data.challenges)) edges.push({ source: d.data.id, target: c, rel: "has-challenge" });
+    for (const r of asArray(d.data.resources)) edges.push({ source: d.data.id, target: r, rel: "has-resource" });
+    for (const h of asArray(d.data.habits)) edges.push({ source: d.data.id, target: h, rel: "has-habit" });
+  }
 
-  return parsed.map((d) => ({
-    id: asStr(d.data.id),
-    slug: asStr(d.data.slug, d.data.id),
-    title: asStr(d.data.title),
-    description: asStr(d.data.description) || undefined,
-    phase: asStr(d.data.phase) || undefined,
-    duration_minutes: asNum(d.data.duration_minutes) ?? 0,
-    levels: asArray(d.data.levels),
-    rules: asArray(d.data.rules),
-  }));
+  for (const d of readDirDocs("modules")) {
+    if (d.data.type !== "module") continue;
+    addNode({ id: d.data.id, type: "module", label: d.data.title, slug: d.data.slug });
+    if (d.data.phase) edges.push({ source: d.data.id, target: d.data.phase, rel: "in-phase" });
+    for (const c of asArray(d.data.challenges)) edges.push({ source: d.data.id, target: c, rel: "has-challenge" });
+    for (const r of asArray(d.data.resources)) edges.push({ source: d.data.id, target: r, rel: "has-resource" });
+  }
+
+  for (const d of readDirDocs("retos")) {
+    if (d.data.type !== "challenge") continue;
+    addNode({ id: d.data.id, type: "challenge", label: d.data.title, slug: d.data.slug });
+    if (d.data.module) edges.push({ source: d.data.id, target: d.data.module, rel: "in-module" });
+    if (d.data.phase) edges.push({ source: d.data.id, target: d.data.phase, rel: "in-phase" });
+  }
+
+  for (const d of readDirDocs("recursos")) {
+    if (!d.data.type) continue;
+    addNode({ id: d.data.id, type: "resource", label: d.data.title, slug: d.data.id });
+    for (const m of asArray(d.data.modules)) edges.push({ source: d.data.id, target: m, rel: "for-module" });
+    for (const p of asArray(d.data.phases)) edges.push({ source: d.data.id, target: p, rel: "for-phase" });
+  }
+
+  for (const d of readDirDocs("habits")) {
+    if (d.data.type !== "habit") continue;
+    addNode({ id: d.data.id, type: "habit", label: d.data.title, slug: d.data.slug });
+    for (const p of asArray(d.data.phases)) edges.push({ source: d.data.id, target: p, rel: "for-phase" });
+  }
+
+  const examFile = path.join(contentRoot, "retos", "exam-simulations.md");
+  if (fs.existsSync(examFile)) {
+    const raw = fs.readFileSync(examFile, "utf8");
+    const wrapped = parseFrontmatter(raw);
+    const parts = (wrapped.content || "").split(/\n---\n/);
+    const blocks: string[] = [];
+    for (const part of parts) if (part.trim()) blocks.push("---\n" + part + "\n---");
+    if (wrapped.data && (wrapped.data.type === "ExamSimulation" || wrapped.data.type === "exam")) {
+      blocks.unshift("---\n" + raw.replace(FM_REGEX, "$1") + "\n---");
+    }
+    for (const blk of blocks) {
+      const p = parseFrontmatter(blk);
+      if (p.data && (p.data.type === "ExamSimulation" || p.data.type === "exam")) {
+        addNode({ id: p.data.id, type: "exam", label: p.data.title, slug: p.data.slug });
+        if (p.data.phase) edges.push({ source: p.data.id, target: p.data.phase, rel: "for-phase" });
+        for (const l of asArray(p.data.levels)) edges.push({ source: p.data.id, target: l, rel: "uses-challenge" });
+      }
+    }
+  }
+
+  return { nodes, edges };
 }
-
-// ---------------------------------------------------------------------------
-// Main
-// ---------------------------------------------------------------------------
-function main(): ContentJSON {
-  const data: ContentJSON = {
-    phases: buildPhases().sort((a, b) => (a.order ?? 0) - (b.order ?? 0)),
-    modules: buildModules().sort((a, b) => (a.order ?? 0) - (b.order ?? 0)),
-    challenges: buildChallenges(),
-    resources: buildResources(),
-    habits: buildHabits(),
-    exams: buildExams(),
-  };
-
-  const outDir = path.join(repoRoot, "app", "public");
-  fs.mkdirSync(outDir, { recursive: true });
-  const outPath = path.join(outDir, "content.json");
-  fs.writeFileSync(outPath, JSON.stringify(data, null, 2), "utf8");
-
-  console.log(
-    `content.json generado en ${outPath}\n` +
-      `  phases:    ${data.phases.length}\n` +
-      `  modules:   ${data.modules.length}\n` +
-      `  challenges:${data.challenges.length}\n` +
-      `  resources: ${data.resources.length}\n` +
-      `  habits:    ${data.habits.length}\n` +
-      `  exams:     ${data.exams.length}`
-  );
-  return data;
-}
-
-if (require.main === module) {
-  main();
-}
-
-export { main };
