@@ -1,0 +1,10 @@
+# Piscina42-web repository
+# El vault de Obsidian vive fuera de este repo (D:/Obsidian/...), no se versiona aquí.
+
+# Código de la web (app/) aún no desarrollado en esta fase de contenido.
+/app/
+
+# Artefactos de entorno / SO
+.DS_Store
+Thumbs.db
+*.tmp
