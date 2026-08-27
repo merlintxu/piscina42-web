@@ -93,6 +93,51 @@ como colección de 6 `ExamSimulation` sin envoltura.
 
 **Siguiente fase:** FASE B (script `scripts/md-to-json.ts` alineado al schema → `app/public/content.json`).
 
+---
+
+## FASE B · Pipeline Markdown→JSON (feature/schema-and-app) — 2026-08-27
+
+**Estado:** ✅ IMPLEMENTADO y verificado (build OK).
+
+- `scripts/md-to-json.ts`: recorre `content/`, parsea frontmatter (parser propio,
+  tolerante a BOM/CRLF y `:` en valores), expande colecciones
+  (`challenge-collection`/`resource-collection`) y `exam-simulations.md`.
+- Salida: `app/public/content.json` con `ContentJSON = { phases, modules,
+  challenges, resources, habits, exams }`.
+- Conteo real generado: **4 phases, 9 modules, 55 challenges, 28 resources,
+  13 habits, 6 exams**.
+- `docs/CONTENT-JSON.md`: schema + instrucciones de ejecución.
+- `.gitignore`: añadidos `/scripts/node_modules/` y `/scripts/dist/`.
+
+**Nota:** `app/` sigue excluido en `.gitignore`; `app/public/content.json` se
+regenera con el script tras cualquier cambio en `content/`.
+
+---
+
+## FASE C · Esqueleto de la web en React (feature/schema-and-app) — 2026-08-27
+
+**Estado:** ✅ IMPLEMENTADO y verificado (`npm run build` → 206 módulos, sin errores).
+
+- Stack: **Vite + React + TypeScript** (SPA de datos estáticos).
+- `app/package.json`, `app/vite.config.ts`, `app/tsconfig.json`, `app/index.html`.
+- `app/src/models/index.ts`: tipos TS equivalentes al schema.
+- `app/src/services/contentLoader.ts`: carga `content.json` y helpers
+  (`getPhases`, `getPhaseById`, `getModulesByPhase`, `getModuleById`,
+  `getChallengesByModule`, `getResourcesByModule`, `getHabitsByPhase`,
+  `getExamSimulationsByPhase`, + extras).
+- `app/src/pages/Home.tsx`: grid de `PhaseCard` con título, summary y CTA.
+- `app/src/pages/PhasePage.tsx`: objetivos (react-markdown), módulos, hábitos,
+  simulaciones y recursos de la fase.
+- `app/src/pages/ModulePage.tsx`: conceptos, dificultades, body (react-markdown),
+  retos y recursos del módulo.
+- Componentes: `PhaseCard`, `ModuleCard`, `HabitCard`, `ResourceCard`,
+  `ChallengeCard`; estilos mínimos en `styles.css`.
+- Verificado: el bundle embebe datos reales (`fase1-entorno`, `reto-c01-swap-int`,
+  `exam-sim-1` presentes en el build).
+
+**Nota:** `app/` está gitignoreado; este commit NO incluye el código de la web,
+solo el registro de estado. El código vive en el working tree local.
+
 ### Habits (hábitos)
 Existen 3 iniciales: habit-terminal-daily, habit-git-commits-daily, habit-norminette-daily.
 > FASE 3 debe ampliar a 10–15 hábitos basados en testimonios reales.
