@@ -42,7 +42,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     { path: "/habits", label: "Hábitos Piscineros", icon: Flame, match: (p: string) => p.startsWith("/habits") },
     { path: "/graph", label: "Grafo Obsidian", icon: Share2, match: (p: string) => p.startsWith("/graph") },
     { path: "/norminette", label: "Norminette", icon: ShieldCheck, match: (p: string) => p.startsWith("/norminette") },
-    { path: "/peereval", label: "Peer-Eval", icon: Users, match: (p: string) => p.startsWith("/peereval") },
+    { path: "/peer-eval", label: "Peer-Eval", icon: Users, match: (p: string) => p.startsWith("/peer-eval") || p.startsWith("/peereval") },
   ];
 
   return (

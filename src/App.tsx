@@ -333,15 +333,16 @@ export function App() {
             }
           />
 
-          {/* /peereval → PeerEvalGuide */}
+          {/* /peer-eval → PeerEvalGuide */}
           <Route
-            path="/peereval"
+            path="/peer-eval"
             element={
               <div className="pb-16">
                 <PeerEvalGuide />
               </div>
             }
           />
+          <Route path="/peereval" element={<Navigate to="/peer-eval" replace />} />
 
           {/* Fallback to Home */}
           <Route path="*" element={<Navigate to="/" replace />} />
