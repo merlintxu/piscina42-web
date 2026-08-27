@@ -10,5 +10,5 @@
     "strict": false,
     "resolveJsonModule": true
   },
-  "include": ["md-to-json.ts"]
+  "include": ["md-to-json.ts", "content-graph.ts"]
 }
