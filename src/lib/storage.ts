@@ -84,60 +84,80 @@ export function toggleHabitActive(progress: UserProgress, habitId: string): User
   return updated;
 }
 
-export function incrementHabitDay(progress: UserProgress, habitId: string): UserProgress {
-  const currentCount = progress.completedHabitDays[habitId] || 0;
+export function getTodayDateStr(): string {
+  const d = new Date();
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+export function isHabitCheckedToday(progress: UserProgress, habitId: string): boolean {
+  const today = getTodayDateStr();
   const history = progress.habitHistory?.[habitId] || [];
-  const today = new Date().toISOString().split("T")[0];
+  return history.includes(today);
+}
 
-  const updatedHistory = history.includes(today) ? history : [...history, today];
+export function calculateHabitStreak(dates: string[]): number {
+  if (!dates || dates.length === 0) return 0;
+  
+  const uniqueDates = Array.from(new Set(dates)).sort().reverse();
+  if (uniqueDates.length === 0) return 0;
 
-  // Calculate streak based on dates
-  // Sort dates descending
-  const sortedDates = [...updatedHistory].sort().reverse();
-  let currentStreak = 0;
+  const todayStr = getTodayDateStr();
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  const yesterdayStr = `${yesterday.getFullYear()}-${String(yesterday.getMonth() + 1).padStart(2, "0")}-${String(yesterday.getDate()).padStart(2, "0")}`;
 
-  if (sortedDates.length > 0) {
-    const todayDate = new Date();
-    todayDate.setHours(0, 0, 0, 0);
-
-    let checkDate = new Date(todayDate);
-    const mostRecent = new Date(sortedDates[0]);
-    mostRecent.setHours(0, 0, 0, 0);
-
-    // If most recent is today or yesterday, start counting streak
-    const diffDays = Math.round((todayDate.getTime() - mostRecent.getTime()) / (1000 * 3600 * 24));
-    if (diffDays <= 1) {
-      checkDate = mostRecent;
-      currentStreak = 1;
-
-      for (let i = 1; i < sortedDates.length; i++) {
-        const prevTarget = new Date(checkDate);
-        prevTarget.setDate(prevTarget.getDate() - 1);
-        const prevTargetStr = prevTarget.toISOString().split("T")[0];
-
-        if (sortedDates[i] === prevTargetStr) {
-          currentStreak++;
-          checkDate = prevTarget;
-        } else {
-          break;
-        }
-      }
-    } else {
-      currentStreak = 1;
-    }
-  } else {
-    currentStreak = (progress.habitStreaks?.[habitId] || 0) + 1;
+  const mostRecent = uniqueDates[0];
+  // Streak is only ongoing if the most recent check-in is today or yesterday
+  if (mostRecent !== todayStr && mostRecent !== yesterdayStr) {
+    return 0;
   }
+
+  let streak = 1;
+  let currentDate = new Date(mostRecent + "T00:00:00");
+
+  for (let i = 1; i < uniqueDates.length; i++) {
+    const prevDate = new Date(currentDate);
+    prevDate.setDate(prevDate.getDate() - 1);
+    const expectedStr = `${prevDate.getFullYear()}-${String(prevDate.getMonth() + 1).padStart(2, "0")}-${String(prevDate.getDate()).padStart(2, "0")}`;
+
+    if (uniqueDates[i] === expectedStr) {
+      streak++;
+      currentDate = prevDate;
+    } else {
+      break;
+    }
+  }
+
+  return streak;
+}
+
+export function incrementHabitDay(progress: UserProgress, habitId: string): UserProgress {
+  const today = getTodayDateStr();
+  const history = progress.habitHistory?.[habitId] || [];
+  
+  // If already checked in today, do not increment or add duplicate date
+  if (history.includes(today)) {
+    return progress;
+  }
+
+  const updatedHistory = [...history, today];
+  const uniqueDates = Array.from(new Set(updatedHistory));
+  const newStreak = calculateHabitStreak(uniqueDates);
+  const currentCount = progress.completedHabitDays[habitId] || 0;
+  const newCount = Math.max(currentCount + 1, uniqueDates.length);
 
   const updated = {
     ...progress,
     completedHabitDays: {
       ...progress.completedHabitDays,
-      [habitId]: currentCount + 1
+      [habitId]: newCount
     },
     habitStreaks: {
       ...(progress.habitStreaks || {}),
-      [habitId]: Math.max(currentStreak, (progress.habitStreaks?.[habitId] || 0) + 1)
+      [habitId]: newStreak
     },
     habitHistory: {
       ...(progress.habitHistory || {}),

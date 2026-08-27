@@ -105,12 +105,12 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="global-search-btn"
               onClick={onOpenSearch}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#141927] hover:bg-[#1a2236] border border-[#2A2F3C] text-[#9FA7B8] hover:text-[#ECEFF4] text-xs transition-colors"
+              className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#141927] hover:bg-[#1a2236] border border-[#2A2F3C] text-[#9FA7B8] hover:text-[#ECEFF4] text-xs transition-colors cursor-pointer"
               title="Buscar en todo el temario (Cmd/Ctrl + K)"
             >
               <Search className="w-3.5 h-3.5 text-[#03A9F4]" />
               <span className="hidden sm:inline">Buscar...</span>
-              <kbd className="hidden sm:inline px-1.5 py-0.5 text-[9px] bg-[#0b0f19] border border-[#2A2F3C] rounded font-mono text-[#9FA7B8]">
+              <kbd className="hidden sm:inline-flex items-center px-1.5 py-0.5 text-[9px] bg-[#0b0f19] border border-[#2A2F3C] rounded font-mono text-[#9FA7B8]">
                 ⌘K
               </kbd>
             </button>
@@ -119,7 +119,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="ai-mentor-btn"
               onClick={onOpenAiMentor}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-[#4CAF50]/15 to-[#03A9F4]/15 hover:from-[#4CAF50]/25 hover:to-[#03A9F4]/25 border border-[#4CAF50]/40 text-[#ECEFF4] text-xs font-medium transition-all shadow-sm group"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-[#4CAF50]/15 to-[#03A9F4]/15 hover:from-[#4CAF50]/25 hover:to-[#03A9F4]/25 border border-[#4CAF50]/40 text-[#ECEFF4] text-xs font-medium transition-all shadow-sm group cursor-pointer"
             >
               <Sparkles className="w-3.5 h-3.5 text-[#4CAF50] group-hover:rotate-12 transition-transform" />
               <span className="hidden md:inline">Tutor IA</span>
@@ -128,9 +128,9 @@ export const Navbar: React.FC<NavbarProps> = ({
             {/* Progress Badge */}
             <div 
               id="progress-badge"
-              onClick={() => navigate("/challenges")}
-              className="flex items-center gap-2 px-3 py-1.5 bg-[#141927] border border-[#2A2F3C] rounded-lg cursor-pointer hover:border-[#4CAF50]/50 transition-colors"
-              title={`${completedCount} de ${totalChallengesCount} retos completados`}
+              onClick={() => navigate("/progress")}
+              className="flex items-center gap-2 px-3 py-1.5 bg-[#141927] border border-[#2A2F3C] rounded-lg cursor-pointer hover:border-[#4CAF50]/50 hover:bg-[#182035] transition-all"
+              title={`Panel de Progreso: ${completedCount} de ${totalChallengesCount} retos completados (${pct}%)`}
             >
               <div className="relative w-4 h-4 flex items-center justify-center">
                 <CheckCircle2 className="w-4 h-4 text-[#4CAF50]" />

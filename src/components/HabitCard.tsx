@@ -13,6 +13,7 @@ import {
   Zap
 } from "lucide-react";
 import confetti from "canvas-confetti";
+import { isHabitCheckedToday } from "../lib/storage";
 
 interface HabitCardProps {
   habit: Habit;
@@ -35,12 +36,14 @@ export const HabitCard: React.FC<HabitCardProps> = ({
   const completedDays = progress.completedHabitDays[habit.id] || 0;
   const streak = progress.habitStreaks?.[habit.id] ?? (completedDays > 0 ? completedDays : 0);
   const existingNote = progress.habitNotes?.[habit.id] || "";
+  const isCheckedToday = isHabitCheckedToday(progress, habit.id);
 
   const [isEditingNote, setIsEditingNote] = useState(false);
   const [noteDraft, setNoteDraft] = useState(existingNote);
 
   const handleCheckin = (e: React.MouseEvent) => {
     e.stopPropagation();
+    if (isCheckedToday) return;
     confetti({
       particleCount: 35,
       spread: 55,
@@ -227,13 +230,23 @@ export const HabitCard: React.FC<HabitCardProps> = ({
         </div>
 
         <div className="flex items-center gap-2">
-          <button
-            onClick={handleCheckin}
-            className="flex items-center gap-1 px-3 py-1.5 bg-[#4CAF50]/15 hover:bg-[#4CAF50]/25 border border-[#4CAF50]/40 text-[#4CAF50] text-xs font-bold rounded-xl transition-colors shadow-sm cursor-pointer"
-          >
-            <Plus className="w-3.5 h-3.5" />
-            <span>Check-in</span>
-          </button>
+          {isCheckedToday ? (
+            <div
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-[#4CAF50]/15 border border-[#4CAF50]/40 text-[#4CAF50] text-xs font-bold font-mono rounded-xl shadow-sm select-none"
+              title="Ya has registrado este hábito el día de hoy"
+            >
+              <Check className="w-3.5 h-3.5" />
+              <span>Hecho hoy</span>
+            </div>
+          ) : (
+            <button
+              onClick={handleCheckin}
+              className="flex items-center gap-1 px-3 py-1.5 bg-[#4CAF50]/15 hover:bg-[#4CAF50]/25 border border-[#4CAF50]/40 text-[#4CAF50] text-xs font-bold rounded-xl transition-colors shadow-sm cursor-pointer"
+            >
+              <Plus className="w-3.5 h-3.5" />
+              <span>Check-in</span>
+            </button>
+          )}
 
           {/* Botón o link 'Ver detalle' */}
           <span className="text-xs font-semibold text-[#03A9F4] group-hover:translate-x-0.5 transition-all inline-flex items-center gap-1">

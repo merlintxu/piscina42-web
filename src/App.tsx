@@ -20,6 +20,7 @@ import { ChallengePage } from "./views/ChallengePage";
 import { HabitsView } from "./views/HabitsView";
 import { ExamsView } from "./views/ExamsView";
 import { GraphView } from "./views/GraphView";
+import { ProgressView } from "./views/ProgressView";
 import { NorminetteChecker } from "./components/NorminetteChecker";
 import { PeerEvalGuide } from "./components/PeerEvalGuide";
 import { AiMentorModal } from "./components/AiMentorModal";
@@ -41,6 +42,21 @@ export function App() {
 
   // User persistent progress
   const [progress, setProgress] = useState<UserProgress>(loadUserProgress());
+
+  // Global keyboard shortcuts for Command Palette (Cmd+K / Ctrl+K)
+  useEffect(() => {
+    const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setIsSearchOpen((prev) => !prev);
+      } else if (e.key === "Escape" && isSearchOpen) {
+        setIsSearchOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleGlobalKeyDown);
+    return () => window.removeEventListener("keydown", handleGlobalKeyDown);
+  }, [isSearchOpen]);
 
   // Load content and graph on mount
   useEffect(() => {
@@ -136,7 +152,7 @@ export function App() {
     setIsAiMentorOpen(true);
   };
 
-  const handleSelectGraphNode = (node: GraphNode) => {
+  const handleNavigateGraphNode = (node: GraphNode) => {
     if (node.type === "phase") {
       const p = content?.phases.find(phase => phase.id === node.id);
       navigate(`/phase/${p?.slug || node.id}`);
@@ -146,6 +162,11 @@ export function App() {
     } else if (node.type === "challenge") {
       const ch = content?.challenges.find(c => c.id === node.id);
       navigate(`/challenge/${ch?.slug || node.id}`);
+    } else if (node.type === "resource") {
+      const r = content?.resources.find(res => res.id === node.id);
+      if (r?.url) {
+        window.open(r.url, "_blank", "noopener,noreferrer");
+      }
     } else if (node.type === "exam") {
       navigate("/exams");
     } else if (node.type === "habit") {
@@ -304,7 +325,8 @@ export function App() {
             element={
               <GraphView
                 graphData={graphData}
-                onSelectNode={handleSelectGraphNode}
+                resources={content?.resources || []}
+                onNavigateNode={handleNavigateGraphNode}
               />
             }
           />
@@ -319,6 +341,18 @@ export function App() {
                 onToggleActive={handleToggleHabitActive}
                 onIncrementDay={handleIncrementHabitDay}
                 onSaveNote={handleSaveHabitNote}
+              />
+            }
+          />
+
+          {/* /progress → ProgressView */}
+          <Route
+            path="/progress"
+            element={
+              <ProgressView
+                content={content}
+                progress={progress}
+                onToggleChallengeComplete={handleToggleChallengeComplete}
               />
             }
           />
