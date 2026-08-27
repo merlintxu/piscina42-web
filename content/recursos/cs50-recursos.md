@@ -1,4 +1,4 @@
-﻿---
+---
 id: cs50-recursos
 type: resource-collection
 title: Recursos CS50 para C y fundamentos

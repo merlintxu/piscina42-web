@@ -1,4 +1,4 @@
-﻿---
+---
 id: exercism-c
 type: resource-collection
 title: Exercism C

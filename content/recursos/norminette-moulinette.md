@@ -1,4 +1,4 @@
-﻿---
+---
 id: norminette-moulinette
 type: resource-collection
 title: Norminette y Moulinette

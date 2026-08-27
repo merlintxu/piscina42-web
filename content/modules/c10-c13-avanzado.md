@@ -1,4 +1,4 @@
-﻿---
+---
 id: c10-c13-avanzado
 type: module
 slug: c10-c13-avanzado

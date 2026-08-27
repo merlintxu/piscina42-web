@@ -1,4 +1,4 @@
-﻿---
+---
 id: c01-punteros
 type: module
 slug: c01-punteros

@@ -1,4 +1,4 @@
-﻿---
+---
 id: fase1-entorno
 type: phase
 slug: fase1-entorno

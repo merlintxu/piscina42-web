@@ -1,4 +1,4 @@
-﻿---
+---
 id: c-retos-basicos
 type: challenge-collection
 title: Retos de C básicos (C00–C02)

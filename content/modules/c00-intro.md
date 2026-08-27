@@ -1,4 +1,4 @@
-﻿---
+---
 id: c00-intro
 type: module
 slug: c00-intro

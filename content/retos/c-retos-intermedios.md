@@ -1,4 +1,4 @@
-﻿---
+---
 id: c-retos-intermedios
 type: challenge-collection
 title: Retos de C intermedios (C04–C09)

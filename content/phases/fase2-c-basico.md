@@ -1,4 +1,4 @@
-﻿---
+---
 id: fase2-c-basico
 type: phase
 slug: fase2-c-basico

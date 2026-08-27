@@ -1,4 +1,4 @@
-﻿---
+---
 id: fase3-c-intermedio
 type: phase
 slug: fase3-c-intermedio

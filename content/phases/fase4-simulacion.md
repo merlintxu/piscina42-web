@@ -1,4 +1,4 @@
-﻿---
+---
 id: fase4-simulacion
 type: phase
 slug: fase4-simulacion

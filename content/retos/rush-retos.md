@@ -1,4 +1,4 @@
-﻿---
+---
 id: rush-retos
 type: challenge-collection
 title: Retos de Rush (proyecto en equipo)

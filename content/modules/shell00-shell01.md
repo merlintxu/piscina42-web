@@ -1,4 +1,4 @@
-﻿---
+---
 id: shell00-shell01
 type: module
 slug: shell00-shell01

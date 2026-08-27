@@ -1,4 +1,4 @@
-﻿---
+---
 id: c02-c03-cadenas
 type: module
 slug: c02-c03-cadenas

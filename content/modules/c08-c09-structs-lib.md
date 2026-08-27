@@ -1,4 +1,4 @@
-﻿---
+---
 id: c08-c09-structs-lib
 type: module
 slug: c08-c09-structs-lib

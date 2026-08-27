@@ -1,4 +1,4 @@
-﻿---
+---
 id: cursos-bash-git
 type: resource-collection
 title: Cursos y recursos de Bash y Git

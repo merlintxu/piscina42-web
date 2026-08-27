@@ -1,4 +1,4 @@
-﻿---
+---
 id: examshell-retos
 type: challenge-collection
 title: Retos de Examshell (exámenes tipo Piscina)
