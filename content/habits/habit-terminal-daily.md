@@ -1,6 +1,7 @@
 ---
 id: habit-terminal-daily
 type: habit
+slug: habit-terminal-daily
 title: Uso diario de la terminal
 phases:
   - fase1-entorno

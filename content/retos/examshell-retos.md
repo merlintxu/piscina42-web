@@ -16,12 +16,18 @@ Piscina (Examshell). Cada reto tiene su nota individual en el vault.
 ---
 id: reto-examshell-c01
 type: challenge
+slug: reto-examshell-c01
 title: Examshell — Punteros (C01)
 source: piscina42-web
 module: c01-punteros
 phase: fase4-simulacion
 difficulty: medium
 estimated_time_minutes: 15
+tags:
+  - punteros
+  - examen
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -52,12 +58,18 @@ Similar a reto-c01-swap-int pero bajo presión de tiempo.
 ---
 id: reto-examshell-c07
 type: challenge
+slug: reto-examshell-c07
 title: Examshell — Memoria dinámica (C07)
 source: piscina42-web
 module: c07-asignacion-dinamica
 phase: fase4-simulacion
 difficulty: hard
 estimated_time_minutes: 20
+tags:
+  - malloc
+  - examen
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -88,12 +100,18 @@ Similar a reto-c07-ft-strjoin pero bajo presión de tiempo.
 ---
 id: reto-examshell-c00
 type: challenge
+slug: reto-examshell-c00
 title: Examshell — Fundamentos (C00)
 source: piscina42-web
 module: c00-intro
 phase: fase4-simulacion
 difficulty: easy
 estimated_time_minutes: 12
+tags:
+  - fundamentos
+  - examen
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -124,12 +142,18 @@ Similar a reto-c00-ft-print-alphabet pero bajo presión de tiempo.
 ---
 id: reto-examshell-c02
 type: challenge
+slug: reto-examshell-c02
 title: Examshell — Cadenas (C02)
 source: piscina42-web
 module: c02-c03-cadenas
 phase: fase4-simulacion
 difficulty: easy
 estimated_time_minutes: 12
+tags:
+  - cadenas
+  - examen
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -160,12 +184,18 @@ Similar a reto-c02-ft-strcpy pero bajo presión de tiempo.
 ---
 id: reto-examshell-c03
 type: challenge
+slug: reto-examshell-c03
 title: Examshell — Comparación/extracción (C03)
 source: piscina42-web
 module: c02-c03-cadenas
 phase: fase4-simulacion
 difficulty: medium
 estimated_time_minutes: 15
+tags:
+  - cadenas
+  - examen
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -196,12 +226,18 @@ Similar a reto-c03-ft-strncmp pero bajo presión de tiempo.
 ---
 id: reto-examshell-c04
 type: challenge
+slug: reto-examshell-c04
 title: Examshell — Conversión (C04)
 source: piscina42-web
 module: c04-c05-conversion-recursion
 phase: fase4-simulacion
 difficulty: medium
 estimated_time_minutes: 15
+tags:
+  - conversión
+  - examen
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -232,12 +268,18 @@ Similar a reto-c04-ft-atoi pero bajo presión de tiempo.
 ---
 id: reto-examshell-c05
 type: challenge
+slug: reto-examshell-c05
 title: Examshell — Recursión (C05)
 source: piscina42-web
 module: c04-c05-conversion-recursion
 phase: fase4-simulacion
 difficulty: medium
 estimated_time_minutes: 15
+tags:
+  - recursión
+  - examen
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -268,12 +310,18 @@ Similar a reto-c05-ft-power pero bajo presión de tiempo.
 ---
 id: reto-examshell-c06
 type: challenge
+slug: reto-examshell-c06
 title: Examshell — Argumentos (C06)
 source: piscina42-web
 module: c06-cli-args
 phase: fase4-simulacion
 difficulty: medium
 estimated_time_minutes: 15
+tags:
+  - argv
+  - examen
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -305,12 +353,18 @@ Similar a reto-c06-argv-count pero bajo presión de tiempo.
 ---
 id: reto-examshell-c08
 type: challenge
+slug: reto-examshell-c08
 title: Examshell — Listas (C08)
 source: piscina42-web
 module: c08-c09-structs-lib
 phase: fase4-simulacion
 difficulty: hard
 estimated_time_minutes: 20
+tags:
+  - listas
+  - examen
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -342,12 +396,18 @@ Similar a reto-c08-ft-list-size pero bajo presión de tiempo.
 ---
 id: reto-examshell-c09
 type: challenge
+slug: reto-examshell-c09
 title: Examshell — Makefile/lib (C09)
 source: piscina42-web
 module: c08-c09-structs-lib
 phase: fase4-simulacion
 difficulty: hard
 estimated_time_minutes: 20
+tags:
+  - Makefile
+  - examen
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -379,12 +439,18 @@ Similar a reto-c09-makefile-lib pero bajo presión de tiempo.
 ---
 id: reto-examshell-c10
 type: challenge
+slug: reto-examshell-c10
 title: Examshell — Árboles (C10)
 source: piscina42-web
 module: c10-c13-avanzado
 phase: fase4-simulacion
 difficulty: hard
 estimated_time_minutes: 25
+tags:
+  - árboles
+  - examen
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -415,12 +481,18 @@ Similar a reto-c10-bst-insert pero bajo presión de tiempo.
 ---
 id: reto-examshell-c12
 type: challenge
+slug: reto-examshell-c12
 title: Examshell — Estructuras avanzadas (C12)
 source: piscina42-web
 module: c10-c13-avanzado
 phase: fase4-simulacion
 difficulty: hard
 estimated_time_minutes: 25
+tags:
+  - estructuras
+  - examen
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado

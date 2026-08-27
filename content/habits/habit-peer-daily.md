@@ -1,6 +1,7 @@
 ---
 id: habit-peer-daily
 type: habit
+slug: habit-peer-daily
 title: Intercambio con compañeros cada día
 phases:
   - fase1-entorno

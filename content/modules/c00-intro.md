@@ -1,10 +1,22 @@
 ﻿---
 id: c00-intro
 type: module
+slug: c00-intro
+order: 2
 title: C00: Introducción a C
 source: piscina42-web
 phase: fase2-c-basico
 level: basic
+concepts:
+  - estructura de un programa C (main, include, return)
+  - tipos básicos (int, char, float, double)
+  - funciones (declaración, definición, prototipo)
+  - entrada/salida básica (printf, write)
+  - compilación con gcc (preprocesado, compilación, enlazado)
+cognitive_difficulties:
+  - comprender el flujo de main más allá de "línea a línea"
+  - confundir declaración, asignación y dirección
+  - leer errores del compilador y separar compilación/enlazado
 resources:
   - resource-cs50x-week1
   - resource-cs50x-overview

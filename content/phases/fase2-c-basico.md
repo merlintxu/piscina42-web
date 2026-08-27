@@ -1,8 +1,15 @@
 ﻿---
 id: fase2-c-basico
 type: phase
+slug: fase2-c-basico
+order: 2
 title: Fase 2: Fundamentos de C (C00–C02)
 source: piscina42-web
+summary: >
+  Entrada a la programación en C: sintaxis obligatoria, tipos, flujo de main,
+  compilación con gcc, entrada/salida y primeras cadenas. Aquí se asientan las
+  bases (tipos, flujo, compilación) sin las cuales los módulos de punteros y
+  memoria se vuelven mucho más costosos.
 modules:
   - c00-intro
   - c01-punteros

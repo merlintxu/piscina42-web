@@ -15,12 +15,19 @@ nota individual en el vault.
 ---
 id: reto-shell00-midls
 type: challenge
+slug: reto-shell00-midls
 title: midLS (listado tipo Shell00)
 source: piscina42-web
 module: shell00-shell01
 phase: fase1-entorno
 difficulty: easy
 estimated_time_minutes: 30
+tags:
+  - shell
+  - ls
+  - permisos
+  - shell00
+norminette_focus: false
 ---
 
 ### Enunciado
@@ -53,12 +60,19 @@ midLS -> "b.txt, a.txt"  (formato según subject)
 ---
 id: reto-shell00-git-clean
 type: challenge
+slug: reto-shell00-git-clean
 title: clean (borrado de basura)
 source: piscina42-web
 module: shell00-shell01
 phase: fase1-entorno
 difficulty: easy
 estimated_time_minutes: 20
+tags:
+  - shell
+  - find
+  - limpieza
+  - shell00
+norminette_focus: false
 ---
 
 ### Enunciado
@@ -89,12 +103,19 @@ clean -> elimina a.txt~ y #b.txt#, deja el resto intacto.
 ---
 id: reto-shell01-find-sh
 type: challenge
+slug: reto-shell01-find-sh
 title: find_sh (nombres .sh sin extensión)
 source: piscina42-web
 module: shell00-shell01
 phase: fase1-entorno
 difficulty: easy
 estimated_time_minutes: 15
+tags:
+  - shell
+  - find
+  - sed
+  - shell01
+norminette_focus: false
 ---
 
 ### Enunciado
@@ -125,12 +146,18 @@ find_sh -> "y", "z"  (orden según subject)
 ---
 id: reto-shell00-hello
 type: challenge
+slug: reto-shell00-hello
 title: Hello, Shell00
 source: piscina42-web
 module: shell00-shell01
 phase: fase1-entorno
 difficulty: easy
 estimated_time_minutes: 10
+tags:
+  - shell
+  - echo
+  - shell00
+norminette_focus: false
 ---
 
 ### Enunciado
@@ -162,12 +189,19 @@ Shell00 de repos como mlrcbsousa/42piscine. [web:155]
 ---
 id: reto-shell00-clean
 type: challenge
+slug: reto-shell00-clean
 title: clean — borrado de basura
 source: piscina42-web
 module: shell00-shell01
 phase: fase1-entorno
 difficulty: easy
 estimated_time_minutes: 15
+tags:
+  - shell
+  - find
+  - limpieza
+  - shell00
+norminette_focus: false
 ---
 
 ### Enunciado
@@ -198,12 +232,19 @@ juancumbeq/42_BCN_C_Piscine_2023. [web:156]
 ---
 id: reto-shell01-ffs
 type: challenge
+slug: reto-shell01-ffs
 title: ffs — From First to Last Sequence
 source: piscina42-web
 module: shell00-shell01
 phase: fase1-entorno
 difficulty: easy
 estimated_time_minutes: 20
+tags:
+  - shell
+  - sed
+  - texto
+  - shell01
+norminette_focus: false
 ---
 
 ### Enunciado
@@ -235,12 +276,19 @@ ffs "abc" -> "cba"
 ---
 id: reto-shell01-print
 type: challenge
+slug: reto-shell01-print
 title: print — imprimir argumentos con separador
 source: piscina42-web
 module: shell00-shell01
 phase: fase1-entorno
 difficulty: easy
 estimated_time_minutes: 15
+tags:
+  - shell
+  - argumentos
+  - bucles
+  - shell01
+norminette_focus: false
 ---
 
 ### Enunciado

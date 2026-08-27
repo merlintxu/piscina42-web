@@ -1,10 +1,25 @@
 ﻿---
 id: shell00-shell01
 type: module
+slug: shell00-shell01
+order: 1
 title: Shell00–Shell01: Fundamentos de Unix, Git y shell scripting
 source: piscina42-web
 phase: fase1-entorno
 level: basic
+concepts:
+  - navegación de sistema de archivos
+  - permisos y modos (chmod, rwx)
+  - enlaces simbólicos y duros
+  - redirecciones y pipes
+  - búsqueda y diff (find, grep, wc, diff)
+  - git básico
+  - text-processing y scripting
+cognitive_difficulties:
+  - mentalidad de comandos frente a interfaz gráfica
+  - modelo de permisos y riesgo con chmod/rm
+  - recordar combinaciones de comandos y flags
+  - disciplina de mensajes de commit en Git
 challenges:
   - reto-shell00-midls
   - reto-shell00-git-clean

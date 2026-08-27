@@ -1,6 +1,7 @@
 ---
 id: habit-daily-commit
 type: habit
+slug: habit-daily-commit
 title: Commit diario de avance
 phases:
   - fase1-entorno

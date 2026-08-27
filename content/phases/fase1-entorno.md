@@ -1,8 +1,15 @@
 ﻿---
 id: fase1-entorno
 type: phase
+slug: fase1-entorno
+order: 1
 title: Fase 1: Entorno, terminal, Bash y Git
 source: piscina42-web
+summary: >
+  Primer contacto con el flujo de trabajo de la Piscina: ganar soltura en la
+  terminal Unix, dominar permisos, redirecciones y Git básico, e interiorizar
+  un flujo de commits semánticos. Prepara el terreno para Shell00–01 y reduce
+  la fricción de entorno antes de enfrentar C00–C13.
 modules:
   - shell00-shell01
 challenges:

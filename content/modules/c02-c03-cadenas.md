@@ -1,10 +1,21 @@
 ﻿---
 id: c02-c03-cadenas
 type: module
+slug: c02-c03-cadenas
+order: 4
 title: C02–C03: Cadenas y funciones de <string.h>
 source: piscina42-web
 phase: fase3-c-intermedio
 level: intermediate
+concepts:
+  - cadena como array de char terminado en \0
+  - recorrido de cadenas con punteros e índices
+  - recreación manual de strlen/strcmp/strcpy/strcat/strdup
+  - longitud vs capacidad y desbordamiento de buffer
+cognitive_difficulties:
+  - entender que la cadena es un puntero, no un objeto
+  - no olvidar el \0 al construir cadenas manualmente
+  - distinguir strcmp (contenido) de == (punteros)
 challenges:
   - reto-c02-strlen-strcmp
 resources:

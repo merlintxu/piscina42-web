@@ -1,8 +1,15 @@
 ﻿---
 id: fase3-c-intermedio
 type: phase
+slug: fase3-c-intermedio
+order: 3
 title: Fase 3: C intermedio, memoria y estilo 42
 source: piscina42-web
+summary: >
+  El corazón técnico de la preparación: punteros, cadenas, conversión de datos,
+  recursión, argumentos de línea de comandos, memoria dinámica, structs y
+  librerías. Cada módulo apila sobre el anterior; aquí se construye la base de
+  la futura libft y se consolida la disciplina de Norminette.
 modules:
   - c01-punteros
   - c02-c03-cadenas

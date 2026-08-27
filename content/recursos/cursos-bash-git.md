@@ -14,7 +14,7 @@ antes y durante la Piscina. Cada recurso tiene su nota individual en el vault.
 
 ---
 id: resource-bash-basics
-type: resource
+type: course
 title: Bash básico (guía/curso)
 url: ""
 modules:
@@ -34,7 +34,7 @@ y scripting simple. Útil para afrontar Shell00–Shell01 con soltura en la CLI.
 
 ---
 id: resource-git-basics
-type: resource
+type: course
 title: Git básico (tutorial)
 url: ""
 modules:
@@ -55,7 +55,7 @@ Fase 1 para respaldar el trabajo en la Piscina. [web:112][web:119]
 
 ---
 id: resource-shell00-subject
-type: resource
+type: course
 title: Subject oficial de Shell00
 url: ""
 modules:
@@ -76,7 +76,7 @@ Shell00. [web:115][web:117]
 
 ---
 id: resource-shell01-subject
-type: resource
+type: course
 title: Subject oficial de Shell01
 url: ""
 modules:
@@ -96,10 +96,9 @@ Referencia primaria para los retos de Shell01. [web:120][web:117]
 
 ---
 id: resource-godbolt
-type: resource
+type: tool
 title: GodBolt Compiler Explorer
 url: https://godbolt.org/
-type: tool
 modules:
   - c00-intro
   - c01-punteros
@@ -120,10 +119,9 @@ instrucciones reales, y para depurar comportamientos raros de optimización. [we
 
 ---
 id: resource-explainshell
-type: resource
+type: tool
 title: explainshell
 url: https://explainshell.com/
-type: tool
 modules:
   - shell00-shell01
 phases:
@@ -141,10 +139,9 @@ páginas `man`. Ideal para entender los one-liners que pide Shell01. [web:113]
 
 ---
 id: resource-cheat-sh
-type: resource
+type: tool
 title: cheat.sh
 url: https://cheat.sh/
-type: tool
 modules:
   - shell00-shell01
   - c00-intro
@@ -165,10 +162,9 @@ terminal (`curl cheat.sh/...`). Rápido para recordar la sintaxis de `sed`, `awk
 
 ---
 id: resource-progit
-type: resource
+type: book
 title: Pro Git (libro oficial, gratuito)
 url: https://git-scm.com/book/es/v2
-type: book
 modules:
   - shell00-shell01
 phases:
@@ -187,10 +183,9 @@ Vogsphere y tus entregas. [web:112][web:119]
 
 ---
 id: resource-learnxinyminutes-bash
-type: resource
+type: article
 title: Learn X in Y minutes — Bash
 url: https://learnxinyminutes.com/docs/bash/
-type: article
 modules:
   - shell00-shell01
 phases:

@@ -1,6 +1,7 @@
 ---
 id: habit-sleep-7h
 type: habit
+slug: habit-sleep-7h
 title: Dormir 7+ horas
 phases:
   - fase1-entorno

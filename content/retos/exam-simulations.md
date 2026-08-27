@@ -1,6 +1,7 @@
 ---
 id: exam-sim-1
 type: ExamSimulation
+slug: exam-sim-1
 title: Simulación Examshell 1 — C00–C02 básico
 source: piscina42-web
 phase: fase4-simulacion
@@ -24,6 +25,7 @@ acostumbrar al ritmo de la Examshell. Objetivo: 3 retos en 2 horas.
 ---
 id: exam-sim-2
 type: ExamSimulation
+slug: exam-sim-2
 title: Simulación Examshell 2 — Punteros y conversión
 source: piscina42-web
 phase: fase4-simulacion
@@ -46,6 +48,7 @@ Segundo simulacro: bloque intermedio de punteros y conversión/recursión.
 ---
 id: exam-sim-3
 type: ExamSimulation
+slug: exam-sim-3
 title: Simulación Examshell 3 — Memoria y argumentos
 source: piscina42-web
 phase: fase4-simulacion
@@ -68,6 +71,7 @@ Tercer simulacro: énfasis en malloc/free y argv, con control de fugas.
 ---
 id: exam-sim-4
 type: ExamSimulation
+slug: exam-sim-4
 title: Simulación Examshell 4 — Estructuras y lib
 source: piscina42-web
 phase: fase4-simulacion
@@ -90,6 +94,7 @@ Cuarto simulacro: listas, árboles y Makefiles/librerías.
 ---
 id: exam-sim-5
 type: ExamSimulation
+slug: exam-sim-5
 title: Mini-Piscina fin de semana — bloque completo
 source: piscina42-web
 phase: fase4-simulacion
@@ -118,6 +123,7 @@ niveles. Buen termómetro antes de la Piscina real.
 ---
 id: exam-sim-6
 type: ExamSimulation
+slug: exam-sim-6
 title: ExamSimulation de defensa Rush
 source: piscina42-web
 phase: fase4-simulacion
