@@ -234,9 +234,11 @@ export function syncSkillsWithUserProgress(
     }
   }
 
-  // Check exam simulations
+  // Check exam simulations. Each retake is a distinct evidence identified by examId + completedAt.
   if (progress.completedExams) {
     for (const [examId, examData] of Object.entries(progress.completedExams)) {
+      const completedAt = examData.completedAt || now;
+      const attemptId = `${examId}::${completedAt}`;
       const examSim = content.exams?.find(e => e.id === examId || e.slug === examId);
       const matchedExamSkills = examSim 
         ? getSkillsForExam(examSim)
@@ -246,22 +248,29 @@ export function syncSkillsWithUserProgress(
         const skill = updatedSkills[match.skillId];
         if (!skill) continue;
 
-        const alreadyHasExam = skill.history?.some(h => h.sourceId === examId && h.sourceType === "exam");
-        if (!alreadyHasExam) {
+        // Backwards compatibility: consider a legacy sourceId=examId the same attempt only
+        // when timestamp and score also match the current UserProgress attempt.
+        const alreadyHasAttempt = skill.history?.some(h => {
+          if (h.sourceType !== "exam") return false;
+          if (h.sourceId === attemptId) return true;
+          return h.sourceId === examId && h.timestamp === completedAt && h.score === examData.score;
+        });
+
+        if (!alreadyHasAttempt) {
           changed = true;
           const examEvidence: SkillEvidence = {
             sourceType: "exam",
-            sourceId: examId,
-            timestamp: examData.completedAt || now,
+            sourceId: attemptId,
+            timestamp: completedAt,
             score: examData.score,
             mode: "prove",
             weight: match.weight ? match.weight * 2.5 : 2.5,
             independence: 1.0,
-            notes: `Simulación de examen: ${examData.score}/100`
+            notes: `Simulación de examen: ${examData.score}/100 (${examId})`
           };
 
           const newHistory = [...(skill.history || []), examEvidence];
-          updatedSkills[match.skillId] = recalculateSkillMastery(match.skillId, newHistory, examData.completedAt || now);
+          updatedSkills[match.skillId] = recalculateSkillMastery(match.skillId, newHistory, completedAt);
         }
       }
     }
