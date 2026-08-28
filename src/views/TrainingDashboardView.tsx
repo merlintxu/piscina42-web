@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { 
   TrainingState, 
@@ -63,6 +63,17 @@ export const TrainingDashboardView: React.FC<TrainingDashboardViewProps> = ({
   const [targetDateInput, setTargetDateInput] = useState<string>(trainingState.profile.targetDate || DEFAULT_TARGET_DATE);
   const [hoursPerWeekInput, setHoursPerWeekInput] = useState<number>(trainingState.profile.availableHoursPerWeek || 15);
   const [paceInput, setPaceInput] = useState<"relaxed" | "standard" | "intensive">(trainingState.profile.pace || "standard");
+  const [dailyCommitmentInput, setDailyCommitmentInput] = useState<number>(trainingState.profile.dailyCommitmentMinutes || 90);
+
+  // Synchronize modal inputs when opening settings
+  useEffect(() => {
+    if (isSettingsOpen) {
+      setTargetDateInput(trainingState.profile.targetDate || DEFAULT_TARGET_DATE);
+      setHoursPerWeekInput(trainingState.profile.availableHoursPerWeek || 15);
+      setPaceInput(trainingState.profile.pace || "standard");
+      setDailyCommitmentInput(trainingState.profile.dailyCommitmentMinutes || 90);
+    }
+  }, [isSettingsOpen, trainingState.profile]);
 
   const todayStr = getTodayDateString();
 
@@ -92,11 +103,27 @@ export const TrainingDashboardView: React.FC<TrainingDashboardViewProps> = ({
 
   const handleSaveProfileSettings = (e: React.FormEvent) => {
     e.preventDefault();
-    const updated = updateTrainingProfile(trainingState, {
+    const validMinutes = Math.min(360, Math.max(30, Number(dailyCommitmentInput) || 90));
+    let updated = updateTrainingProfile(trainingState, {
       targetDate: targetDateInput,
       availableHoursPerWeek: Number(hoursPerWeekInput),
-      pace: paceInput
+      pace: paceInput,
+      dailyCommitmentMinutes: validMinutes
     });
+
+    // If today's mission has not been started yet, regenerate it with the newly chosen budget
+    const currentMission = updated.dailyMissions[todayStr];
+    const hasCompletedItems = currentMission?.items?.some(i => i.completed);
+    if (!hasCompletedItems) {
+      const stateWithoutToday = {
+        ...updated,
+        dailyMissions: { ...updated.dailyMissions }
+      };
+      delete stateWithoutToday.dailyMissions[todayStr];
+      const regeneratedMission = generateDailyMission(todayStr, stateWithoutToday, content, progress);
+      updated = saveDailyMissionToState(stateWithoutToday, regeneratedMission);
+    }
+
     onUpdateTrainingState(updated);
     setIsSettingsOpen(false);
   };
@@ -151,7 +178,7 @@ export const TrainingDashboardView: React.FC<TrainingDashboardViewProps> = ({
                 {readiness.daysRemaining} <span className="text-sm font-normal text-[#9FA7B8]">días ({readiness.weeksRemaining} sem)</span>
               </div>
               <div className="text-xs text-[#9FA7B8] font-mono mt-0.5">
-                ~{readiness.projectedHoursAvailable}h disponibles ({trainingState.profile.availableHoursPerWeek}h/sem)
+                ~{readiness.projectedHoursAvailable}h disponibles ({trainingState.profile.availableHoursPerWeek}h/sem · {trainingState.profile.dailyCommitmentMinutes || 90}m/día)
               </div>
             </div>
 
@@ -426,6 +453,26 @@ export const TrainingDashboardView: React.FC<TrainingDashboardViewProps> = ({
                         <ArrowRight className="w-3 h-3" />
                       </Link>
                     )}
+
+                    {item.type === "peer" && (
+                      <Link
+                        to="/norminette"
+                        className="px-2.5 py-1 text-xs font-mono bg-[#141927] hover:bg-[#1f2840] border border-[#2A2F3C] text-[#00BCD4] rounded-lg transition-colors flex items-center gap-1"
+                      >
+                        <span>Peer Eval</span>
+                        <ArrowRight className="w-3 h-3" />
+                      </Link>
+                    )}
+
+                    {item.type === "debrief" && (
+                      <Link
+                        to="/progress"
+                        className="px-2.5 py-1 text-xs font-mono bg-[#141927] hover:bg-[#1f2840] border border-[#2A2F3C] text-[#8BC34A] rounded-lg transition-colors flex items-center gap-1"
+                      >
+                        <span>Debrief</span>
+                        <ArrowRight className="w-3 h-3" />
+                      </Link>
+                    )}
                   </div>
                 </div>
               ))}
@@ -654,6 +701,25 @@ export const TrainingDashboardView: React.FC<TrainingDashboardViewProps> = ({
                   <option value={25}>25 horas / semana (Intensivo)</option>
                   <option value={40}>40 horas / semana (Full-time / Inmersivo)</option>
                 </select>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-mono text-[#9FA7B8] block">
+                  Compromiso diario (minutos de misión)
+                </label>
+                <select
+                  value={dailyCommitmentInput}
+                  onChange={(e) => setDailyCommitmentInput(Number(e.target.value))}
+                  className="w-full bg-[#0b0f19] border border-[#2A2F3C] rounded-xl px-3 py-2 text-xs font-mono text-[#ECEFF4] focus:outline-none focus:border-[#4CAF50]"
+                >
+                  <option value={45}>45 min / día (Mantenimiento rápido)</option>
+                  <option value={60}>60 min / día (1 hora base)</option>
+                  <option value={90}>90 min / día (1.5 horas - Recomendado 42)</option>
+                  <option value={120}>120 min / día (2 horas - Intensivo)</option>
+                  <option value={180}>180 min / día (3 horas - Inmersión total)</option>
+                  <option value={240}>240 min / día (4 horas - Modo Maratón)</option>
+                </select>
+                <span className="text-[10px] text-[#9FA7B8]">Calibra el volumen de la misión diaria sin cortar retos.</span>
               </div>
 
               <div className="space-y-1.5">
