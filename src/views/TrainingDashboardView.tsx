@@ -387,12 +387,22 @@ export const TrainingDashboardView: React.FC<TrainingDashboardViewProps> = ({
                       {item.estimatedMinutes} min
                     </span>
 
-                    {item.type === "challenge" && (
+                    {(item.type === "challenge" || item.type === "recall" || item.type === "practice") && (
                       <Link
-                        to={`/challenge/${item.referenceId}`}
+                        to={item.referenceId.startsWith("shell") || item.referenceId.startsWith("c0") ? `/module/${item.referenceId}` : `/challenge/${item.referenceId}`}
                         className="px-2.5 py-1 text-xs font-mono bg-[#141927] hover:bg-[#1f2840] border border-[#2A2F3C] text-[#03A9F4] rounded-lg transition-colors flex items-center gap-1"
                       >
                         <span>Abrir</span>
+                        <ArrowRight className="w-3 h-3" />
+                      </Link>
+                    )}
+
+                    {item.type === "concept" && (
+                      <Link
+                        to={`/module/${item.referenceId}`}
+                        className="px-2.5 py-1 text-xs font-mono bg-[#141927] hover:bg-[#1f2840] border border-[#2A2F3C] text-[#9C27B0] rounded-lg transition-colors flex items-center gap-1"
+                      >
+                        <span>Módulo</span>
                         <ArrowRight className="w-3 h-3" />
                       </Link>
                     )}
