@@ -1,6 +1,221 @@
-import { TrainingState, ReadinessBreakdown, SkillCategory } from "./types";
+import { 
+  TrainingState, 
+  ReadinessBreakdown, 
+  SkillCategory, 
+  SkillMastery, 
+  SkillEvidence, 
+  SkillLevel 
+} from "./types";
 import { SKILL_DEFINITIONS } from "./config";
 import { ContentJSON, UserProgress } from "../types";
+
+/**
+ * Pure central function to recalculate a SkillMastery object based on its history and evidence.
+ * 
+ * Rules:
+ * 1. NO raw evidenceCount mapping to levels.
+ * 2. Diagnostic provides initial theoretical baseline (weight 1.0), and diagnostic alone can NEVER exceed Level 3.
+ * 3. Completed challenges provide practical evidence (mode="learn" | "prove", weight 1.5).
+ * 4. Passed exams (score >= 75) provide high-rigor evidence (mode="prove", weight 2.5). Failed exams (< 50) penalize.
+ * 5. Missions / habits do NOT automatically increase technical skill mastery.
+ * 6. Evidence count increases confidence, but does not produce levels mechanically.
+ * 7. Mastery can rise OR fall depending on recent performance and weighted evidence scores.
+ * 8. All historical evidences are strictly preserved.
+ */
+export function recalculateSkillMastery(
+  skillIdOrMastery: string | SkillMastery | { skillId: string; history?: SkillEvidence[]; lastAssessedAt?: string },
+  historyInput?: SkillEvidence[],
+  lastAssessedAtInput?: string
+): SkillMastery {
+  let skillId: string;
+  let history: SkillEvidence[];
+  let lastAssessedAt: string;
+
+  if (typeof skillIdOrMastery === "string") {
+    skillId = skillIdOrMastery;
+    history = historyInput || [];
+    lastAssessedAt = lastAssessedAtInput || (history.length > 0 ? history[history.length - 1].timestamp : new Date().toISOString());
+  } else {
+    skillId = skillIdOrMastery.skillId;
+    history = historyInput || skillIdOrMastery.history || [];
+    lastAssessedAt = lastAssessedAtInput || skillIdOrMastery.lastAssessedAt || (history.length > 0 ? history[history.length - 1].timestamp : new Date().toISOString());
+  }
+
+  const def = SKILL_DEFINITIONS.find(s => s.id === skillId);
+  const maxAllowedLevel: SkillLevel = (def?.maxLevel || 5) as SkillLevel;
+
+  // If no history exists, return baseline level 0
+  if (!history || history.length === 0) {
+    return {
+      skillId,
+      level: 0,
+      confidence: 0,
+      evidenceCount: 0,
+      lastAssessedAt,
+      history: []
+    };
+  }
+
+  // Filter out non-technical evidences (e.g. daily missions, habits)
+  // Requirement: "mission completada NO aumenta automáticamente mastery técnico", "hábitos NO aumentan mastery técnico"
+  const validEvidences = history.filter(e => e.sourceType !== "mission");
+
+  if (validEvidences.length === 0) {
+    return {
+      skillId,
+      level: 0,
+      confidence: 0,
+      evidenceCount: history.length,
+      lastAssessedAt,
+      history: [...history]
+    };
+  }
+
+  // Sort valid evidences chronologically
+  const sorted = [...validEvidences].sort((a, b) => {
+    const tA = new Date(a.timestamp).getTime() || 0;
+    const tB = new Date(b.timestamp).getTime() || 0;
+    return tA - tB;
+  });
+
+  const N = sorted.length;
+  let totalWeightedScore = 0;
+  let totalEffectiveWeight = 0;
+
+  let diagnosticOnly = true;
+  let practicalChallengesCount = 0;
+  let examCount = 0;
+  let passedExamCount = 0;
+  let latestExamScore: number | null = null;
+
+  for (let i = 0; i < N; i++) {
+    const ev = sorted[i];
+    
+    // Score normalization [0, 100]
+    let score = typeof ev.score === "number" ? Math.max(0, Math.min(100, ev.score)) : 100;
+    
+    // Base weight by source type
+    let baseWeight = 1.0;
+    if (ev.sourceType === "exam") {
+      baseWeight = 2.5;
+      diagnosticOnly = false;
+      examCount += 1;
+      latestExamScore = score;
+      if (score >= 75) passedExamCount += 1;
+    } else if (ev.sourceType === "challenge") {
+      baseWeight = 1.5;
+      diagnosticOnly = false;
+      practicalChallengesCount += 1;
+    } else if (ev.sourceType === "diagnostic") {
+      baseWeight = 1.0;
+    } else if (ev.sourceType === "manual") {
+      baseWeight = 1.0;
+      diagnosticOnly = false;
+    }
+
+    if (ev.weight !== undefined && ev.weight > 0) {
+      baseWeight = ev.weight;
+    }
+
+    // Independence factor [0.2 - 1.0]
+    const independence = ev.independence !== undefined 
+      ? Math.max(0.2, Math.min(1.0, ev.independence))
+      : (ev.mode === "prove" ? 1.0 : 0.8);
+
+    // Recency factor: newer evidences have higher weighting [0.6 to 1.0]
+    const recency = 0.6 + 0.4 * ((i + 1) / N);
+
+    const effectiveWeight = baseWeight * independence * recency;
+
+    totalWeightedScore += score * effectiveWeight;
+    totalEffectiveWeight += effectiveWeight;
+  }
+
+  const performanceScore = totalEffectiveWeight > 0 
+    ? Math.round(totalWeightedScore / totalEffectiveWeight) 
+    : 0;
+
+  // Level determination:
+  let calculatedLevel: SkillLevel = 0;
+
+  if (diagnosticOnly) {
+    // Diagnostic alone can NEVER exceed Level 3
+    if (performanceScore >= 85) calculatedLevel = 3;
+    else if (performanceScore >= 60) calculatedLevel = 2;
+    else if (performanceScore >= 30) calculatedLevel = 1;
+    else calculatedLevel = 0;
+  } else {
+    // Has practical and/or exam evidence
+    // Level 5: High performance (>=85), multiple challenges, passed exam or exceptional practical autonomy
+    if (
+      performanceScore >= 85 &&
+      practicalChallengesCount >= 2 &&
+      (passedExamCount >= 1 || practicalChallengesCount >= 4) &&
+      (latestExamScore === null || latestExamScore >= 70)
+    ) {
+      calculatedLevel = 5;
+    } 
+    // Level 4: Solid performance (>=70), at least 2 practical challenges or 1 passed exam
+    else if (
+      performanceScore >= 70 &&
+      (practicalChallengesCount >= 2 || passedExamCount >= 1) &&
+      (latestExamScore === null || latestExamScore >= 50)
+    ) {
+      calculatedLevel = 4;
+    }
+    // Level 3: Competent (>=50), has at least 1 practical challenge or solid diagnostic baseline
+    else if (
+      performanceScore >= 50 &&
+      (practicalChallengesCount >= 1 || passedExamCount >= 1 || performanceScore >= 75) &&
+      (latestExamScore === null || latestExamScore >= 40)
+    ) {
+      calculatedLevel = 3;
+    }
+    // Level 2: Basic practical or standard diagnostic (>=30)
+    else if (performanceScore >= 30) {
+      calculatedLevel = 2;
+    }
+    // Level 1: Initial familiarity (>=15)
+    else if (performanceScore >= 15) {
+      calculatedLevel = 1;
+    }
+    // Level 0: Under 15 or poor scores
+    else {
+      calculatedLevel = 0;
+    }
+  }
+
+  // Cap level at skill's defined maxLevel (typically 5)
+  calculatedLevel = Math.min(calculatedLevel, maxAllowedLevel) as SkillLevel;
+
+  // Calculate confidence [0.0 - 1.0]
+  // Confidence grows with evidence count and diversity, but does not mechanically alter level
+  const baseCountConfidence = Math.min(0.5, 0.15 * Math.sqrt(sorted.length));
+  let sourceDiversityBonus = 0;
+  if (!diagnosticOnly && sorted.some(e => e.sourceType === "diagnostic")) sourceDiversityBonus += 0.15;
+  if (practicalChallengesCount > 0) sourceDiversityBonus += 0.15;
+  if (sorted.some(e => e.mode === "prove" || e.sourceType === "exam")) sourceDiversityBonus += 0.20;
+
+  // Consistency penalty if recent exam failed badly
+  let consistencyMultiplier = 1.0;
+  if (latestExamScore !== null && latestExamScore < 50) {
+    consistencyMultiplier = 0.75;
+  }
+
+  const confidence = Math.max(
+    0.1,
+    Math.min(1.0, Math.round((baseCountConfidence + sourceDiversityBonus) * consistencyMultiplier * 100) / 100)
+  );
+
+  return {
+    skillId,
+    level: calculatedLevel,
+    confidence,
+    evidenceCount: history.length,
+    lastAssessedAt,
+    history: [...history]
+  };
+}
 
 export function calculateCountdown(targetDateStr: string) {
   const target = new Date(targetDateStr + "T00:00:00");

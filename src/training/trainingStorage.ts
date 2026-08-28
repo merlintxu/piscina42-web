@@ -5,12 +5,12 @@ import {
   SkillMastery, 
   DailyMission,
   DailyMissionItem,
-  SkillLevel,
   SkillEvidence
 } from "./types";
 import { SKILL_DEFINITIONS, DEFAULT_TRAINING_PROFILE } from "./config";
 import { UserProgress, ContentJSON } from "../types";
-import { getSkillsForChallenge } from "./skillMapping";
+import { getSkillsForChallenge, getSkillsForExam } from "./skillMapping";
+import { recalculateSkillMastery } from "./skillEngine";
 
 export const TRAINING_STORAGE_KEY = "piscina42_training_v1";
 
@@ -54,15 +54,16 @@ export function loadTrainingState(): TrainingState {
     const parsed = JSON.parse(raw);
     const initial = createInitialTrainingState();
 
-    // Ensure all defined skills exist in state
+    // Ensure all defined skills exist in state and normalize using pure recalculateSkillMastery
     const mergedSkills: Record<string, SkillMastery> = { ...initial.skills };
     if (parsed.skills) {
       for (const key of Object.keys(parsed.skills)) {
         if (mergedSkills[key]) {
-          mergedSkills[key] = {
+          const rawSkill = {
             ...mergedSkills[key],
             ...parsed.skills[key]
           };
+          mergedSkills[key] = recalculateSkillMastery(rawSkill);
         }
       }
     }
@@ -127,26 +128,19 @@ export function applyDiagnosticToState(
       history: []
     };
 
-    // Calculate level bump from diagnostic score
-    const newLevel: SkillLevel = scoreInfo.calculatedLevel;
-    const confidence = scoreInfo.total > 0 ? scoreInfo.correct / scoreInfo.total : 0.5;
-
     const evidence: SkillEvidence = {
       sourceType: "diagnostic",
       sourceId: "diag-result-" + now,
       timestamp: now,
       score: scoreInfo.percentage,
+      mode: "prove",
+      weight: 1.0,
+      independence: 1.0,
       notes: `Evaluación diagnóstica: ${scoreInfo.correct}/${scoreInfo.total} acertadas (${scoreInfo.percentage}%)`
     };
 
-    updatedSkills[skillId] = {
-      ...current,
-      level: Math.max(current.level, newLevel) as SkillLevel,
-      confidence: Math.max(current.confidence, confidence),
-      evidenceCount: current.evidenceCount + 1,
-      lastAssessedAt: now,
-      history: [...(current.history || []), evidence]
-    };
+    const newHistory = [...(current.history || []), evidence];
+    updatedSkills[skillId] = recalculateSkillMastery(skillId, newHistory, now);
   }
 
   const updated: TrainingState = {
@@ -168,7 +162,7 @@ export function syncSkillsWithUserProgress(
   const now = new Date().toISOString();
   let changed = false;
 
-  // Track completed challenges to calculate mastery evidence
+  // Track completed challenges to calculate practical mastery evidence
   const challengeMap = new Map(content.challenges.map(c => [c.id, c]));
 
   for (const completedId of progress.completedChallenges) {
@@ -181,61 +175,55 @@ export function syncSkillsWithUserProgress(
       if (!current) continue;
 
       // Check if this evidence is already recorded
-      const alreadyHas = current.history?.some(h => h.sourceId === completedId);
+      const alreadyHas = current.history?.some(h => h.sourceId === completedId && h.sourceType === "challenge");
       if (!alreadyHas) {
         changed = true;
-        const newEvidenceCount = current.evidenceCount + 1;
-        // Gradual level increment based on challenges completed
-        // E.g., 1-2 challenges = level 1-2, 3-4 = level 3, etc.
-        let calculatedLevel = current.level;
-        if (newEvidenceCount >= 6 && current.level < 4) calculatedLevel = 4;
-        else if (newEvidenceCount >= 4 && current.level < 3) calculatedLevel = 3;
-        else if (newEvidenceCount >= 2 && current.level < 2) calculatedLevel = 2;
-        else if (newEvidenceCount >= 1 && current.level < 1) calculatedLevel = 1;
-
         const evidence: SkillEvidence = {
           sourceType: "challenge",
           sourceId: completedId,
           timestamp: now,
           score: 100,
+          mode: "learn",
+          weight: match.weight ? match.weight * 1.5 : 1.5,
+          independence: 0.8,
           notes: `Reto completado: ${ch.title}`
         };
 
-        updatedSkills[match.skillId] = {
-          ...current,
-          level: Math.max(current.level, calculatedLevel) as SkillLevel,
-          confidence: Math.min(1.0, current.confidence + 0.1),
-          evidenceCount: newEvidenceCount,
-          lastAssessedAt: now,
-          history: [...(current.history || []), evidence]
-        };
+        const newHistory = [...(current.history || []), evidence];
+        updatedSkills[match.skillId] = recalculateSkillMastery(match.skillId, newHistory, now);
       }
     }
   }
 
-  // Also check exams passed
-  for (const [examId, examData] of Object.entries(progress.completedExams)) {
-    if (examData.score >= 75) {
-      const examSkill = updatedSkills["meta-exam-pressure"];
-      if (examSkill && !examSkill.history?.some(h => h.sourceId === examId)) {
-        changed = true;
-        updatedSkills["meta-exam-pressure"] = {
-          ...examSkill,
-          level: Math.max(examSkill.level, 3) as SkillLevel,
-          confidence: 0.9,
-          evidenceCount: examSkill.evidenceCount + 1,
-          lastAssessedAt: now,
-          history: [
-            ...(examSkill.history || []),
-            {
-              sourceType: "exam",
-              sourceId: examId,
-              timestamp: examData.completedAt || now,
-              score: examData.score,
-              notes: `Simulación aprobada: ${examData.score}/100`
-            }
-          ]
-        };
+  // Check exam simulations
+  if (progress.completedExams) {
+    for (const [examId, examData] of Object.entries(progress.completedExams)) {
+      const examSim = content.exams?.find(e => e.id === examId || e.slug === examId);
+      const matchedExamSkills = examSim 
+        ? getSkillsForExam(examSim)
+        : [{ skillId: "meta-exam-pressure", weight: 1.0 }];
+
+      for (const match of matchedExamSkills) {
+        const skill = updatedSkills[match.skillId];
+        if (!skill) continue;
+
+        const alreadyHasExam = skill.history?.some(h => h.sourceId === examId && h.sourceType === "exam");
+        if (!alreadyHasExam) {
+          changed = true;
+          const examEvidence: SkillEvidence = {
+            sourceType: "exam",
+            sourceId: examId,
+            timestamp: examData.completedAt || now,
+            score: examData.score,
+            mode: "prove",
+            weight: match.weight ? match.weight * 2.5 : 2.5,
+            independence: 1.0,
+            notes: `Simulación de examen: ${examData.score}/100`
+          };
+
+          const newHistory = [...(skill.history || []), examEvidence];
+          updatedSkills[match.skillId] = recalculateSkillMastery(match.skillId, newHistory, examData.completedAt || now);
+        }
       }
     }
   }
