@@ -95,14 +95,48 @@ export interface DiagnosticResult {
   strongestSkills: string[];
 }
 
+export type DailyMissionItemType =
+  | "warmup"
+  | "recall"
+  | "concept"
+  | "practice"
+  | "challenge"
+  | "peer"
+  | "debrief"
+  | "exam"
+  | "habit"
+  | "review";
+
+export type DailyMissionItemMode = "learn" | "prove";
+
+export function getDefaultModeForMissionItemType(type: DailyMissionItemType): DailyMissionItemMode {
+  switch (type) {
+    case "concept":
+    case "practice":
+    case "debrief":
+    case "warmup":
+    case "review":
+    case "habit":
+      return "learn";
+    case "recall":
+    case "exam":
+    case "peer":
+    case "challenge":
+      return "prove";
+    default:
+      return "learn";
+  }
+}
+
 export interface DailyMissionItem {
   id: string;
-  type: "challenge" | "habit" | "exam" | "review";
+  type: DailyMissionItemType;
   title: string;
   referenceId: string;
   targetSkillId: string;
   estimatedMinutes: number;
   completed: boolean;
+  mode?: DailyMissionItemMode;
 }
 
 export interface DailyMission {

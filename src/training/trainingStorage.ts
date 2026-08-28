@@ -5,7 +5,8 @@ import {
   SkillMastery, 
   DailyMission,
   DailyMissionItem,
-  SkillEvidence
+  SkillEvidence,
+  getDefaultModeForMissionItemType
 } from "./types";
 import { SKILL_DEFINITIONS, DEFAULT_TRAINING_PROFILE } from "./config";
 import { UserProgress, ContentJSON } from "../types";
@@ -68,6 +69,24 @@ export function loadTrainingState(): TrainingState {
       }
     }
 
+    // Normalize daily missions to ensure backwards compatibility with stored items
+    const mergedDailyMissions: Record<string, DailyMission> = {};
+    if (parsed.dailyMissions && typeof parsed.dailyMissions === "object") {
+      for (const [dateKey, mission] of Object.entries(parsed.dailyMissions as Record<string, DailyMission>)) {
+        if (mission && Array.isArray(mission.items)) {
+          mergedDailyMissions[dateKey] = {
+            ...mission,
+            items: mission.items.map(item => ({
+              ...item,
+              mode: item.mode || getDefaultModeForMissionItemType(item.type)
+            }))
+          };
+        } else if (mission) {
+          mergedDailyMissions[dateKey] = mission;
+        }
+      }
+    }
+
     return {
       version: parsed.version || 1,
       profile: {
@@ -76,7 +95,7 @@ export function loadTrainingState(): TrainingState {
       },
       diagnostic: parsed.diagnostic || null,
       skills: mergedSkills,
-      dailyMissions: parsed.dailyMissions || {},
+      dailyMissions: mergedDailyMissions,
       lastTrainedDate: parsed.lastTrainedDate || null,
       streakDays: typeof parsed.streakDays === "number" ? parsed.streakDays : 0,
       readinessScore: typeof parsed.readinessScore === "number" ? parsed.readinessScore : 0,
@@ -244,11 +263,19 @@ export function saveDailyMissionToState(
   state: TrainingState,
   mission: DailyMission
 ): TrainingState {
+  const normalizedMission: DailyMission = {
+    ...mission,
+    items: (mission.items || []).map(item => ({
+      ...item,
+      mode: item.mode || getDefaultModeForMissionItemType(item.type)
+    }))
+  };
+
   const updated: TrainingState = {
     ...state,
     dailyMissions: {
       ...state.dailyMissions,
-      [mission.date]: mission
+      [mission.date]: normalizedMission
     }
   };
   saveTrainingState(updated);
