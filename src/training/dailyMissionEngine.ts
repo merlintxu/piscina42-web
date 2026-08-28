@@ -49,9 +49,11 @@ export interface FitMissionBudgetParams {
  *
  * Pedagogical Rules:
  * - DEBRIEF is ALWAYS the last block of the mission.
- * - Tolerancia máxima aproximada: +10% (e.g. 60m -> max 66m, 90m -> max 99m, 180m -> max 198m).
- * - Prioriza ítems pedagógicamente cruciales (Reto principal ~60% debilidad, Active recall ~25%, Conceptos, Peer, Debrief).
- * - NUNCA corta un reto a la mitad (se respeta su estimated_time_minutes completo).
+ * - Total duration must stay at or below budget +10%.
+ * - A challenge is never truncated; if the main challenge does not fit, it is skipped
+ *   and the session falls back to recall/concept/review items that fit the budget.
+ * - Peer/Norminette blocks tied to the main challenge are only included when that
+ *   challenge itself is included.
  */
 export function fitMissionItemsToBudget(params: FitMissionBudgetParams): DailyMissionItem[] {
   const targetBudget = Math.min(360, Math.max(30, params.budgetMinutes || 90));
@@ -60,22 +62,16 @@ export function fitMissionItemsToBudget(params: FitMissionBudgetParams): DailyMi
   const selectedItems: DailyMissionItem[] = [];
   const selectedIds = new Set<string>();
 
-  // Reserve debrief minutes if debriefItem is present
+  // Reserve the debrief before selecting any other item so the final mission,
+  // including debrief, can never exceed the +10% ceiling.
   const debriefMinutes = params.debriefItem ? params.debriefItem.estimatedMinutes : 0;
-  const effectiveMaxAllowed = params.debriefItem ? Math.max(targetBudget, maxAllowed - debriefMinutes) : maxAllowed;
+  const contentMaxAllowed = Math.max(0, maxAllowed - debriefMinutes);
 
   const tryAddItem = (item?: DailyMissionItem): boolean => {
     if (!item || selectedIds.has(item.id) || item === params.debriefItem) return false;
     const currentTotal = selectedItems.reduce((acc, curr) => acc + curr.estimatedMinutes, 0);
-    
-    // Always permit the main challenge as the initial anchor item even if it takes most/all of the budget
-    if (selectedItems.length === 0 && item === params.mainChallengeItem) {
-      selectedItems.push(item);
-      selectedIds.add(item.id);
-      return true;
-    }
 
-    if (currentTotal + item.estimatedMinutes <= effectiveMaxAllowed) {
+    if (currentTotal + item.estimatedMinutes <= contentMaxAllowed) {
       selectedItems.push(item);
       selectedIds.add(item.id);
       return true;
@@ -83,10 +79,10 @@ export function fitMissionItemsToBudget(params: FitMissionBudgetParams): DailyMi
     return false;
   };
 
-  // 1. Primary weakness anchor (Main Challenge)
-  if (params.mainChallengeItem) {
-    tryAddItem(params.mainChallengeItem);
-  }
+  // 1. Primary weakness anchor. It is NOT exempt from the time ceiling.
+  const mainChallengeAdded = params.mainChallengeItem
+    ? tryAddItem(params.mainChallengeItem)
+    : false;
 
   // 2. Active recall item (~25% Spaced Repetition)
   if (params.recallItem) {
@@ -98,13 +94,13 @@ export function fitMissionItemsToBudget(params: FitMissionBudgetParams): DailyMi
     tryAddItem(params.conceptItem);
   }
 
-  // 4. Peer evaluation (explicación en voz alta del reto)
-  if (params.peerItem && targetBudget >= 60) {
+  // 4. Peer evaluation only makes sense if its main challenge was actually done.
+  if (mainChallengeAdded && params.peerItem && targetBudget >= 60) {
     tryAddItem(params.peerItem);
   }
 
-  // 5. Norminette & Strict Flags Review
-  if (targetBudget >= 60 && params.reviewItem) {
+  // 5. Norminette/strict-flags review is tied to the main challenge too.
+  if (mainChallengeAdded && targetBudget >= 60 && params.reviewItem) {
     tryAddItem(params.reviewItem);
   }
 
@@ -123,16 +119,26 @@ export function fitMissionItemsToBudget(params: FitMissionBudgetParams): DailyMi
     tryAddItem(params.extraPracticeChallengeItem);
   }
 
-  // 9. Fine-grained filler if budget has remaining capacity:
-  const fillCandidates = [
-    params.conceptItem,
-    params.peerItem,
-    params.recallItem,
-    params.reviewItem,
-    params.habitItem,
-    params.secondaryRecallItem,
-    params.secondaryChallengeItem
-  ];
+  // 9. Fine-grained filler. When the main challenge did not fit, prefer
+  // independent recall/concept items instead of challenge-dependent peer/review.
+  const fillCandidates = mainChallengeAdded
+    ? [
+        params.conceptItem,
+        params.peerItem,
+        params.recallItem,
+        params.reviewItem,
+        params.habitItem,
+        params.secondaryRecallItem,
+        params.secondaryChallengeItem
+      ]
+    : [
+        params.recallItem,
+        params.conceptItem,
+        params.secondaryRecallItem,
+        params.habitItem,
+        params.secondaryChallengeItem,
+        params.extraPracticeChallengeItem
+      ];
 
   let currentTotal = selectedItems.reduce((acc, curr) => acc + curr.estimatedMinutes, 0);
   while (currentTotal < targetBudget - debriefMinutes) {
@@ -142,7 +148,7 @@ export function fitMissionItemsToBudget(params: FitMissionBudgetParams): DailyMi
     let addedAny = false;
     for (const cand of fillCandidates) {
       if (cand && !selectedIds.has(cand.id) && cand !== params.debriefItem) {
-        if (currentTotal + cand.estimatedMinutes <= effectiveMaxAllowed) {
+        if (currentTotal + cand.estimatedMinutes <= contentMaxAllowed) {
           selectedItems.push(cand);
           selectedIds.add(cand.id);
           currentTotal += cand.estimatedMinutes;
@@ -154,7 +160,8 @@ export function fitMissionItemsToBudget(params: FitMissionBudgetParams): DailyMi
     if (!addedAny) break;
   }
 
-  // 10. ALWAYS append DEBRIEF as the LAST BLOCK of the mission
+  // 10. ALWAYS append DEBRIEF as the LAST BLOCK of the mission.
+  // Standard debrief is 10m and the minimum supported budget is 30m.
   if (params.debriefItem) {
     selectedItems.push(params.debriefItem);
     selectedIds.add(params.debriefItem.id);
@@ -594,15 +601,20 @@ export function generateDailyMission(
   });
 
   const totalMinutes = items.reduce((acc, curr) => acc + curr.estimatedMinutes, 0);
+  const mainChallengeIncluded = !!mainChallengeItem && items.some(item => item.id === mainChallengeItem?.id);
+  const secondaryChallengeIncluded = !!secondaryChallengeItem && items.some(item => item.id === secondaryChallengeItem?.id);
+  const recallIncluded = !!recallItem && items.some(item => item.id === recallItem?.id);
 
   // --------------------------------------------------------------------------
   // RATIONALE GENERATION
   // --------------------------------------------------------------------------
-  let rationale = `Misión del día ajustada a ~${dailyBudget} min (${totalMinutes} min estimados) en etapa ${plan.stageTitle}: ~60% debilidades en '${primaryWeakDef.title}', ~25% active recall, fundamentos y debrief reflexivo. `;
-  if (mainChallenge) {
+  let rationale = `Misión del día ajustada a ~${dailyBudget} min (${totalMinutes} min estimados) en etapa ${plan.stageTitle}: ~60% debilidades, ~25% active recall, fundamentos y debrief reflexivo. `;
+  if (mainChallengeIncluded && mainChallenge) {
     rationale += `Reto ancla: '${mainChallenge.title}'. `;
+  } else if (mainChallenge && !mainChallengeIncluded) {
+    rationale += `El reto prioritario '${mainChallenge.title}' no cabe completo en el presupuesto de hoy; se sustituye por bloques de refuerzo que sí caben sin recortar ejercicios. `;
   }
-  if (recallChallenge) {
+  if (recallIncluded && recallChallenge) {
     rationale += `Recall activo: '${recallChallenge.title}'. `;
   }
   if (plan.isBlockedByWeakPointersOrMemory && plan.blockerReason) {
@@ -613,8 +625,8 @@ export function generateDailyMission(
 
   return {
     date: dateStr,
-    mainChallengeId: mainChallenge?.id,
-    secondaryChallengeId: secondaryChallenge?.id,
+    mainChallengeId: mainChallengeIncluded ? mainChallenge?.id : undefined,
+    secondaryChallengeId: secondaryChallengeIncluded ? secondaryChallenge?.id : undefined,
     habitId: selectedHabit?.id,
     items,
     rationale,
@@ -623,7 +635,7 @@ export function generateDailyMission(
     targetSkills,
     completed: false,
     generatedAt: nowIso,
-    generationVersion: 2
+    generationVersion: 3
   };
 }
 
@@ -702,4 +714,3 @@ export function countCompletedMissions(
   if (!dailyMissions || typeof dailyMissions !== "object") return 0;
   return Object.values(dailyMissions).filter(m => m && m.completed === true).length;
 }
-
