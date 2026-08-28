@@ -58,9 +58,9 @@ export function recalculateSkillMastery(
 
   // Filter out non-technical evidences (e.g. daily missions, habits)
   // Requirement: "mission completada NO aumenta automáticamente mastery técnico", "hábitos NO aumentan mastery técnico"
-  const validEvidences = history.filter(e => e.sourceType !== "mission");
+  const nonMissionEvidences = history.filter(e => e.sourceType !== "mission");
 
-  if (validEvidences.length === 0) {
+  if (nonMissionEvidences.length === 0) {
     return {
       skillId,
       level: 0,
@@ -71,8 +71,21 @@ export function recalculateSkillMastery(
     };
   }
 
-  // Sort valid evidences chronologically
-  const sorted = [...validEvidences].sort((a, b) => {
+  // Find the latest diagnostic evidence to serve as the active diagnostic baseline
+  const diagnosticEvidences = nonMissionEvidences.filter(e => e.sourceType === "diagnostic");
+  const latestDiagnostic = diagnosticEvidences.length > 0
+    ? [...diagnosticEvidences].sort((a, b) => (new Date(b.timestamp).getTime() || 0) - (new Date(a.timestamp).getTime() || 0))[0]
+    : null;
+
+  // Active evidences for level calculation: non-diagnostic evidences + ONLY the latest diagnostic as baseline
+  // This satisfies: "conservar diagnósticos anteriores en el historial de evidencias; el diagnóstico más reciente sustituye al baseline diagnóstico"
+  const activeEvidences = nonMissionEvidences.filter(e => {
+    if (e.sourceType !== "diagnostic") return true;
+    return e === latestDiagnostic;
+  });
+
+  // Sort active evidences chronologically
+  const sorted = [...activeEvidences].sort((a, b) => {
     const tA = new Date(a.timestamp).getTime() || 0;
     const tB = new Date(b.timestamp).getTime() || 0;
     return tA - tB;
