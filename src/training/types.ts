@@ -20,12 +20,17 @@ export interface SkillDefinition {
   weightInReadiness: number; // weight multiplier for calculating overall readiness
 }
 
+export type TrainingMode = "learn" | "prove";
+
 export interface SkillEvidence {
   sourceType: "challenge" | "diagnostic" | "exam" | "mission" | "manual";
   sourceId: string;
   timestamp: string;
   score?: number; // e.g., 0 to 100 or 1 for pass
   notes?: string;
+  mode?: TrainingMode; // "learn" | "prove"
+  independence?: number; // e.g., 0 to 1 or 1 to 5
+  weight?: number; // custom weight multiplier
 }
 
 export interface SkillMastery {
