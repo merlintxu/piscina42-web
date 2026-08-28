@@ -217,7 +217,7 @@ export const TrainingDashboardView: React.FC<TrainingDashboardViewProps> = ({
           <div className="flex items-center justify-between border-b border-[#2A2F3C] pb-3">
             <h2 className="text-sm font-bold text-[#ECEFF4] flex items-center gap-2">
               <Award className="w-4 h-4 text-[#4CAF50]" />
-              <span>Readiness Score (Estimación 42)</span>
+              <span>Readiness Score (Estimación de entrenamiento)</span>
             </h2>
             <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded border ${
               readiness.paceStatus === "ahead"
@@ -256,7 +256,7 @@ export const TrainingDashboardView: React.FC<TrainingDashboardViewProps> = ({
                   {readiness.overallScore}%
                 </span>
                 <span className="text-[9px] font-mono text-[#9FA7B8] uppercase tracking-wider">
-                  Readiness
+                  Técnico
                 </span>
               </div>
             </div>
@@ -266,7 +266,7 @@ export const TrainingDashboardView: React.FC<TrainingDashboardViewProps> = ({
           <div className="space-y-3 pt-2 text-xs font-mono">
             <div>
               <div className="flex items-center justify-between mb-1">
-                <span className="text-[#9FA7B8]">C Core & Punteros</span>
+                <span className="text-[#9FA7B8]">C Core & Punteros (35%)</span>
                 <span className="text-[#ECEFF4] font-bold">{readiness.cMastery}%</span>
               </div>
               <div className="w-full h-1.5 bg-[#0b0f19] rounded-full overflow-hidden border border-[#2A2F3C]">
@@ -276,7 +276,7 @@ export const TrainingDashboardView: React.FC<TrainingDashboardViewProps> = ({
 
             <div>
               <div className="flex items-center justify-between mb-1">
-                <span className="text-[#9FA7B8]">Terminal & Git</span>
+                <span className="text-[#9FA7B8]">Terminal & Git (20%)</span>
                 <span className="text-[#ECEFF4] font-bold">{readiness.unixAndGit}%</span>
               </div>
               <div className="w-full h-1.5 bg-[#0b0f19] rounded-full overflow-hidden border border-[#2A2F3C]">
@@ -286,7 +286,7 @@ export const TrainingDashboardView: React.FC<TrainingDashboardViewProps> = ({
 
             <div>
               <div className="flex items-center justify-between mb-1">
-                <span className="text-[#9FA7B8]">Rigor & Norminette</span>
+                <span className="text-[#9FA7B8]">Rigor & Norminette (25%)</span>
                 <span className="text-[#ECEFF4] font-bold">{readiness.rigorAndNorminette}%</span>
               </div>
               <div className="w-full h-1.5 bg-[#0b0f19] rounded-full overflow-hidden border border-[#2A2F3C]">
@@ -296,12 +296,28 @@ export const TrainingDashboardView: React.FC<TrainingDashboardViewProps> = ({
 
             <div>
               <div className="flex items-center justify-between mb-1">
-                <span className="text-[#9FA7B8]">Examshell Simulator</span>
+                <span className="text-[#9FA7B8]">Examshell Simulator (20%)</span>
                 <span className="text-[#ECEFF4] font-bold">{readiness.examshellReadiness}%</span>
               </div>
               <div className="w-full h-1.5 bg-[#0b0f19] rounded-full overflow-hidden border border-[#2A2F3C]">
                 <div className="h-full bg-[#FFC107] rounded-full" style={{ width: `${readiness.examshellReadiness}%` }} />
               </div>
+            </div>
+
+            <div className="pt-2 border-t border-[#2A2F3C]">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-[#CAD2E2] flex items-center gap-1">
+                  <Flame className="w-3 h-3 text-[#FF9800]" />
+                  Consistencia de Entrenamiento
+                </span>
+                <span className="text-[#FF9800] font-bold">{readiness.trainingConsistency}%</span>
+              </div>
+              <div className="w-full h-1.5 bg-[#0b0f19] rounded-full overflow-hidden border border-[#2A2F3C]">
+                <div className="h-full bg-[#FF9800] rounded-full" style={{ width: `${readiness.trainingConsistency}%` }} />
+              </div>
+              <span className="text-[10px] text-[#9FA7B8] block mt-1">
+                Rachas, misiones y hábitos completados (independiente del score técnico).
+              </span>
             </div>
           </div>
         </div>

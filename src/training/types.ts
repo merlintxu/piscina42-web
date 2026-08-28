@@ -119,7 +119,9 @@ export interface DailyMission {
 }
 
 export interface ReadinessBreakdown {
-  overallScore: number; // 0 to 100
+  overallScore: number; // 0 to 100 (pure technical readiness)
+  technicalReadiness: number; // 0 to 100 (pure technical competence)
+  trainingConsistency: number; // 0 to 100 (streaks, missions, habits consistency)
   cMastery: number; // 0 to 100
   unixAndGit: number; // 0 to 100
   rigorAndNorminette: number; // 0 to 100

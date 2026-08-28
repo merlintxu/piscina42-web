@@ -292,47 +292,56 @@ export function calculateReadiness(
 
   // 4. Examshell Readiness (weight 20%)
   const metaStats = calculateCategoryMastery("meta", state);
-  const examCount = Object.keys(progress.completedExams || {}).length;
-  const examPassedCount = Object.values(progress.completedExams || {}).filter(e => e.score >= 75).length;
+  const completedExamsList = Object.values(progress.completedExams || {});
+  const passedExamsList = completedExamsList.filter(e => e.score >= 75);
+  
+  // Base readiness from meta skills
   let examshellScore = metaStats.score * 0.5;
-  if (examCount > 0) {
-    const examBonus = Math.min(50, examPassedCount * 25 + (examCount - examPassedCount) * 10);
-    examshellScore += examBonus;
+  // A passed exam increases exam readiness; failed attempts do NOT add technical points
+  if (passedExamsList.length > 0) {
+    const avgPassedScore = passedExamsList.reduce((acc, e) => acc + e.score, 0) / passedExamsList.length;
+    const passedBonus = Math.min(50, (passedExamsList.length * 25) * (avgPassedScore / 100));
+    examshellScore += passedBonus;
   }
   const examshellReadiness = Math.min(100, Math.round(examshellScore));
 
-  // Overall conservative composite score (0-100)
+  // Pure technical readiness (0-100):
   // 35% C + 20% Unix/Git + 25% Rigor + 20% Exams
-  let composite = Math.round(
+  // NO direct bonuses for diagnostic completion or streak >= 7 to prevent inflation
+  const technicalReadiness = Math.min(100, Math.max(0, Math.round(
     cMastery * 0.35 +
     unixAndGit * 0.20 +
     rigorAndNorminette * 0.25 +
     examshellReadiness * 0.20
-  );
+  )));
 
-  // Boost slightly if user has diagnostic and active streaks
-  if (state.diagnostic) {
-    composite = Math.min(100, composite + 2);
-  }
-  if (state.streakDays >= 7) {
-    composite = Math.min(100, composite + 3);
-  }
+  // Separate Training Consistency Metric (0-100):
+  // Combines streaks, completed daily missions, and active habits without inflating technical readiness
+  const streakPoints = Math.min(40, (state.streakDays || 0) * 5.7);
+  const missionPoints = Math.min(30, (state.totalMissionsCompleted || Object.keys(state.dailyMissions || {}).length) * 5);
+  const habitPoints = Math.min(30, (progress.activeHabits?.length || 0) * 10);
+  const trainingConsistency = Math.min(100, Math.max(0, Math.round(streakPoints + missionPoints + habitPoints)));
+
+  // overallScore reflects technical readiness directly
+  const overallScore = technicalReadiness;
 
   // Determine Pace Status
   // Rule of thumb: Need ~150-200 hours of quality prep for 42 Piscine
   let paceStatus: "on_track" | "ahead" | "needs_attention" | "critical" = "on_track";
-  if (composite >= 70) {
+  if (overallScore >= 70) {
     paceStatus = "ahead";
-  } else if (daysRemaining < 30 && composite < 50) {
+  } else if (daysRemaining < 30 && overallScore < 50) {
     paceStatus = "critical";
-  } else if (daysRemaining < 60 && composite < 40) {
+  } else if (daysRemaining < 60 && overallScore < 40) {
     paceStatus = "needs_attention";
   } else {
     paceStatus = "on_track";
   }
 
   return {
-    overallScore: Math.min(100, Math.max(0, composite)),
+    overallScore,
+    technicalReadiness,
+    trainingConsistency,
     cMastery,
     unixAndGit,
     rigorAndNorminette,
