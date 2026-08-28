@@ -16,7 +16,8 @@ import { generateDailyMission, getTodayDateString } from "../training/dailyMissi
 import { 
   saveDailyMissionToState, 
   toggleMissionItemInState, 
-  updateTrainingProfile 
+  updateTrainingProfile,
+  saveMissionDebrief 
 } from "../training/trainingStorage";
 import { ContentJSON, UserProgress } from "../types";
 import { 
@@ -38,7 +39,13 @@ import {
   Layers,
   AlertCircle,
   HelpCircle,
-  X
+  X,
+  ExternalLink,
+  BookOpen,
+  Users,
+  ClipboardCheck,
+  RefreshCw,
+  MessageSquare
 } from "lucide-react";
 
 interface TrainingDashboardViewProps {
@@ -58,6 +65,13 @@ export const TrainingDashboardView: React.FC<TrainingDashboardViewProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<SkillCategory | "all">("all");
   const [expandedSkillId, setExpandedSkillId] = useState<string | null>(null);
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
+  const [expandedPeerItemId, setExpandedPeerItemId] = useState<string | null>(null);
+
+  // Debrief modal state
+  const [isDebriefOpen, setIsDebriefOpen] = useState<boolean>(false);
+  const [debriefDifficulty, setDebriefDifficulty] = useState<number>(3);
+  const [debriefConfidence, setDebriefConfidence] = useState<number>(3);
+  const [debriefHardestThing, setDebriefHardestThing] = useState<string>("");
 
   // Settings form state
   const [targetDateInput, setTargetDateInput] = useState<string>(trainingState.profile.targetDate || DEFAULT_TARGET_DATE);
@@ -96,9 +110,35 @@ export const TrainingDashboardView: React.FC<TrainingDashboardViewProps> = ({
     }
   }, [todayStr]);
 
+  // Initialize debrief inputs when existing debrief is present
+  const existingDebrief = trainingState.debriefs?.[todayStr] || dailyMission.debrief;
+  useEffect(() => {
+    if (existingDebrief) {
+      setDebriefDifficulty(existingDebrief.difficultyRating);
+      setDebriefConfidence(existingDebrief.confidenceRating);
+      setDebriefHardestThing(existingDebrief.hardestThing || "");
+    }
+  }, [existingDebrief]);
+
   const handleToggleMissionItem = (itemId: string) => {
+    const item = dailyMission.items.find(i => i.id === itemId);
+    if (item?.type === "debrief") {
+      setIsDebriefOpen(true);
+      return;
+    }
     const updated = toggleMissionItemInState(trainingState, todayStr, itemId);
     onUpdateTrainingState(updated);
+  };
+
+  const handleSaveDebrief = (e: React.FormEvent) => {
+    e.preventDefault();
+    const updated = saveMissionDebrief(trainingState, todayStr, {
+      difficultyRating: debriefDifficulty,
+      confidenceRating: debriefConfidence,
+      hardestThing: debriefHardestThing
+    });
+    onUpdateTrainingState(updated);
+    setIsDebriefOpen(false);
   };
 
   const handleSaveProfileSettings = (e: React.FormEvent) => {
@@ -385,95 +425,179 @@ export const TrainingDashboardView: React.FC<TrainingDashboardViewProps> = ({
             </div>
 
             {/* Mission Items Checklist */}
-            <div className="space-y-2.5">
+            <div className="space-y-3">
               {dailyMission.items.map((item) => (
                 <div
                   key={item.id}
-                  className={`p-3 rounded-xl border flex items-center justify-between gap-3 transition-all ${
+                  className={`p-3.5 rounded-xl border transition-all ${
                     item.completed
                       ? "bg-[#4CAF50]/10 border-[#4CAF50]/40 text-[#4CAF50]"
                       : "bg-[#0b0f19] border-[#2A2F3C] text-[#ECEFF4]"
                   }`}
                 >
-                  <button
-                    onClick={() => handleToggleMissionItem(item.id)}
-                    className="flex items-center gap-3 flex-1 text-left cursor-pointer"
-                  >
-                    <div className={`w-5 h-5 rounded-md border flex items-center justify-center shrink-0 transition-colors ${
-                      item.completed ? "bg-[#4CAF50] border-[#4CAF50] text-[#0b0f19]" : "border-[#2A2F3C] bg-[#141927]"
-                    }`}>
-                      {item.completed && <CheckCircle2 className="w-4 h-4 fill-current" />}
+                  <div className="flex items-start justify-between gap-3">
+                    <button
+                      onClick={() => handleToggleMissionItem(item.id)}
+                      className="flex items-start gap-3 flex-1 text-left cursor-pointer pt-0.5"
+                    >
+                      <div className={`w-5 h-5 rounded-md border flex items-center justify-center shrink-0 transition-colors mt-0.5 ${
+                        item.completed ? "bg-[#4CAF50] border-[#4CAF50] text-[#0b0f19]" : "border-[#2A2F3C] bg-[#141927]"
+                      }`}>
+                        {item.completed && <CheckCircle2 className="w-4 h-4 fill-current" />}
+                      </div>
+                      <div className="space-y-1">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className={`text-xs sm:text-sm font-medium ${item.completed ? "line-through opacity-80" : ""}`}>
+                            {item.title}
+                          </span>
+                          
+                          {/* Mode Badge (learn vs prove) */}
+                          <span className={`text-[10px] font-mono px-1.5 py-0.2 rounded font-semibold uppercase ${
+                            item.mode === "prove" 
+                              ? "bg-[#00BCD4]/15 text-[#00BCD4] border border-[#00BCD4]/30" 
+                              : "bg-[#9C27B0]/15 text-[#BA68C8] border border-[#9C27B0]/30"
+                          }`}>
+                            {item.mode === "prove" ? "Demostrar" : "Aprender"}
+                          </span>
+
+                          {/* Item Type Badge */}
+                          <span className="text-[10px] font-mono px-1.5 py-0.2 bg-[#141927] border border-[#2A2F3C] text-[#9FA7B8] rounded uppercase">
+                            {item.type}
+                          </span>
+                        </div>
+
+                        {item.description && (
+                          <p className="text-[11px] text-[#9FA7B8] leading-relaxed">
+                            {item.description}
+                          </p>
+                        )}
+                      </div>
+                    </button>
+
+                    <div className="flex items-center gap-2 shrink-0">
+                      <span className="text-[10px] font-mono text-[#9FA7B8] hidden sm:inline">
+                        {item.estimatedMinutes} min
+                      </span>
+
+                      {(item.type === "challenge" || item.type === "recall" || item.type === "practice") && (
+                        <Link
+                          to={item.referenceId.startsWith("shell") || item.referenceId.startsWith("c0") ? `/module/${item.referenceId}` : `/challenge/${item.referenceId}`}
+                          className="px-2.5 py-1 text-xs font-mono bg-[#141927] hover:bg-[#1f2840] border border-[#2A2F3C] text-[#03A9F4] rounded-lg transition-colors flex items-center gap-1"
+                        >
+                          <span>Abrir</span>
+                          <ArrowRight className="w-3 h-3" />
+                        </Link>
+                      )}
+
+                      {item.type === "concept" && (
+                        item.externalUrl ? (
+                          <a
+                            href={item.externalUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="px-2.5 py-1 text-xs font-mono bg-[#141927] hover:bg-[#1f2840] border border-[#2A2F3C] text-[#9C27B0] rounded-lg transition-colors flex items-center gap-1"
+                          >
+                            <span>Recurso</span>
+                            <ExternalLink className="w-3 h-3" />
+                          </a>
+                        ) : (
+                          <Link
+                            to={`/module/${item.referenceId}`}
+                            className="px-2.5 py-1 text-xs font-mono bg-[#141927] hover:bg-[#1f2840] border border-[#2A2F3C] text-[#9C27B0] rounded-lg transition-colors flex items-center gap-1"
+                          >
+                            <span>Módulo</span>
+                            <ArrowRight className="w-3 h-3" />
+                          </Link>
+                        )
+                      )}
+
+                      {item.type === "peer" && (
+                        <button
+                          type="button"
+                          onClick={() => setExpandedPeerItemId(expandedPeerItemId === item.id ? null : item.id)}
+                          className="px-2.5 py-1 text-xs font-mono bg-[#141927] hover:bg-[#1f2840] border border-[#2A2F3C] text-[#00BCD4] rounded-lg transition-colors flex items-center gap-1 cursor-pointer"
+                        >
+                          <span>Edge Cases</span>
+                          {expandedPeerItemId === item.id ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+                        </button>
+                      )}
+
+                      {item.type === "review" && (
+                        <Link
+                          to="/norminette"
+                          className="px-2.5 py-1 text-xs font-mono bg-[#141927] hover:bg-[#1f2840] border border-[#2A2F3C] text-[#E91E63] rounded-lg transition-colors flex items-center gap-1"
+                        >
+                          <span>Norminette</span>
+                          <ArrowRight className="w-3 h-3" />
+                        </Link>
+                      )}
+
+                      {item.type === "habit" && (
+                        <Link
+                          to="/habits"
+                          className="px-2.5 py-1 text-xs font-mono bg-[#141927] hover:bg-[#1f2840] border border-[#2A2F3C] text-[#FFC107] rounded-lg transition-colors flex items-center gap-1"
+                        >
+                          <span>Hábitos</span>
+                          <ArrowRight className="w-3 h-3" />
+                        </Link>
+                      )}
+
+                      {item.type === "debrief" && (
+                        <button
+                          type="button"
+                          onClick={() => setIsDebriefOpen(true)}
+                          className="px-2.5 py-1 text-xs font-mono bg-[#141927] hover:bg-[#1f2840] border border-[#2A2F3C] text-[#8BC34A] rounded-lg transition-colors flex items-center gap-1 cursor-pointer"
+                        >
+                          <span>{item.completed ? "Editar Debrief" : "Rellenar"}</span>
+                          <ClipboardCheck className="w-3 h-3" />
+                        </button>
+                      )}
                     </div>
-                    <span className={`text-xs sm:text-sm font-medium ${item.completed ? "line-through opacity-80" : ""}`}>
-                      {item.title}
-                    </span>
-                  </button>
-
-                  <div className="flex items-center gap-2 shrink-0">
-                    <span className="text-[10px] font-mono text-[#9FA7B8] hidden sm:inline">
-                      {item.estimatedMinutes} min
-                    </span>
-
-                    {(item.type === "challenge" || item.type === "recall" || item.type === "practice") && (
-                      <Link
-                        to={item.referenceId.startsWith("shell") || item.referenceId.startsWith("c0") ? `/module/${item.referenceId}` : `/challenge/${item.referenceId}`}
-                        className="px-2.5 py-1 text-xs font-mono bg-[#141927] hover:bg-[#1f2840] border border-[#2A2F3C] text-[#03A9F4] rounded-lg transition-colors flex items-center gap-1"
-                      >
-                        <span>Abrir</span>
-                        <ArrowRight className="w-3 h-3" />
-                      </Link>
-                    )}
-
-                    {item.type === "concept" && (
-                      <Link
-                        to={`/module/${item.referenceId}`}
-                        className="px-2.5 py-1 text-xs font-mono bg-[#141927] hover:bg-[#1f2840] border border-[#2A2F3C] text-[#9C27B0] rounded-lg transition-colors flex items-center gap-1"
-                      >
-                        <span>Módulo</span>
-                        <ArrowRight className="w-3 h-3" />
-                      </Link>
-                    )}
-
-                    {item.type === "review" && (
-                      <Link
-                        to="/norminette"
-                        className="px-2.5 py-1 text-xs font-mono bg-[#141927] hover:bg-[#1f2840] border border-[#2A2F3C] text-[#E91E63] rounded-lg transition-colors flex items-center gap-1"
-                      >
-                        <span>Norminette</span>
-                        <ArrowRight className="w-3 h-3" />
-                      </Link>
-                    )}
-
-                    {item.type === "habit" && (
-                      <Link
-                        to="/habits"
-                        className="px-2.5 py-1 text-xs font-mono bg-[#141927] hover:bg-[#1f2840] border border-[#2A2F3C] text-[#FFC107] rounded-lg transition-colors flex items-center gap-1"
-                      >
-                        <span>Hábitos</span>
-                        <ArrowRight className="w-3 h-3" />
-                      </Link>
-                    )}
-
-                    {item.type === "peer" && (
-                      <Link
-                        to="/norminette"
-                        className="px-2.5 py-1 text-xs font-mono bg-[#141927] hover:bg-[#1f2840] border border-[#2A2F3C] text-[#00BCD4] rounded-lg transition-colors flex items-center gap-1"
-                      >
-                        <span>Peer Eval</span>
-                        <ArrowRight className="w-3 h-3" />
-                      </Link>
-                    )}
-
-                    {item.type === "debrief" && (
-                      <Link
-                        to="/progress"
-                        className="px-2.5 py-1 text-xs font-mono bg-[#141927] hover:bg-[#1f2840] border border-[#2A2F3C] text-[#8BC34A] rounded-lg transition-colors flex items-center gap-1"
-                      >
-                        <span>Debrief</span>
-                        <ArrowRight className="w-3 h-3" />
-                      </Link>
-                    )}
                   </div>
+
+                  {/* Peer Evaluation Edge Cases Accordion */}
+                  {item.type === "peer" && expandedPeerItemId === item.id && (
+                    <div className="mt-3 pt-3 border-t border-[#2A2F3C] space-y-2 bg-[#141927]/60 p-3 rounded-lg">
+                      <div className="flex items-center gap-2 text-xs font-bold text-[#00BCD4] font-mono">
+                        <Users className="w-3.5 h-3.5" />
+                        <span>Checklist de defensa en voz alta y decisiones de diseño:</span>
+                      </div>
+                      <p className="text-[11px] text-[#CAD2E2]">
+                        Explica ante tu peer por qué elegiste cada tipo de datos, cómo gestionas la memoria y valida estos casos límite:
+                      </p>
+                      {item.edgeCases && item.edgeCases.length > 0 ? (
+                        <ul className="space-y-1 pl-2">
+                          {item.edgeCases.map((ec, idx) => (
+                            <li key={idx} className="text-[11px] text-[#ECEFF4] flex items-start gap-1.5 font-mono">
+                              <span className="text-[#00BCD4] font-bold">›</span>
+                              <span>{ec}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p className="text-[11px] text-[#9FA7B8] font-mono">
+                          › Punteros NULL, buffers vacíos, límites de tipos enteros y Norminette v3.
+                        </p>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Debrief Saved Summary preview */}
+                  {item.type === "debrief" && (item.debriefData || existingDebrief) && (
+                    <div className="mt-2.5 pt-2.5 border-t border-[#2A2F3C] flex flex-wrap items-center gap-2 text-[11px] font-mono">
+                      <span className="px-2 py-0.5 bg-[#141927] border border-[#2A2F3C] rounded text-[#8BC34A]">
+                        Dificultad: {(item.debriefData || existingDebrief)?.difficultyRating}/5
+                      </span>
+                      <span className="px-2 py-0.5 bg-[#141927] border border-[#2A2F3C] rounded text-[#03A9F4]">
+                        Confianza: {(item.debriefData || existingDebrief)?.confidenceRating}/5
+                      </span>
+                      {(item.debriefData || existingDebrief)?.hardestThing && (
+                        <span className="text-[#9FA7B8] italic truncate max-w-xs sm:max-w-md">
+                          "{(item.debriefData || existingDebrief)?.hardestThing}"
+                        </span>
+                      )}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -750,6 +874,138 @@ export const TrainingDashboardView: React.FC<TrainingDashboardViewProps> = ({
                   className="px-4 py-2 bg-[#4CAF50] hover:bg-[#43a047] text-[#0b0f19] font-bold text-xs font-mono rounded-xl shadow-md cursor-pointer"
                 >
                   Guardar Cambios
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Technical Debrief Modal */}
+      {isDebriefOpen && (
+        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-[#141927] border border-[#2A2F3C] rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-5 animate-in fade-in zoom-in-95 duration-150">
+            <div className="flex items-center justify-between border-b border-[#2A2F3C] pb-3">
+              <div className="flex items-center gap-2">
+                <ClipboardCheck className="w-5 h-5 text-[#8BC34A]" />
+                <div>
+                  <h2 className="text-base font-bold text-[#ECEFF4]">
+                    Debrief Técnico de Sesión
+                  </h2>
+                  <p className="text-[10px] font-mono text-[#9FA7B8]">
+                    {dailyMission.date} · Calibración determinista (sin IA)
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsDebriefOpen(false)}
+                className="p-1 rounded-lg text-[#9FA7B8] hover:text-[#ECEFF4] hover:bg-[#1a2236] cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="p-3 bg-[#0b0f19] border border-[#2A2F3C] rounded-xl text-xs text-[#CAD2E2] leading-relaxed">
+              <p>
+                <span className="text-[#8BC34A] font-bold font-mono">Pedagogía 42: </span>
+                El debrief registra tu autoevaluación reflexiva y nivel de dificultad percibido. Permite calibrar futuras sesiones de entrenamiento adaptativo.
+              </p>
+              <p className="text-[10px] text-[#9FA7B8] mt-1 italic">
+                * Nota: El debrief no aumenta directamente el mastery técnico.
+              </p>
+            </div>
+
+            <form onSubmit={handleSaveDebrief} className="space-y-4">
+              {/* Difficulty Rating 1-5 */}
+              <div className="space-y-2">
+                <label className="text-xs font-mono text-[#ECEFF4] flex items-center justify-between">
+                  <span>Dificultad Percibida en la Sesión</span>
+                  <span className="text-[#8BC34A] font-bold">{debriefDifficulty} / 5</span>
+                </label>
+                <div className="grid grid-cols-5 gap-2">
+                  {[
+                    { val: 1, label: "Muy fácil" },
+                    { val: 2, label: "Asequible" },
+                    { val: 3, label: "Adecuada" },
+                    { val: 4, label: "Exigente" },
+                    { val: 5, label: "Extrema" }
+                  ].map(({ val, label }) => (
+                    <button
+                      key={val}
+                      type="button"
+                      onClick={() => setDebriefDifficulty(val)}
+                      className={`p-2 rounded-xl border text-center transition-all cursor-pointer ${
+                        debriefDifficulty === val
+                          ? "bg-[#8BC34A]/20 border-[#8BC34A] text-[#8BC34A] font-bold shadow-sm"
+                          : "bg-[#0b0f19] border-[#2A2F3C] text-[#9FA7B8] hover:border-[#8BC34A]/40"
+                      }`}
+                    >
+                      <div className="text-sm font-mono font-bold">{val}</div>
+                      <div className="text-[9px] truncate">{label}</div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Confidence Rating 1-5 */}
+              <div className="space-y-2">
+                <label className="text-xs font-mono text-[#ECEFF4] flex items-center justify-between">
+                  <span>Nivel de Confianza Técnico Alcanzado</span>
+                  <span className="text-[#03A9F4] font-bold">{debriefConfidence} / 5</span>
+                </label>
+                <div className="grid grid-cols-5 gap-2">
+                  {[
+                    { val: 1, label: "Inseguro" },
+                    { val: 2, label: "Con dudas" },
+                    { val: 3, label: "Asimilado" },
+                    { val: 4, label: "Sólido" },
+                    { val: 5, label: "Dominio" }
+                  ].map(({ val, label }) => (
+                    <button
+                      key={val}
+                      type="button"
+                      onClick={() => setDebriefConfidence(val)}
+                      className={`p-2 rounded-xl border text-center transition-all cursor-pointer ${
+                        debriefConfidence === val
+                          ? "bg-[#03A9F4]/20 border-[#03A9F4] text-[#03A9F4] font-bold shadow-sm"
+                          : "bg-[#0b0f19] border-[#2A2F3C] text-[#9FA7B8] hover:border-[#03A9F4]/40"
+                      }`}
+                    >
+                      <div className="text-sm font-mono font-bold">{val}</div>
+                      <div className="text-[9px] truncate">{label}</div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Hardest Thing Textarea */}
+              <div className="space-y-1.5">
+                <label className="text-xs font-mono text-[#ECEFF4] block">
+                  Obstáculo más complejo o lección aprendida (opcional)
+                </label>
+                <textarea
+                  rows={3}
+                  value={debriefHardestThing}
+                  onChange={(e) => setDebriefHardestThing(e.target.value)}
+                  placeholder="Ej: Gestionar el caso extremo de INT_MIN en ft_putnbr, o evitar fugas de memoria con free() en caso de fallo de malloc..."
+                  className="w-full bg-[#0b0f19] border border-[#2A2F3C] rounded-xl p-3 text-xs text-[#ECEFF4] placeholder-[#5A6275] focus:outline-none focus:border-[#8BC34A] resize-none"
+                />
+              </div>
+
+              <div className="pt-3 border-t border-[#2A2F3C] flex items-center justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={() => setIsDebriefOpen(false)}
+                  className="px-4 py-2 bg-[#0b0f19] hover:bg-[#1a2236] border border-[#2A2F3C] text-[#ECEFF4] text-xs font-mono rounded-xl cursor-pointer"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-[#8BC34A] hover:bg-[#7cb342] text-[#0b0f19] font-bold text-xs font-mono rounded-xl shadow-md cursor-pointer flex items-center gap-1.5"
+                >
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  <span>Guardar Debrief</span>
                 </button>
               </div>
             </form>

@@ -5,6 +5,7 @@ import {
   SkillMastery, 
   DailyMission,
   DailyMissionItem,
+  DailyMissionDebrief,
   SkillEvidence,
   getDefaultModeForMissionItemType
 } from "./types";
@@ -36,6 +37,7 @@ export function createInitialTrainingState(): TrainingState {
     diagnostic: null,
     skills: initialSkills,
     dailyMissions: {},
+    debriefs: {},
     lastTrainedDate: null,
     streakDays: 0,
     readinessScore: 0,
@@ -71,6 +73,8 @@ export function loadTrainingState(): TrainingState {
 
     // Normalize daily missions to ensure backwards compatibility with stored items
     const mergedDailyMissions: Record<string, DailyMission> = {};
+    const mergedDebriefs: Record<string, DailyMissionDebrief> = { ...(parsed.debriefs || {}) };
+
     if (parsed.dailyMissions && typeof parsed.dailyMissions === "object") {
       for (const [dateKey, mission] of Object.entries(parsed.dailyMissions as Record<string, DailyMission>)) {
         if (mission && Array.isArray(mission.items)) {
@@ -81,6 +85,9 @@ export function loadTrainingState(): TrainingState {
               mode: item.mode || getDefaultModeForMissionItemType(item.type)
             }))
           };
+          if (mission.debrief && !mergedDebriefs[dateKey]) {
+            mergedDebriefs[dateKey] = mission.debrief;
+          }
         } else if (mission) {
           mergedDailyMissions[dateKey] = mission;
         }
@@ -96,6 +103,7 @@ export function loadTrainingState(): TrainingState {
       diagnostic: parsed.diagnostic || null,
       skills: mergedSkills,
       dailyMissions: mergedDailyMissions,
+      debriefs: mergedDebriefs,
       lastTrainedDate: parsed.lastTrainedDate || null,
       streakDays: typeof parsed.streakDays === "number" ? parsed.streakDays : 0,
       readinessScore: typeof parsed.readinessScore === "number" ? parsed.readinessScore : 0,
@@ -332,4 +340,82 @@ export function toggleMissionItemInState(
 
   saveTrainingState(updated);
   return updated;
+}
+
+export function saveMissionDebrief(
+  state: TrainingState,
+  date: string,
+  debriefInput: { difficultyRating: number; confidenceRating: number; hardestThing?: string }
+): TrainingState {
+  const mission = state.dailyMissions[date];
+  const now = new Date().toISOString();
+
+  const debriefRecord: DailyMissionDebrief = {
+    date,
+    difficultyRating: Math.min(5, Math.max(1, Math.round(debriefInput.difficultyRating))),
+    confidenceRating: Math.min(5, Math.max(1, Math.round(debriefInput.confidenceRating))),
+    hardestThing: debriefInput.hardestThing?.trim() || undefined,
+    completedAt: now
+  };
+
+  let updatedMission = mission;
+  if (mission) {
+    const updatedItems = mission.items.map(item => {
+      if (item.type === "debrief") {
+        return {
+          ...item,
+          completed: true,
+          debriefData: debriefRecord
+        };
+      }
+      return item;
+    });
+
+    const allCompleted = updatedItems.length > 0 && updatedItems.every(i => i.completed);
+    const wasCompletedBefore = mission.completed;
+
+    updatedMission = {
+      ...mission,
+      items: updatedItems,
+      debrief: debriefRecord,
+      completed: allCompleted,
+      completedAt: allCompleted ? (mission.completedAt || now) : undefined
+    };
+
+    let newStreak = state.streakDays;
+    let totalMissions = state.totalMissionsCompleted;
+
+    if (allCompleted && !wasCompletedBefore) {
+      totalMissions += 1;
+      newStreak += 1;
+    }
+
+    const updated: TrainingState = {
+      ...state,
+      dailyMissions: {
+        ...state.dailyMissions,
+        [date]: updatedMission
+      },
+      debriefs: {
+        ...(state.debriefs || {}),
+        [date]: debriefRecord
+      },
+      lastTrainedDate: allCompleted ? date : state.lastTrainedDate,
+      streakDays: newStreak,
+      totalMissionsCompleted: totalMissions
+    };
+
+    saveTrainingState(updated);
+    return updated;
+  } else {
+    const updated: TrainingState = {
+      ...state,
+      debriefs: {
+        ...(state.debriefs || {}),
+        [date]: debriefRecord
+      }
+    };
+    saveTrainingState(updated);
+    return updated;
+  }
 }

@@ -128,6 +128,14 @@ export function getDefaultModeForMissionItemType(type: DailyMissionItemType): Da
   }
 }
 
+export interface DailyMissionDebrief {
+  date: string;
+  difficultyRating: number; // 1 to 5
+  confidenceRating: number; // 1 to 5
+  hardestThing?: string;
+  completedAt: string;
+}
+
 export interface DailyMissionItem {
   id: string;
   type: DailyMissionItemType;
@@ -137,6 +145,11 @@ export interface DailyMissionItem {
   estimatedMinutes: number;
   completed: boolean;
   mode?: DailyMissionItemMode;
+  description?: string;
+  referenceType?: "module" | "resource" | "challenge" | "habit" | "exam" | "peer" | "debrief";
+  externalUrl?: string;
+  edgeCases?: string[];
+  debriefData?: DailyMissionDebrief;
 }
 
 export interface DailyMission {
@@ -152,6 +165,7 @@ export interface DailyMission {
   targetSkills: string[];
   completed: boolean;
   completedAt?: string;
+  debrief?: DailyMissionDebrief;
 }
 
 export interface ReadinessBreakdown {
@@ -174,6 +188,7 @@ export interface TrainingState {
   diagnostic: DiagnosticResult | null;
   skills: Record<string, SkillMastery>;
   dailyMissions: Record<string, DailyMission>;
+  debriefs?: Record<string, DailyMissionDebrief>;
   lastTrainedDate: string | null;
   streakDays: number;
   readinessScore: number;

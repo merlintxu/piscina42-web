@@ -6,7 +6,7 @@ import {
   getDefaultModeForMissionItemType 
 } from "./types";
 import { SKILL_DEFINITIONS } from "./config";
-import { ContentJSON, UserProgress, Challenge, Module } from "../types";
+import { ContentJSON, UserProgress, Challenge, Module, Resource } from "../types";
 import { getSkillsForChallenge, getSkillsForModule, getSkillsForHabit } from "./skillMapping";
 import { generateTrainingPlan, getSkillMastery } from "./trainingPlan";
 
@@ -47,11 +47,11 @@ export interface FitMissionBudgetParams {
 /**
  * Pure function that adjusts and fits daily mission items into the daily time budget.
  *
- * Rules:
+ * Pedagogical Rules:
+ * - DEBRIEF is ALWAYS the last block of the mission.
  * - Tolerancia máxima aproximada: +10% (e.g. 60m -> max 66m, 90m -> max 99m, 180m -> max 198m).
- * - Prioriza ítems pedagógicamente cruciales (Reto principal ~60% debilidad, Active recall ~25%, etc.).
+ * - Prioriza ítems pedagógicamente cruciales (Reto principal ~60% debilidad, Active recall ~25%, Conceptos, Peer, Debrief).
  * - NUNCA corta un reto a la mitad (se respeta su estimated_time_minutes completo).
- * - Si sobra poco tiempo, rellena inteligentemente con recall, peer o debrief.
  */
 export function fitMissionItemsToBudget(params: FitMissionBudgetParams): DailyMissionItem[] {
   const targetBudget = Math.min(360, Math.max(30, params.budgetMinutes || 90));
@@ -60,8 +60,12 @@ export function fitMissionItemsToBudget(params: FitMissionBudgetParams): DailyMi
   const selectedItems: DailyMissionItem[] = [];
   const selectedIds = new Set<string>();
 
+  // Reserve debrief minutes if debriefItem is present
+  const debriefMinutes = params.debriefItem ? params.debriefItem.estimatedMinutes : 0;
+  const effectiveMaxAllowed = params.debriefItem ? Math.max(targetBudget, maxAllowed - debriefMinutes) : maxAllowed;
+
   const tryAddItem = (item?: DailyMissionItem): boolean => {
-    if (!item || selectedIds.has(item.id)) return false;
+    if (!item || selectedIds.has(item.id) || item === params.debriefItem) return false;
     const currentTotal = selectedItems.reduce((acc, curr) => acc + curr.estimatedMinutes, 0);
     
     // Always permit the main challenge as the initial anchor item even if it takes most/all of the budget
@@ -71,7 +75,7 @@ export function fitMissionItemsToBudget(params: FitMissionBudgetParams): DailyMi
       return true;
     }
 
-    if (currentTotal + item.estimatedMinutes <= maxAllowed) {
+    if (currentTotal + item.estimatedMinutes <= effectiveMaxAllowed) {
       selectedItems.push(item);
       selectedIds.add(item.id);
       return true;
@@ -89,51 +93,56 @@ export function fitMissionItemsToBudget(params: FitMissionBudgetParams): DailyMi
     tryAddItem(params.recallItem);
   }
 
-  // 3. Norminette & Strict Flags Review
+  // 3. Concepts for weak skills
+  if (params.conceptItem) {
+    tryAddItem(params.conceptItem);
+  }
+
+  // 4. Peer evaluation (explicación en voz alta del reto)
+  if (params.peerItem && targetBudget >= 60) {
+    tryAddItem(params.peerItem);
+  }
+
+  // 5. Norminette & Strict Flags Review
   if (targetBudget >= 60 && params.reviewItem) {
     tryAddItem(params.reviewItem);
   }
 
-  // 4. Curriculum advance or Habit for budgets >= 90m
-  if (targetBudget >= 90) {
-    if (params.conceptItem) tryAddItem(params.conceptItem);
-    if (params.habitItem) tryAddItem(params.habitItem);
+  // 6. Habit for budgets >= 90m
+  if (targetBudget >= 90 && params.habitItem) {
+    tryAddItem(params.habitItem);
   }
 
-  // 5. Secondary Challenge for budgets >= 120m
+  // 7. Secondary Challenge for budgets >= 120m
   if (targetBudget >= 120 && params.secondaryChallengeItem) {
     tryAddItem(params.secondaryChallengeItem);
   }
 
-  // 6. Large budgets (>= 180m): Extra practice, Peer simulation, Technical debrief
-  if (targetBudget >= 180) {
-    if (params.extraPracticeChallengeItem) tryAddItem(params.extraPracticeChallengeItem);
-    if (params.peerItem) tryAddItem(params.peerItem);
-    if (params.debriefItem) tryAddItem(params.debriefItem);
+  // 8. Large budgets (>= 180m): Extra practice
+  if (targetBudget >= 180 && params.extraPracticeChallengeItem) {
+    tryAddItem(params.extraPracticeChallengeItem);
   }
 
-  // 7. Fine-grained filler if budget has remaining capacity:
-  // Use recall, peer, debrief, review, habit or concept without exceeding maxAllowed (+10%)
+  // 9. Fine-grained filler if budget has remaining capacity:
   const fillCandidates = [
+    params.conceptItem,
+    params.peerItem,
     params.recallItem,
     params.reviewItem,
-    params.conceptItem,
     params.habitItem,
-    params.peerItem,
-    params.debriefItem,
     params.secondaryRecallItem,
     params.secondaryChallengeItem
   ];
 
   let currentTotal = selectedItems.reduce((acc, curr) => acc + curr.estimatedMinutes, 0);
-  while (currentTotal < targetBudget) {
-    const remaining = targetBudget - currentTotal;
+  while (currentTotal < targetBudget - debriefMinutes) {
+    const remaining = (targetBudget - debriefMinutes) - currentTotal;
     if (remaining < 5) break;
 
     let addedAny = false;
     for (const cand of fillCandidates) {
-      if (cand && !selectedIds.has(cand.id)) {
-        if (currentTotal + cand.estimatedMinutes <= maxAllowed) {
+      if (cand && !selectedIds.has(cand.id) && cand !== params.debriefItem) {
+        if (currentTotal + cand.estimatedMinutes <= effectiveMaxAllowed) {
           selectedItems.push(cand);
           selectedIds.add(cand.id);
           currentTotal += cand.estimatedMinutes;
@@ -145,6 +154,12 @@ export function fitMissionItemsToBudget(params: FitMissionBudgetParams): DailyMi
     if (!addedAny) break;
   }
 
+  // 10. ALWAYS append DEBRIEF as the LAST BLOCK of the mission
+  if (params.debriefItem) {
+    selectedItems.push(params.debriefItem);
+    selectedIds.add(params.debriefItem.id);
+  }
+
   return selectedItems;
 }
 
@@ -152,7 +167,7 @@ export function fitMissionItemsToBudget(params: FitMissionBudgetParams): DailyMi
  * Generates an adaptive, deterministic daily training mission reflecting:
  * - ~60% Weaknesses (reforzar habilidades con menor nivel o baja confianza)
  * - ~25% Active Recall (retos ya completados para resolver otra vez sin mirar)
- * - ~15% Curriculum Advance (siguiente paso en el temario según el plan de entrenamiento)
+ * - ~15% Curriculum Advance & Concepts (siguiente paso en el temario según el plan de entrenamiento)
  * - Exact adjustment to trainingState.profile.dailyCommitmentMinutes (e.g. 60m, 90m, 180m).
  */
 export function generateDailyMission(
@@ -194,6 +209,10 @@ export function generateDailyMission(
 
   const primaryWeakDef = plan.prioritySkills[0] || sortedWeakSkills[0].def;
   const targetCategory: SkillCategory = primaryWeakDef.category;
+
+  // Filter skills with low mastery / low confidence (< 3 level or < 0.7 confidence)
+  const lowMasteryOrConfSkills = sortedWeakSkills.filter(s => s.mastery.level < 3 || s.mastery.confidence < 0.7);
+  const weakSkillForConcept = lowMasteryOrConfSkills[0]?.def || primaryWeakDef;
 
   // --------------------------------------------------------------------------
   // PART A: ~60% DEBILIDADES (Weakness Focus)
@@ -270,11 +289,24 @@ export function generateDailyMission(
   }
 
   // --------------------------------------------------------------------------
-  // PART C: ~15% CURRICULUM ADVANCE (Siguiente Paso Temario)
+  // PART C: CONCEPT (Para skills con mastery/confidence bajos - Sin IA)
   // --------------------------------------------------------------------------
-  let advanceModule: Module | undefined = plan.recommendedModules[0];
-  if (!advanceModule && content.modules.length > 0) {
-    advanceModule = content.modules[0];
+  let conceptResource: Resource | undefined = undefined;
+  let conceptModule: Module | undefined = undefined;
+
+  if (content.resources && content.resources.length > 0) {
+    conceptResource = content.resources.find(r => 
+      r.modules && r.modules.some(mId => weakSkillForConcept.relatedModuleIds.includes(mId))
+    );
+    if (!conceptResource && weakSkillForConcept.category === "c_prog") {
+      conceptResource = content.resources.find(r => r.title.toLowerCase().includes("cs50") || r.title.toLowerCase().includes("c"));
+    }
+  }
+
+  if (!conceptResource && content.modules && content.modules.length > 0) {
+    conceptModule = content.modules.find(m => weakSkillForConcept.relatedModuleIds.includes(m.id)) 
+      || plan.recommendedModules[0] 
+      || content.modules[0];
   }
 
   // --------------------------------------------------------------------------
@@ -313,10 +345,12 @@ export function generateDailyMission(
       type: "challenge",
       title: `Reto Principal (Debilidad): ${mainChallenge.title}`,
       referenceId: mainChallenge.slug || mainChallenge.id,
+      referenceType: "challenge",
       targetSkillId: primaryChSkill,
       estimatedMinutes: mainChallenge.estimated_time_minutes || 45,
       completed: false,
-      mode: "prove"
+      mode: "prove",
+      description: `Implementa y depura ${mainChallenge.title} enfocado en superar debilidades técnicas en ${primaryWeakDef.title}.`
     };
 
     reviewItem = {
@@ -327,7 +361,8 @@ export function generateDailyMission(
       targetSkillId: "eng-norminette",
       estimatedMinutes: 15,
       completed: false,
-      mode: "learn"
+      mode: "learn",
+      description: "Verifica -Wall -Wextra -Werror, funciones prohibidas y formato Norminette v3."
     };
   }
 
@@ -341,10 +376,12 @@ export function generateDailyMission(
       type: "recall",
       title: `Active Recall (sin mirar): Re-implementar ${recallChallenge.title}`,
       referenceId: recallChallenge.slug || recallChallenge.id,
+      referenceType: "challenge",
       targetSkillId: primaryRecallSkill,
       estimatedMinutes: Math.min(30, Math.max(15, Math.round((recallChallenge.estimated_time_minutes || 30) * 0.5))),
       completed: false,
-      mode: "prove"
+      mode: "prove",
+      description: `Reescribe ${recallChallenge.title} desde cero sin consultar código previo ni apuntes.`
     };
   } else {
     const warmupSkillId = plan.prioritySkills[0]?.id || "term-nav-files";
@@ -353,14 +390,100 @@ export function generateDailyMission(
       type: "recall",
       title: "Active Recall: Repaso mental de comandos y sintaxis sin apuntes",
       referenceId: "shell00-shell01",
+      referenceType: "module",
       targetSkillId: warmupSkillId,
       estimatedMinutes: 15,
       completed: false,
-      mode: "prove"
+      mode: "prove",
+      description: "Recuperación activa de comandos de terminal y reglas sintácticas de C."
     };
   }
 
-  // 3. Secondary Challenge Item
+  // 3. CONCEPT Item (para skills con mastery/confidence bajos, enlazando a Module o Resource existente sin IA)
+  if (conceptResource) {
+    conceptItem = {
+      id: `item-concept-${conceptResource.id}-${dateStr}`,
+      type: "concept",
+      title: `Fundamentos Teóricos: ${conceptResource.title} (${weakSkillForConcept.title})`,
+      referenceId: conceptResource.id,
+      referenceType: "resource",
+      externalUrl: conceptResource.url,
+      targetSkillId: weakSkillForConcept.id,
+      estimatedMinutes: 15,
+      completed: false,
+      mode: "learn",
+      description: conceptResource.description || `Lectura y asimilación conceptual de ${conceptResource.title} para afianzar ${weakSkillForConcept.title}.`
+    };
+  } else if (conceptModule) {
+    conceptItem = {
+      id: `item-concept-${conceptModule.id}-${dateStr}`,
+      type: "concept",
+      title: `Concepto Clave: ${conceptModule.title} (${weakSkillForConcept.title})`,
+      referenceId: conceptModule.slug || conceptModule.id,
+      referenceType: "module",
+      targetSkillId: weakSkillForConcept.id,
+      estimatedMinutes: 15,
+      completed: false,
+      mode: "learn",
+      description: `Estudio estructurado de conceptos y dificultades cognitivas en ${conceptModule.title}.`
+    };
+  }
+
+  // 4. PEER Item (pedir explicar en voz alta el reto realizado, incluir edge cases y decisiones de implementación, mode="prove")
+  const peerChallengeTitle = mainChallenge ? mainChallenge.title : (recallChallenge ? recallChallenge.title : "el reto asignado");
+  const peerChallengeMod = mainChallenge?.module || "";
+
+  let peerEdgeCases: string[] = [];
+  if (peerChallengeMod.includes("c01") || peerChallengeMod.includes("puntero") || peerChallengeMod.includes("c02") || peerChallengeMod.includes("c03")) {
+    peerEdgeCases = [
+      "Punteros NULL recibidos como argumentos de entrada",
+      "Cadenas vacías (\"\\0\") y tamaño límite de buffers",
+      "Aritmética de punteros vs indexación por corchetes",
+      "Cumplimiento estricto de Norminette v3 (máx 25 líneas, 5 funciones/archivo)"
+    ];
+  } else if (peerChallengeMod.includes("c04") || peerChallengeMod.includes("c05") || peerChallengeMod.includes("conversion")) {
+    peerEdgeCases = [
+      "Valor extremo INT_MIN (-2147483648) en ft_putnbr/ft_atoi",
+      "Comportamiento con el valor 0 y signos redundantes (+/-)",
+      "Límites de recursión (evitar stack overflow y verificar caso base)",
+      "Restricción de funciones externas prohibidas"
+    ];
+  } else if (peerChallengeMod.includes("c07") || peerChallengeMod.includes("asignacion") || peerChallengeMod.includes("memoria")) {
+    peerEdgeCases = [
+      "Protección obligatoria de malloc (comprobar if (!ptr) return (NULL))",
+      "Liberación de memoria con free() en todas las ramas de salida",
+      "Comprobación con Valgrind (cero leaks, cero invalid reads/writes)",
+      "Asignación de 0 bytes malloc(0)"
+    ];
+  } else if (peerChallengeMod.includes("shell") || peerChallengeMod.includes("term")) {
+    peerEdgeCases = [
+      "Permisos de ficheros octales exactos (chmod / umask)",
+      "Gestión de espacios en rutas y nombres de ficheros",
+      "Redirecciones de stdout/stderr y tuberías compuestas"
+    ];
+  } else {
+    peerEdgeCases = [
+      "Punteros NULL y valores frontera (boundaries)",
+      "Justificación de decisiones algorítmicas y tipos de datos",
+      "Cumplimiento estricto de las normas de estilo 42 (Norminette)"
+    ];
+  }
+
+  peerItem = {
+    id: `item-peer-${mainChallenge ? mainChallenge.id : dateStr}`,
+    type: "peer",
+    title: `Simulación Peer-Evaluation: Explicar en voz alta ${peerChallengeTitle}`,
+    referenceId: mainChallenge ? (mainChallenge.slug || mainChallenge.id) : "peer-evaluation",
+    referenceType: "peer",
+    targetSkillId: "eng-peer-evaluation",
+    estimatedMinutes: 15,
+    completed: false,
+    mode: "prove",
+    description: `Explica en voz alta tu solución línea a línea ante un compañero de 42: defiende cada decisión de implementación (estructuras de control, tipos de datos, punteros) y demuestra el manejo de edge cases críticos.`,
+    edgeCases: peerEdgeCases
+  };
+
+  // 5. Secondary Challenge Item
   if (secondaryChallenge) {
     const secSkills = getSkillsForChallenge(secondaryChallenge);
     const primarySecSkill = secSkills[0]?.skillId || primaryWeakDef.id;
@@ -370,14 +493,16 @@ export function generateDailyMission(
       type: "challenge",
       title: `Reto Refuerzo: ${secondaryChallenge.title}`,
       referenceId: secondaryChallenge.slug || secondaryChallenge.id,
+      referenceType: "challenge",
       targetSkillId: primarySecSkill,
       estimatedMinutes: secondaryChallenge.estimated_time_minutes || 30,
       completed: false,
-      mode: "prove"
+      mode: "prove",
+      description: `Práctica secundaria para consolidar competencias en ${primarySecSkill}.`
     };
   }
 
-  // 4. Extra Practice Challenge (for long sessions)
+  // 6. Extra Practice Challenge (for long sessions)
   if (tertiaryChallenge) {
     const tertSkills = getSkillsForChallenge(tertiaryChallenge);
     const tertSkillId = tertSkills[0]?.skillId || primaryWeakDef.id;
@@ -387,6 +512,7 @@ export function generateDailyMission(
       type: "practice",
       title: `Práctica Adicional: ${tertiaryChallenge.title}`,
       referenceId: tertiaryChallenge.slug || tertiaryChallenge.id,
+      referenceType: "challenge",
       targetSkillId: tertSkillId,
       estimatedMinutes: tertiaryChallenge.estimated_time_minutes || 30,
       completed: false,
@@ -394,24 +520,7 @@ export function generateDailyMission(
     };
   }
 
-  // 5. Concept Item (Avance)
-  if (advanceModule) {
-    const modSkills = getSkillsForModule(advanceModule);
-    const advanceSkillId = modSkills[0]?.skillId || primaryWeakDef.id;
-
-    conceptItem = {
-      id: `item-concept-${advanceModule.id}`,
-      type: "concept",
-      title: `Avance Curricular: Conceptos clave de ${advanceModule.title}`,
-      referenceId: advanceModule.slug || advanceModule.id,
-      targetSkillId: advanceSkillId,
-      estimatedMinutes: 15,
-      completed: false,
-      mode: "learn"
-    };
-  }
-
-  // 6. Habit Item
+  // 7. Habit Item
   if (selectedHabit) {
     const habitSkills = getSkillsForHabit(selectedHabit);
     const habitSkillId = habitSkills[0]?.skillId || "meta-deep-work";
@@ -421,35 +530,27 @@ export function generateDailyMission(
       type: "habit",
       title: `Hábito de Piscina: ${selectedHabit.title}`,
       referenceId: selectedHabit.slug || selectedHabit.id,
+      referenceType: "habit",
       targetSkillId: habitSkillId,
       estimatedMinutes: 15,
       completed: false,
-      mode: "learn"
+      mode: "learn",
+      description: selectedHabit.description || "Hábito clave de resiliencia y metodología 42."
     };
   }
 
-  // 7. Peer Evaluation Simulation Item
-  peerItem = {
-    id: `item-peer-${dateStr}`,
-    type: "peer",
-    title: "Simulación Peer-Evaluation: Explicación de código y edge cases con checklist 42",
-    referenceId: "peer-evaluation",
-    targetSkillId: "eng-peer-evaluation",
-    estimatedMinutes: 15,
-    completed: false,
-    mode: "prove"
-  };
-
-  // 8. Technical Debrief Item
+  // 8. DEBRIEF Item (Último bloque de la misión, guarda difficultyRating 1-5, confidenceRating 1-5, hardestThing?)
   debriefItem = {
     id: `item-debrief-${dateStr}`,
     type: "debrief",
-    title: "Debrief Técnico: Registro de fallos, fugas de memoria (Valgrind) y lecciones",
+    title: "Debrief de Sesión: Registro de Dificultad y Calibración",
     referenceId: "debrief",
+    referenceType: "debrief",
     targetSkillId: "meta-autonomy-search",
     estimatedMinutes: 10,
     completed: false,
-    mode: "learn"
+    mode: "learn",
+    description: "Último bloque: calibra la dificultad (1-5), tu nivel de confianza alcanzado (1-5) y documenta el obstáculo o edge case más complejo de hoy."
   };
 
   // 9. Secondary Recall Item
@@ -460,6 +561,7 @@ export function generateDailyMission(
       type: "recall",
       title: `Active Recall complementario: ${secondaryRecallChallenge.title}`,
       referenceId: secondaryRecallChallenge.slug || secondaryRecallChallenge.id,
+      referenceType: "challenge",
       targetSkillId: secRecSkills[0]?.skillId || "c-basics-types",
       estimatedMinutes: 15,
       completed: false,
@@ -468,7 +570,7 @@ export function generateDailyMission(
   }
 
   // --------------------------------------------------------------------------
-  // ADJUST AND FIT TO DAILY TIME BUDGET
+  // ADJUST AND FIT TO DAILY TIME BUDGET (DEBRIEF is always the last block)
   // --------------------------------------------------------------------------
   const items = fitMissionItemsToBudget({
     budgetMinutes: dailyBudget,
@@ -496,7 +598,7 @@ export function generateDailyMission(
   // --------------------------------------------------------------------------
   // RATIONALE GENERATION
   // --------------------------------------------------------------------------
-  let rationale = `Misión del día ajustada a ~${dailyBudget} min (${totalMinutes} min estimados) en etapa ${plan.stageTitle}: ~60% debilidades en '${primaryWeakDef.title}', ~25% active recall y ~15% avance. `;
+  let rationale = `Misión del día ajustada a ~${dailyBudget} min (${totalMinutes} min estimados) en etapa ${plan.stageTitle}: ~60% debilidades en '${primaryWeakDef.title}', ~25% active recall, fundamentos y debrief reflexivo. `;
   if (mainChallenge) {
     rationale += `Reto ancla: '${mainChallenge.title}'. `;
   }
