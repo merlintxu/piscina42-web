@@ -13,6 +13,9 @@ import { SKILL_DEFINITIONS, DEFAULT_TRAINING_PROFILE } from "./config";
 import { UserProgress, ContentJSON } from "../types";
 import { getSkillsForChallenge, getSkillsForExam } from "./skillMapping";
 import { recalculateSkillMastery } from "./skillEngine";
+import { calculateTrainingStreak, countCompletedMissions } from "./dailyMissionEngine";
+
+export { calculateTrainingStreak, countCompletedMissions };
 
 export const TRAINING_STORAGE_KEY = "piscina42_training_v1";
 
@@ -80,6 +83,8 @@ export function loadTrainingState(): TrainingState {
         if (mission && Array.isArray(mission.items)) {
           mergedDailyMissions[dateKey] = {
             ...mission,
+            generatedAt: mission.generatedAt || new Date().toISOString(),
+            generationVersion: typeof mission.generationVersion === "number" ? mission.generationVersion : 1,
             items: mission.items.map(item => ({
               ...item,
               mode: item.mode || getDefaultModeForMissionItemType(item.type)
@@ -89,10 +94,17 @@ export function loadTrainingState(): TrainingState {
             mergedDebriefs[dateKey] = mission.debrief;
           }
         } else if (mission) {
-          mergedDailyMissions[dateKey] = mission;
+          mergedDailyMissions[dateKey] = {
+            ...mission,
+            generatedAt: mission.generatedAt || new Date().toISOString(),
+            generationVersion: typeof mission.generationVersion === "number" ? mission.generationVersion : 1
+          };
         }
       }
     }
+
+    const calculatedStreak = calculateTrainingStreak(mergedDailyMissions);
+    const calculatedTotalMissions = countCompletedMissions(mergedDailyMissions);
 
     return {
       version: parsed.version || 1,
@@ -105,9 +117,9 @@ export function loadTrainingState(): TrainingState {
       dailyMissions: mergedDailyMissions,
       debriefs: mergedDebriefs,
       lastTrainedDate: parsed.lastTrainedDate || null,
-      streakDays: typeof parsed.streakDays === "number" ? parsed.streakDays : 0,
+      streakDays: calculatedStreak,
       readinessScore: typeof parsed.readinessScore === "number" ? parsed.readinessScore : 0,
-      totalMissionsCompleted: typeof parsed.totalMissionsCompleted === "number" ? parsed.totalMissionsCompleted : 0
+      totalMissionsCompleted: calculatedTotalMissions
     };
   } catch (err) {
     console.error("Error loading training state, initializing defaults:", err);
@@ -273,18 +285,24 @@ export function saveDailyMissionToState(
 ): TrainingState {
   const normalizedMission: DailyMission = {
     ...mission,
+    generatedAt: mission.generatedAt || new Date().toISOString(),
+    generationVersion: typeof mission.generationVersion === "number" ? mission.generationVersion : 2,
     items: (mission.items || []).map(item => ({
       ...item,
       mode: item.mode || getDefaultModeForMissionItemType(item.type)
     }))
   };
 
+  const updatedDailyMissions = {
+    ...state.dailyMissions,
+    [mission.date]: normalizedMission
+  };
+
   const updated: TrainingState = {
     ...state,
-    dailyMissions: {
-      ...state.dailyMissions,
-      [mission.date]: normalizedMission
-    }
+    dailyMissions: updatedDailyMissions,
+    streakDays: calculateTrainingStreak(updatedDailyMissions),
+    totalMissionsCompleted: countCompletedMissions(updatedDailyMissions)
   };
   saveTrainingState(updated);
   return updated;
@@ -306,7 +324,6 @@ export function toggleMissionItemInState(
   });
 
   const allCompleted = updatedItems.length > 0 && updatedItems.every(i => i.completed);
-  const wasCompletedBefore = mission.completed;
   const now = new Date().toISOString();
 
   const updatedMission: DailyMission = {
@@ -316,26 +333,17 @@ export function toggleMissionItemInState(
     completedAt: allCompleted ? (mission.completedAt || now) : undefined
   };
 
-  let newStreak = state.streakDays;
-  let totalMissions = state.totalMissionsCompleted;
-
-  if (allCompleted && !wasCompletedBefore) {
-    totalMissions += 1;
-    newStreak += 1;
-  } else if (!allCompleted && wasCompletedBefore) {
-    totalMissions = Math.max(0, totalMissions - 1);
-    newStreak = Math.max(0, newStreak - 1);
-  }
+  const updatedDailyMissions = {
+    ...state.dailyMissions,
+    [date]: updatedMission
+  };
 
   const updated: TrainingState = {
     ...state,
-    dailyMissions: {
-      ...state.dailyMissions,
-      [date]: updatedMission
-    },
+    dailyMissions: updatedDailyMissions,
     lastTrainedDate: allCompleted ? date : state.lastTrainedDate,
-    streakDays: newStreak,
-    totalMissionsCompleted: totalMissions
+    streakDays: calculateTrainingStreak(updatedDailyMissions),
+    totalMissionsCompleted: countCompletedMissions(updatedDailyMissions)
   };
 
   saveTrainingState(updated);
@@ -358,7 +366,6 @@ export function saveMissionDebrief(
     completedAt: now
   };
 
-  let updatedMission = mission;
   if (mission) {
     const updatedItems = mission.items.map(item => {
       if (item.type === "debrief") {
@@ -372,9 +379,8 @@ export function saveMissionDebrief(
     });
 
     const allCompleted = updatedItems.length > 0 && updatedItems.every(i => i.completed);
-    const wasCompletedBefore = mission.completed;
 
-    updatedMission = {
+    const updatedMission: DailyMission = {
       ...mission,
       items: updatedItems,
       debrief: debriefRecord,
@@ -382,27 +388,21 @@ export function saveMissionDebrief(
       completedAt: allCompleted ? (mission.completedAt || now) : undefined
     };
 
-    let newStreak = state.streakDays;
-    let totalMissions = state.totalMissionsCompleted;
-
-    if (allCompleted && !wasCompletedBefore) {
-      totalMissions += 1;
-      newStreak += 1;
-    }
+    const updatedDailyMissions = {
+      ...state.dailyMissions,
+      [date]: updatedMission
+    };
 
     const updated: TrainingState = {
       ...state,
-      dailyMissions: {
-        ...state.dailyMissions,
-        [date]: updatedMission
-      },
+      dailyMissions: updatedDailyMissions,
       debriefs: {
         ...(state.debriefs || {}),
         [date]: debriefRecord
       },
       lastTrainedDate: allCompleted ? date : state.lastTrainedDate,
-      streakDays: newStreak,
-      totalMissionsCompleted: totalMissions
+      streakDays: calculateTrainingStreak(updatedDailyMissions),
+      totalMissionsCompleted: countCompletedMissions(updatedDailyMissions)
     };
 
     saveTrainingState(updated);

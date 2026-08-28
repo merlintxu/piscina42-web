@@ -8,6 +8,7 @@ import {
 } from "./types";
 import { SKILL_DEFINITIONS } from "./config";
 import { ContentJSON, UserProgress } from "../types";
+import { calculateTrainingStreak, countCompletedMissions } from "./dailyMissionEngine";
 
 /**
  * Pure central function to recalculate a SkillMastery object based on its history and evidence.
@@ -316,10 +317,28 @@ export function calculateReadiness(
   )));
 
   // Separate Training Consistency Metric (0-100):
-  // Combines streaks, completed daily missions, and active habits without inflating technical readiness
-  const streakPoints = Math.min(40, (state.streakDays || 0) * 5.7);
-  const missionPoints = Math.min(30, (state.totalMissionsCompleted || Object.keys(state.dailyMissions || {}).length) * 5);
-  const habitPoints = Math.min(30, (progress.activeHabits?.length || 0) * 10);
+  // Measures behavioral consistency based purely on confirmed accomplishments:
+  // 1. Real consecutive daily streak from calculateTrainingStreak
+  // 2. Verified completed daily missions (DailyMission.completed === true)
+  // 3. Verified habit check-in history (completedHabitDays / habitHistory)
+  const realStreak = calculateTrainingStreak(state.dailyMissions);
+  const realCompletedMissions = countCompletedMissions(state.dailyMissions);
+
+  // Real habit check-in occurrences across all habits
+  let realHabitCheckins = 0;
+  const habitIds = new Set([
+    ...Object.keys(progress.completedHabitDays || {}),
+    ...Object.keys(progress.habitHistory || {})
+  ]);
+  for (const habitId of habitIds) {
+    const daysCount = progress.completedHabitDays?.[habitId] || 0;
+    const historyCount = Array.isArray(progress.habitHistory?.[habitId]) ? progress.habitHistory[habitId].length : 0;
+    realHabitCheckins += Math.max(daysCount, historyCount);
+  }
+
+  const streakPoints = Math.min(40, realStreak * 5.7);
+  const missionPoints = Math.min(35, realCompletedMissions * 5);
+  const habitPoints = Math.min(25, realHabitCheckins * 2.5);
   const trainingConsistency = Math.min(100, Math.max(0, Math.round(streakPoints + missionPoints + habitPoints)));
 
   // overallScore reflects technical readiness directly

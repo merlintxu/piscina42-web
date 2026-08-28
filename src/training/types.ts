@@ -166,6 +166,8 @@ export interface DailyMission {
   completed: boolean;
   completedAt?: string;
   debrief?: DailyMissionDebrief;
+  generatedAt?: string;
+  generationVersion?: number;
 }
 
 export interface ReadinessBreakdown {

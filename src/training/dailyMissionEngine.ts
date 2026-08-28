@@ -609,6 +609,8 @@ export function generateDailyMission(
     rationale += `Nota de rigor: ${plan.blockerReason}`;
   }
 
+  const nowIso = new Date().toISOString();
+
   return {
     date: dateStr,
     mainChallengeId: mainChallenge?.id,
@@ -619,7 +621,85 @@ export function generateDailyMission(
     focusCategory: targetCategory,
     estimatedMinutes: totalMinutes,
     targetSkills,
-    completed: false
+    completed: false,
+    generatedAt: nowIso,
+    generationVersion: 2
   };
+}
+
+/**
+ * Calculates active training streak based on unique consecutive days where mission.completed === true.
+ * 
+ * Rules:
+ * - Deterministic evaluation from recorded dailyMissions.
+ * - Counts unique consecutive completed dates leading up to today (or yesterday if today is not completed yet).
+ * - Avoids arbitrary counter increments/decrements.
+ */
+export function calculateTrainingStreak(
+  dailyMissions: Record<string, DailyMission> | undefined,
+  referenceDateStr?: string
+): number {
+  if (!dailyMissions || typeof dailyMissions !== "object") return 0;
+
+  const completedDates = new Set<string>();
+  for (const [dateStr, mission] of Object.entries(dailyMissions)) {
+    if (mission && mission.completed === true) {
+      completedDates.add(dateStr);
+    }
+  }
+
+  if (completedDates.size === 0) return 0;
+
+  const refDateStr = referenceDateStr || getTodayDateString();
+
+  const getDateWithOffset = (baseDateStr: string, offsetDays: number): string => {
+    const parts = baseDateStr.split("-").map(Number);
+    if (parts.length !== 3 || isNaN(parts[0]) || isNaN(parts[1]) || isNaN(parts[2])) {
+      return baseDateStr;
+    }
+    const d = new Date(parts[0], parts[1] - 1, parts[2]);
+    d.setDate(d.getDate() + offsetDays);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
+  let streak = 0;
+
+  if (completedDates.has(refDateStr)) {
+    // Today's mission is already completed -> count backwards starting from today
+    streak = 1;
+    let offset = -1;
+    while (completedDates.has(getDateWithOffset(refDateStr, offset))) {
+      streak += 1;
+      offset -= 1;
+    }
+  } else {
+    // Today's mission is pending -> check if yesterday was completed to keep the active streak alive
+    const yesterdayStr = getDateWithOffset(refDateStr, -1);
+    if (completedDates.has(yesterdayStr)) {
+      streak = 1;
+      let offset = -2;
+      while (completedDates.has(getDateWithOffset(refDateStr, offset))) {
+        streak += 1;
+        offset -= 1;
+      }
+    } else {
+      streak = 0;
+    }
+  }
+
+  return streak;
+}
+
+/**
+ * Counts total unique missions completed across all dates.
+ */
+export function countCompletedMissions(
+  dailyMissions: Record<string, DailyMission> | undefined
+): number {
+  if (!dailyMissions || typeof dailyMissions !== "object") return 0;
+  return Object.values(dailyMissions).filter(m => m && m.completed === true).length;
 }
 

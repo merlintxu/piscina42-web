@@ -66,18 +66,21 @@ export const TrainingDashboardView: React.FC<TrainingDashboardViewProps> = ({
     });
   }, [todayStr, trainingState, content, progress]);
 
-  // Get or generate today's daily mission
+  // Get today's daily mission from state if already stored, or generate only if missing
   const dailyMission = useMemo(() => {
+    if (trainingState.dailyMissions[todayStr]) {
+      return trainingState.dailyMissions[todayStr];
+    }
     return generateDailyMission(todayStr, trainingState, content, progress);
-  }, [todayStr, trainingState, content, progress]);
+  }, [todayStr, trainingState.dailyMissions, content, progress]);
 
-  // Ensure today's mission is persisted if newly generated
+  // Ensure today's mission is persisted if newly created
   useEffect(() => {
     if (!trainingState.dailyMissions[todayStr]) {
       const updated = saveDailyMissionToState(trainingState, dailyMission);
       onUpdateTrainingState(updated);
     }
-  }, [todayStr]);
+  }, [todayStr, trainingState.dailyMissions]);
 
   const existingDebrief = trainingState.debriefs?.[todayStr] || dailyMission.debrief;
 
@@ -100,27 +103,25 @@ export const TrainingDashboardView: React.FC<TrainingDashboardViewProps> = ({
     onUpdateTrainingState(updated);
   };
 
+  const handleRegenerateMission = () => {
+    const stateWithoutToday = {
+      ...trainingState,
+      dailyMissions: { ...trainingState.dailyMissions }
+    };
+    delete stateWithoutToday.dailyMissions[todayStr];
+    const newMission = generateDailyMission(todayStr, stateWithoutToday, content, progress);
+    const updated = saveDailyMissionToState(stateWithoutToday, newMission);
+    onUpdateTrainingState(updated);
+  };
+
   const handleSaveProfileSettings = (updatedProfile: {
     targetDate: string;
     availableHoursPerWeek: number;
     pace: "relaxed" | "standard" | "intensive";
     dailyCommitmentMinutes: number;
   }) => {
-    let updated = updateTrainingProfile(trainingState, updatedProfile);
-
-    // If today's mission has not been started yet, regenerate it with the newly chosen budget
-    const currentMission = updated.dailyMissions[todayStr];
-    const hasCompletedItems = currentMission?.items?.some(i => i.completed);
-    if (!hasCompletedItems) {
-      const stateWithoutToday = {
-        ...updated,
-        dailyMissions: { ...updated.dailyMissions }
-      };
-      delete stateWithoutToday.dailyMissions[todayStr];
-      const regeneratedMission = generateDailyMission(todayStr, stateWithoutToday, content, progress);
-      updated = saveDailyMissionToState(stateWithoutToday, regeneratedMission);
-    }
-
+    // Updating settings only updates profile configuration; never regenerates or destroys the active mission
+    const updated = updateTrainingProfile(trainingState, updatedProfile);
     onUpdateTrainingState(updated);
     setIsSettingsOpen(false);
   };
@@ -165,6 +166,7 @@ export const TrainingDashboardView: React.FC<TrainingDashboardViewProps> = ({
           }
           onToggleMissionItem={handleToggleMissionItem}
           onOpenDebrief={() => setIsDebriefOpen(true)}
+          onRegenerateMission={handleRegenerateMission}
         />
       </div>
 
