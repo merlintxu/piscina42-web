@@ -1,0 +1,2033 @@
+{
+  "phases": [
+    {
+      "id": "fase1-entorno",
+      "slug": "fase1-entorno",
+      "title": "Fase 1: Entorno, terminal, Bash y Git",
+      "summary": ">",
+      "order": 1,
+      "modules": [
+        "shell00-shell01"
+      ],
+      "challenges": [
+        "reto-shell00-midls",
+        "reto-shell00-git-clean",
+        "reto-shell01-find-sh"
+      ],
+      "resources": [
+        "resource-shell00-subject",
+        "resource-shell01-subject",
+        "resource-bash-basics",
+        "resource-git-basics"
+      ],
+      "habits": [
+        "habit-terminal-daily",
+        "habit-git-commits-daily"
+      ],
+      "body": "# Fase 1: Entorno, terminal, Bash y Git\n\n## Objetivos\n\n- Abandonar la dependencia de la interfaz gráfica y trabajar casi exclusivamente desde la terminal Unix.\n- Dominar comandos básicos de navegación, manipulación de archivos, permisos y redirecciones/pipes.\n- Interiorizar un flujo mínimo de Git: inicializar repos, revisar estado, hacer commits semánticos y entender gitignore.\n- Preparar el terreno para Shell00–Shell01 y para que C00–C13 se puedan trabajar sin fricciones de entorno.\n\n## Subfases\n\n- Subfase 1.1: Shell00 – Fundamentos de Unix y Git.\n- Subfase 1.2: Shell01 – Text‑processing, pipelines y scripting sencillo.\n\n## Descripción\n\nLos primeros días de la Piscina giran en torno a Shell00 y, opcionalmente, Shell01:\naprender a moverse por el sistema de archivos, ver y cambiar permisos, crear enlaces,\nusar pipes y redirecciones, y automatizar tareas repetitivas con pequeños scripts.\n\nAl mismo tiempo se introduce Git como herramienta central del flujo de trabajo:\ncrear repos, hacer commits, listar los últimos hashes, ignorar archivos y limpiar\nbasura (`*~`, `#*#`). Gran parte de esto aparece en los ejercicios oficiales de Shell00\n(`midLS`, `git_commit.sh`, `git_ignore.sh`, `clean`).\n\nEsta fase busca que el candidato llegue a C con soltura en terminal y Git, reduciendo\nel coste cognitivo de pelear con el entorno y permitiendo concentrarse en la lógica\nde programación desde C00 en adelante.\n\n## Relación con módulos\n\n- `shell00-shell01`: módulo que agrupa los ejercicios Shell00–Shell01 (fundamentos de CLI, permisos, Git, text‑processing y scripting).\n\n## Retos sugeridos\n\n- `reto-shell00-midls`: reproducir el comportamiento del comando `midLS` de Shell00 (listar archivos/directorios con orden y formato específico).\n- `reto-shell00-git-clean`: crear un script tipo `clean` que encuentre y borre archivos `*~` y `#*#` en el árbol actual.\n- `reto-shell01-find-sh`: escribir una línea de comando que encuentre todos los `.sh` y muestre sólo el nombre del fichero sin extensión.\n\n## Recursos recomendados\n\n- `resource-shell00-subject`: PDF/subject oficial de Shell00 con enunciados de ejercicios y reglas de entrega.\n- `resource-shell01-subject`: PDF/subject oficial de Shell01 con ejercicios de text‑processing y scripting.\n- `resource-bash-basics`: curso/guía sobre Bash básico (historial, variables, control de flujo).\n- `resource-git-basics`: tutorial de Git centrado en `init`, `status`, `log`, `add`, `commit`, `push` y `gitignore`."
+    },
+    {
+      "id": "fase2-c-basico",
+      "slug": "fase2-c-basico",
+      "title": "Fase 2: Fundamentos de C (C00–C02)",
+      "summary": ">",
+      "order": 2,
+      "modules": [
+        "c00-intro",
+        "c01-punteros",
+        "c02-c03-cadenas"
+      ],
+      "challenges": [
+        "reto-c02-strlen-strcmp"
+      ],
+      "resources": [
+        "resource-cs50x-week1",
+        "resource-cs50x-overview",
+        "resource-bash-basics",
+        "resource-git-basics"
+      ],
+      "habits": [
+        "habit-terminal-daily",
+        "habit-git-commits-daily"
+      ],
+      "body": "# Fase 2: Fundamentos de C (C00–C02)\n\n## Objetivos\n\n- Escribir y compilar programas básicos en C usando `gcc` y un editor de terminal.\n- Comprender la estructura de un programa C: `#include`, `main`, tipos, funciones y `return`.\n- Dominar punteros como mecanismo de referencia a memoria y paso de parámetros.\n- Manipular cadenas como arrays de `char` terminados en `\\0` y recrear funciones de `<string.h>`.\n\n## Subfases\n\n- Subfase 2.1: C00 – Sintaxis básica, tipos y primeras funciones.\n- Subfase 2.2: C01 – Punteros y paso por referencia.\n- Subfase 2.3: C02–C03 – Cadenas y funciones de cadena.\n\n## Descripción\n\nLa Fase 2 es la entrada real a la programación en C de la Piscina. Tras haber\nganado soltura con la terminal y Git en la Fase 1, el alumno empieza a escribir\ncódigo que se compila y ejecuta, aprendiendo a depurar errores de compilación\ny de lógica.\n\nC00 introduce la sintaxis y el flujo de un programa; C01 es el primer gran\nsalto conceptual (punteros y memoria); y C02–C03 consolidan el trabajo con\ncadenas, que es donde muchos proyectos de la Piscina se apoyan.\n\nEl objetivo pedagógico es que el alumno llegue a C04–C09 con una base sólida\nde punteros y cadenas, reduciendo la frustración en módulos más avanzados.\n\n## Relación con módulos\n\n- `c00-intro`: primeros programas, tipos y funciones en C.\n- `c01-punteros`: direcciones de memoria y paso por referencia.\n- `c02-c03-cadenas`:arrays de `char`, `\\0` y recreación de `<string.h>`.\n\n## Retos sugeridos\n\n- `reto-c02-strlen-strcmp`: implementar manualmente `strlen` y `strcmp`.\n\n## Recursos recomendados\n\n- `resource-cs50x-week1`: fundamentos de C de CS50.\n- `resource-cs50x-overview`: punto de partida de CS50 en edX.\n- `resource-bash-basics`: repaso de Bash para el entorno de compilación.\n- `resource-git-basics`: flujo diario de commits mientras se programa en C."
+    },
+    {
+      "id": "fase3-c-intermedio",
+      "slug": "fase3-c-intermedio",
+      "title": "Fase 3: C intermedio, memoria y estilo 42",
+      "summary": ">",
+      "order": 3,
+      "modules": [
+        "c01-punteros",
+        "c02-c03-cadenas",
+        "c04-c05-conversion-recursion",
+        "c06-cli-args",
+        "c07-asignacion-dinamica",
+        "c08-c09-structs-lib"
+      ],
+      "challenges": [
+        "reto-c01-swap-int",
+        "reto-c01-pointer-arithmetic",
+        "reto-c02-strlen-strcmp",
+        "reto-c04-ft-atoi",
+        "reto-c04-ft-itoa",
+        "reto-c05-fibonacci",
+        "reto-c05-factorial",
+        "reto-c06-argv-count",
+        "reto-c07-ft-strdup",
+        "reto-c07-ft-range",
+        "reto-c07-ft-ultimate-range",
+        "reto-c07-ft-strjoin",
+        "reto-c07-ft-split"
+      ],
+      "resources": [
+        "resource-cs50x-week5",
+        "resource-exercism-c-basics",
+        "resource-norminette-overview"
+      ],
+      "habits": [
+        "habit-norminette-daily"
+      ],
+      "body": "# Fase 3: C intermedio, memoria y estilo 42\n\n## Objetivos\n\n- Dominar punteros, cadenas y arrays como estructuras centrales del lenguaje C.\n- Practicar conversión de datos, recursión y argumentos de línea de comandos.\n- Interiorizar memoria dinámica (`malloc` y `free`), structs y librerías estáticas.\n- Incorporar la Norminette y \\\"La Norma\\\" como parte diaria del flujo de trabajo.\n\n## Subfases\n\n- Subfase 3.1: C01 – Punteros.\n- Subfase 3.2: C02–C03 – Cadenas y funciones tipo `<string.h>`.\n- Subfase 3.3: C04–C05 – Conversión de datos y recursión.\n- Subfase 3.4: C06 – Argumentos de línea de comandos (`argc`/`argv`).\n- Subfase 3.5: C07 – Asignación dinámica de memoria (`malloc`, `free`).\n- Subfase 3.6: C08–C09 – Structs, macros y librerías estáticas.\n\n## Descripción\n\nEsta fase corresponde al corazón del currículo de la Piscina: los módulos\nC01–C09, donde se filtra a mucha gente por la dificultad de punteros y memoria.\nEl objetivo es construir una comprensión sólida de cómo se representa la información\nen memoria (stack y heap) y cómo los programas en C manipulan esa memoria\nmediante punteros, arrays, structs y funciones reutilizables.\n\nAdemás se entrena la disciplina de la Norminette: límites de longitud de función,\nnúmero de variables, prohibición de bucles `for`, `switch`, operadores ternarios\ny variables globales, todo ello reforzado con retos específicos.\n\n## Relación con módulos\n\n- `c01-punteros`: primeras nociones de direcciones de memoria y paso por referencia.\n- `c02-c03-cadenas`: recreación manual de funciones de la librería `<string.h>`.\n- `c04-c05-conversion-recursion`: conversión de cadenas a enteros y algoritmos recursivos.\n- `c06-cli-args`: parámetros de línea de comandos `argc`/`argv` y manejo de argumentos.\n- `c07-asignacion-dinamica`: asignación dinámica de memoria en el heap (`malloc`, `free`, `ft_strdup`, `ft_range`, `ft_strjoin`, `ft_split`).\n- `c08-c09-structs-lib`: structs, macros, librerías estáticas y Makefiles.\n\n## Retos sugeridos\n\n- `reto-c01-swap-int`: intercambio de enteros con punteros.\n- `reto-c01-pointer-arithmetic`: manipulación de arrays mediante aritmética de punteros.\n- `reto-c02-strlen-strcmp`: implementación manual de funciones de cadena.\n\n## Recursos recomendados\n\n- `resource-cs50x-week5`: unidades de CS50 donde se tratan punteros y memoria dinámica.\n- `resource-exercism-c-basics`: ejercicios de C centrados en punteros y arrays.\n- `resource-norminette-overview`: documentación sobre Norminette y La Norma."
+    },
+    {
+      "id": "fase4-simulacion",
+      "slug": "fase4-simulacion",
+      "title": "Fase 4: Simulación de la Piscina (Examshell + Rush)",
+      "summary": ">",
+      "order": 4,
+      "modules": [
+        "c10-c13-avanzado"
+      ],
+      "challenges": [
+        "reto-examshell-c01",
+        "reto-examshell-c07",
+        "reto-examshell-c00",
+        "reto-examshell-c02",
+        "reto-examshell-c03",
+        "reto-examshell-c04",
+        "reto-examshell-c05",
+        "reto-examshell-c06",
+        "reto-examshell-c08",
+        "reto-examshell-c09",
+        "reto-examshell-c10",
+        "reto-examshell-c12",
+        "reto-rush-team"
+      ],
+      "resources": [
+        "resource-norminette-overview",
+        "resource-moulinette",
+        "resource-1337-exam-repos",
+        "resource-deepwiki-exam-practice",
+        "resource-exam-study-thread"
+      ],
+      "habits": [
+        "habit-norminette-daily",
+        "habit-exam-sim-weekly",
+        "habit-correction-points-track",
+        "habit-read-subject-twice",
+        "habit-valgrind-after-c07",
+        "habit-peer-daily"
+      ],
+      "body": "# Fase 4: Simulación de la Piscina (Examshell + Rush)\n\n## Objetivos\n\n- Practicar bajo presión temporal mediante el Examshell (exámenes tipo Piscina).\n- Resolver retos de C en sesiones cronometradas que imitan el examen real.\n- Participar en un Rush: proyecto en equipo de 2–3 personas con entrega y defensa.\n- Internalizar el uso de Norminette y la Moulinette como validadores obligatorios.\n\n## Subfases\n\n- Subfase 4.1: Examshell – exámenes cortos (C01, C07, etc.) con tiempo limitado.\n- Subfase 4.2: Rush – proyecto colaborativo de varios días.\n- Subfase 4.3: Evaluación entre iguales (peer-evaluation).\n\n## Descripción\n\nLa Fase 4 es la réplica de la experiencia real de la Piscina de 42: el\nalumno se somete a exámenes automatizados (Examshell) y a un Rush en\nequipo, donde se evalúa tanto el código como la capacidad de colaborar.\n\nEl dominio de la Norminette y la capacidad de depurar rápido bajo presión\nson las competencias clave de esta fase; el proyecto final de C10–C13 suele\nser el punto de partida del Rush.\n\n## Retos sugeridos\n\n- `reto-examshell-c01` – examen corto de punteros bajo tiempo.\n- `reto-examshell-c07` – examen corto de memoria dinámica bajo tiempo.\n- `reto-examshell-c00` – examen corto de fundamentos (C00).\n- `reto-examshell-c02` / `reto-examshell-c03` – cadenas y comparación.\n- `reto-examshell-c04` / `reto-examshell-c05` – conversión y recursión.\n- `reto-examshell-c06` – argumentos de línea de comandos.\n- `reto-examshell-c08` / `reto-examshell-c09` – listas y Makefile/lib.\n- `reto-examshell-c10` / `reto-examshell-c12` – árboles y estructuras avanzadas.\n- `reto-rush-team` – proyecto en equipo con entrega y defensa.\n\n## Simulaciones (ExamSimulation)\n\nColección en `retos/exam-simulations.md` con 6 simulacros progresivos:\n\n- `exam-sim-1` – C00–C02 básico (120 min).\n- `exam-sim-2` – Punteros y conversión (120 min).\n- `exam-sim-3` – Memoria y argumentos, con Valgrind (150 min).\n- `exam-sim-4` – Estructuras y lib (150 min).\n- `exam-sim-5` – Mini-Piscina de fin de semana (480 min, todos los niveles).\n- `exam-sim-6` – Defensa del Rush (60 min, rol de evaluador).\n\n## Recursos recomendados\n\n- `resource-norminette-overview` – guía de la Norminette (estilo obligatorio).\n- `resource-moulinette` – validador automático de ejercicios de la Piscina.\n- `resource-1337-exam-repos` – repos de exámenes resueltos para practicar.\n- `resource-deepwiki-exam-practice` – guías de exam practice de la comunidad.\n- `resource-exam-study-thread` – hilos sobre qué cae en los exámenes."
+    }
+  ],
+  "modules": [
+    {
+      "id": "shell00-shell01",
+      "slug": "shell00-shell01",
+      "title": "Shell00–Shell01: Fundamentos de Unix, Git y shell scripting",
+      "phase": "fase1-entorno",
+      "order": 1,
+      "level": "basic",
+      "concepts": [
+        "navegación de sistema de archivos",
+        "permisos y modos (chmod, rwx)",
+        "enlaces simbólicos y duros",
+        "redirecciones y pipes",
+        "búsqueda y diff (find, grep, wc, diff)",
+        "git básico",
+        "text-processing y scripting"
+      ],
+      "cognitive_difficulties": [
+        "mentalidad de comandos frente a interfaz gráfica",
+        "modelo de permisos y riesgo con chmod/rm",
+        "recordar combinaciones de comandos y flags",
+        "disciplina de mensajes de commit en Git"
+      ],
+      "challenges": [
+        "reto-shell00-midls",
+        "reto-shell00-git-clean",
+        "reto-shell01-find-sh"
+      ],
+      "resources": [
+        "resource-shell00-subject",
+        "resource-shell01-subject",
+        "resource-bash-basics",
+        "resource-git-basics"
+      ],
+      "body": "Shell00 está diseñado para que el candidato se vuelva competente en el uso del shell\nUnix: crear, mover y borrar archivos y directorios, trabajar con enlaces, cambiar\npermisos, usar pipes y redirecciones y entender el modelo de entrada/salida estándar.\n\nLos ejercicios típicos incluyen archivos especiales (`z`, `testShell00`), scripts\npara listar archivos con formato concreto (`midLS`), scripts para mostrar los últimos\ncommits de Git (`git_commit.sh`), listar archivos ignorados (`git_ignore.sh`) y\nlimpiar basura (`clean`).\n\nShell01 profundiza en text‑processing y scripting: comandos como `tr`, `wc`, `grep`,\n`sed`, combinados en pipelines, y ejercicios como `find_sh`, `count_files`, `print_groups`,\n`MAC` o `add_chelou` que enseñan a construir comandos complejos sobre datos reales.\n\nEste módulo conjunto es la base de toda la Piscina: sin soltura en Shell00–Shell01,\ncada proyecto posterior (C00–C13, Rush, Examshell) se vuelve más costoso."
+    },
+    {
+      "id": "c00-intro",
+      "slug": "c00-intro",
+      "title": "C00: Introducción a C",
+      "phase": "fase2-c-basico",
+      "order": 2,
+      "level": "basic",
+      "concepts": [
+        "estructura de un programa C (main, include, return)",
+        "tipos básicos (int, char, float, double)",
+        "funciones (declaración, definición, prototipo)",
+        "entrada/salida básica (printf, write)",
+        "compilación con gcc (preprocesado, compilación, enlazado)"
+      ],
+      "cognitive_difficulties": [
+        "comprender el flujo de main más allá de \"línea a línea\"",
+        "confundir declaración, asignación y dirección",
+        "leer errores del compilador y separar compilación/enlazado"
+      ],
+      "challenges": [],
+      "resources": [
+        "resource-cs50x-week1",
+        "resource-cs50x-overview",
+        "resource-cs50x-week2",
+        "resource-geeksforgeeks-c",
+        "resource-cppreference",
+        "resource-cheat-sh"
+      ],
+      "body": "C00 es el módulo de entrada a la programación en C de la Piscina. El alumno\nescribe sus primeros programas, aprende la sintaxis obligatoria (la función\n`main`, el valor de retorno, las directivas de preprocesador) y cómo compilar\ny ejecutarlos con `gcc`.\n\nAunque el módulo es \"básico\", sienta las bases de todo lo posterior: si el\nalumno no interioriza el flujo de un programa y el uso de tipos, los módulos\nde punteros y memoria se vuelven mucho más costosos."
+    },
+    {
+      "id": "c01-punteros",
+      "slug": "c01-punteros",
+      "title": "C01: Punteros",
+      "phase": "fase3-c-intermedio",
+      "order": 3,
+      "level": "intermediate",
+      "concepts": [
+        "direcciones de memoria y representación en RAM",
+        "operadores & y *",
+        "paso por referencia",
+        "punteros a punteros (doble indirección)",
+        "efectos secundarios y aliasing de memoria"
+      ],
+      "cognitive_difficulties": [
+        "visualizar la memoria como celdas con direcciones",
+        "comprender el aliasing (varias variables al mismo dato)",
+        "aceptar comportamiento indefinido al desreferenciar punteros inválidos",
+        "disciplina de inicializar punteros y comprobar NULL"
+      ],
+      "challenges": [
+        "reto-c01-swap-int",
+        "reto-c01-pointer-arithmetic"
+      ],
+      "resources": [
+        "resource-cs50x-week5",
+        "resource-exercism-c-basics",
+        "resource-exercism-c-track",
+        "resource-pointers-article",
+        "resource-godbolt",
+        "resource-cppreference"
+      ],
+      "body": "El módulo C01 marca el primer gran salto de la Piscina: en lugar de trabajar sólo\ncon valores (enteros, caracteres), el alumno empieza a trabajar con **referencias\na ubicaciones de memoria**. Cualquier error conceptual aquí provoca fallos difíciles\nde depurar y suele ser causa de frustración y abandono.\n\nA través de funciones como `ft_swap` y pequeños ejercicios de aritmética de punteros,\nC01 enseña a manipular datos indirectamente y a diseñar APIs que modifican valores\npasados por referencia, lo que prepara el terreno para memoria dinámica, listas y árboles\nen módulos posteriores."
+    },
+    {
+      "id": "c02-c03-cadenas",
+      "slug": "c02-c03-cadenas",
+      "title": "C02–C03: Cadenas y funciones de <string.h>",
+      "phase": "fase3-c-intermedio",
+      "order": 4,
+      "level": "intermediate",
+      "concepts": [
+        "cadena como array de char terminado en \\0",
+        "recorrido de cadenas con punteros e índices",
+        "recreación manual de strlen/strcmp/strcpy/strcat/strdup",
+        "longitud vs capacidad y desbordamiento de buffer"
+      ],
+      "cognitive_difficulties": [
+        "entender que la cadena es un puntero, no un objeto",
+        "no olvidar el \\0 al construir cadenas manualmente",
+        "distinguir strcmp (contenido) de == (punteros)"
+      ],
+      "challenges": [
+        "reto-c02-strlen-strcmp"
+      ],
+      "resources": [
+        "resource-cs50x-overview",
+        "resource-cs50x-week2",
+        "resource-geeksforgeeks-c",
+        "resource-cppreference"
+      ],
+      "body": "C02 y C03 agrupan el trabajo con cadenas de caracteres, uno de los ejes\ntransversales de la Piscina: casi todos los módulos posteriores (C04, C06, C07)\nmanipulan texto. El alumno aprende que en C una cadena es simplemente un array\nde `char` terminado en `\\0` y que debe gestionar su propia memoria y límites.\n\nLa práctica típica consiste en reimplementar las funciones de la librería\nestándar `<string.h>` a mano, lo que refuerza punteros, aritmética y atención\nal carácter terminador."
+    },
+    {
+      "id": "c04-c05-conversion-recursion",
+      "slug": "c04-c05-conversion-recursion",
+      "title": "C04–C05: Conversión de datos y recursión",
+      "phase": "fase3-c-intermedio",
+      "order": 5,
+      "level": "intermediate",
+      "concepts": [
+        "conversión cadena↔entero (atoi/itoa)",
+        "dígitos como caracteres y su valor numérico",
+        "llamadas recursivas (caso base, caso recursivo, pila)",
+        "recursión vs iteración"
+      ],
+      "cognitive_difficulties": [
+        "visualizar la pila de llamadas y el orden de retorno",
+        "manejar desbordamiento de int en ft_atoi",
+        "reservar memoria exacta en ft_itoa"
+      ],
+      "challenges": [
+        "reto-c04-ft-atoi",
+        "reto-c04-ft-itoa",
+        "reto-c05-fibonacci",
+        "reto-c05-factorial"
+      ],
+      "resources": [
+        "resource-cs50x-overview",
+        "resource-cs50x-week4",
+        "resource-godbolt"
+      ],
+      "body": "C04 y C05 combinan dos competencias centrales: transformar representaciones\n(texto ↔ número) y razonar con funciones que se llaman a sí mismas. `ft_atoi`\nobliga a recorrer una cadena, acumular un valor y detectar signo y límites;\n`ft_itoa` obliga a descomponer un entero en dígitos y devolver una cadena\nreservada con `malloc`.\n\nLa recursión (C05) introduce el pensamiento \"divide y vencerás\": problemas\ncomo la sucesión de Fibonacci o el factorial se expresan de forma elegante,\npero exigen cuidar el caso base para no entrar en bucle infinito."
+    },
+    {
+      "id": "c06-cli-args",
+      "slug": "c06-cli-args",
+      "title": "C06: Argumentos de línea de comandos",
+      "phase": "fase3-c-intermedio",
+      "order": 6,
+      "level": "intermediate",
+      "concepts": [
+        "main con argc y argv",
+        "argv[0] es el nombre del programa",
+        "argv como array de punteros a char",
+        "validar argc antes de acceder a argv[i]"
+      ],
+      "cognitive_difficulties": [
+        "entender que argv es char** (no array bidimensional)",
+        "distinguir conteo argc del índice útil",
+        "argumentos con espacios (depende del shell)"
+      ],
+      "challenges": [
+        "reto-c06-argv-count"
+      ],
+      "resources": [
+        "resource-cs50x-overview",
+        "resource-cs50x-week4",
+        "resource-cheat-sh"
+      ],
+      "body": "C06 introduce la recepción de argumentos desde la línea de comandos, el\nprimer contacto real con `main(int argc, char **argv)`. El alumno aprende\nque el programa puede parametrizarse en tiempo de ejecución, lo que abre\nla puerta a herramientas tipo CLI.\n\nAunque es un módulo corto, sienta la base para C07 (donde los argumentos\nsuelen combinarse con memoria dinámica) y para los exámenes de la Piscina,\ndonde muchos retos procesan `argv`."
+    },
+    {
+      "id": "c07-asignacion-dinamica",
+      "slug": "c07-asignacion-dinamica",
+      "title": "C07: Asignación dinámica de memoria",
+      "phase": "fase3-c-intermedio",
+      "order": 7,
+      "level": "intermediate",
+      "concepts": [
+        "malloc y reserva en el heap",
+        "free y fugas de memoria",
+        "ft_strdup (duplicar cadena en heap)",
+        "ft_range / ft_ultimate_range (arrays de int en heap)",
+        "ft_strjoin / ft_split (cadenas dinámicas)"
+      ],
+      "cognitive_difficulties": [
+        "diferencia stack (automático) vs heap (manual)",
+        "no perder la referencia antes de free",
+        "calcular tamaño exacto y comprobar malloc != NULL",
+        "liberar correctamente en error parcial"
+      ],
+      "challenges": [
+        "reto-c07-ft-strdup",
+        "reto-c07-ft-range",
+        "reto-c07-ft-ultimate-range",
+        "reto-c07-ft-strjoin",
+        "reto-c07-ft-split"
+      ],
+      "resources": [
+        "resource-cs50x-week5",
+        "resource-cs50x-week4",
+        "resource-exercism-c-track"
+      ],
+      "body": "C07 es el módulo donde el alumno pasa a gestionar memoria manualmente. Hasta\nahora las cadenas y arrays vivían en el stack o como literales; aquí aprende\na pedir memoria al sistema con `malloc` y a devolverla con `free`.\n\nLas funciones típicas de la Piscina (las de la librería personal del alumno,\ntipo `libft`) obligan a combinar punteros, cadenas y reserva dinámica:\n`ft_strdup`, `ft_range`, `ft_ultimate_range`, `ft_strjoin` y `ft_split` son\nejercicios de referencia de este módulo.\n\nEl objetivo pedagógico es que el alumno interiorice que \"quien reserva,\nlibera\", y que un puntero colgante o una fuga son errores silenciosos que\nla Moulinette/Moulinette penaliza."
+    },
+    {
+      "id": "c08-c09-structs-lib",
+      "slug": "c08-c09-structs-lib",
+      "title": "C08–C09: Structs, macros y librerías estáticas",
+      "phase": "fase3-c-intermedio",
+      "order": 8,
+      "level": "intermediate",
+      "concepts": [
+        "struct (agrupar variables, acceso . y ->)",
+        "punteros a struct",
+        "macros con #define",
+        "librerías estáticas (.a) con ar y Makefile",
+        "listas enlazadas simples"
+      ],
+      "cognitive_difficulties": [
+        "entender struct como plantilla de memoria contigua",
+        "manejar punteros a struct sin perder referencia",
+        "separar responsabilidades en un Makefile"
+      ],
+      "challenges": [
+        "reto-c08-struct-basic",
+        "reto-c08-ft-list-size",
+        "reto-c09-makefile-lib"
+      ],
+      "resources": [
+        "resource-cs50x-week5",
+        "resource-exercism-c-track"
+      ],
+      "body": "C08 y C09 cierran la parte intermedia de la Piscina: el alumno aprende a\ncrear tipos compuestos con `struct`, a parametrizar con macros y a empaquetar\nsu código en una librería que otros programas pueden enlazar.\n\nEl trabajo con listas enlazadas (introducidas aquí mediante la `t_list` de\n`libft`) es la antesala de los módulos avanzados (C10–C13), donde aparecen\nárboles, pilas y estructuras más complejas."
+    },
+    {
+      "id": "c10-c13-avanzado",
+      "slug": "c10-c13-avanzado",
+      "title": "C10–C13: Estructuras avanzadas y proyecto final",
+      "phase": "fase4-simulacion",
+      "order": 9,
+      "level": "advanced",
+      "concepts": [
+        "árboles binarios de búsqueda (BST)",
+        "pilas y colas",
+        "plantillas de proyecto (header/implementación)",
+        "proyecto final integrador"
+      ],
+      "cognitive_difficulties": [
+        "punteros a punteros a struct en inserciones recursivas",
+        "liberar memoria en estructuras anidadas",
+        "disciplina de Norminette en código extenso"
+      ],
+      "challenges": [
+        "reto-c10-bst-insert",
+        "reto-c11-stack",
+        "reto-c12-templates"
+      ],
+      "resources": [
+        "resource-cs50x-week5",
+        "resource-norminette-repo",
+        "resource-1337-exam-repos"
+      ],
+      "body": "C10–C13 es la parte avanzada del currículo de C: estructuras de datos\ncomplejas (árboles, pilas) y un proyecto final que obliga a integrar todo lo\naprendido (punteros, memoria, structs, Makefiles).\n\nEstos módulos preceden a la Fase 4 (Simulación), donde el alumno vive una\nréplica de la Piscina real con Examshell y un Rush en equipo."
+    }
+  ],
+  "challenges": [
+    {
+      "id": "reto-c01-swap-int",
+      "slug": "reto-c01-swap-int",
+      "title": "Intercambio de enteros con punteros",
+      "module": "c01-punteros",
+      "phase": "fase3-c-intermedio",
+      "difficulty": "medium",
+      "estimated_time_minutes": 30,
+      "tags": [
+        "punteros",
+        "fundamentos",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nImplementa una función `ft_swap` que reciba dos punteros a `int` y\nintercambie los valores de las variables apuntadas:\n\n```c\nvoid ft_swap(int *a, int *b);\n```\n\nLa función debe modificar los valores originales de `a` y `b` de forma que,\ntras la llamada, los contenidos queden intercambiados.\n\n### Restricciones\n\n- No usar variables globales.\n- Cumplir Norminette (longitud de función, número de variables, etc.).\n- No devolver ningún valor; la modificación se hace por referencia.\n- No usar funciones de la librería estándar.\n\n### Casos de prueba sugeridos\n\n```text\nCaso 1:\nint a = 1;\nint b = 2;\nft_swap(&a, &b);\n// Resultado esperado: a == 2, b == 1\n\nCaso 2:\nint a = -10;\nint b = 0;\n// Resultado esperado: a == 0, b == -10\n\nCaso 3:\nvalores grandes, combinación de positivos/negativos.\n```\n\n### Dificultad y tags\n\n- Dificultad: medium\n- Tags: punteros, fundamentos, Norminette"
+    },
+    {
+      "id": "reto-c01-pointer-arithmetic",
+      "slug": "reto-c01-pointer-arithmetic",
+      "title": "Recorrido de array con aritmética de punteros",
+      "module": "c01-punteros",
+      "phase": "fase3-c-intermedio",
+      "difficulty": "medium",
+      "estimated_time_minutes": 45,
+      "tags": [
+        "punteros",
+        "arrays",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nEscribe una función que reciba un puntero a `int` y un tamaño `n`, recorra\nel array usando exclusivamente aritmética de punteros y calcule la suma de\ntodos sus elementos:\n\n```c\nint ft_sum_array(int *arr, int n);\n```\n\nNo se permite usar índices (`arr[i]`); sólo expresiones del tipo `*(arr + i)`.\n\n### Restricciones\n\n- No usar variables globales.\n- Cumplir Norminette.\n- Validar que `n` es mayor que 0; si no, devolver 0.\n- No asumir que el puntero es siempre válido; comprobar `arr != NULL`.\n\n### Casos de prueba sugeridos\n\n```text\nCaso 1:\narr = [3,3,4], n = 3 -> resultado 10\n\nCaso 2:\narr = [-5, 5, 10], n = 3 -> resultado 10\n\nCaso 3:\narr = [], n = 0 -> resultado 0\n```\n\n### Dificultad y tags\n\n- Dificultad: medium\n- Tags: punteros, arrays, Norminette"
+    },
+    {
+      "id": "reto-c02-strlen-strcmp",
+      "slug": "reto-c02-strlen-strcmp",
+      "title": "Implementación manual de strlen y strcmp",
+      "module": "c02-c03-cadenas",
+      "phase": "fase3-c-intermedio",
+      "difficulty": "easy",
+      "estimated_time_minutes": 25,
+      "tags": [
+        "cadenas",
+        "punteros",
+        "fundamentos",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nImplementa dos funciones que recrean el comportamiento de `<string.h>`:\n\n```c\nsize_t ft_strlen(const char *s);\nint ft_strcmp(const char *s1, const char *s2);\n```\n\n- `ft_strlen` devuelve el número de caracteres antes del `\\0`.\n- `ft_strcmp` devuelve un entero negativo, 0 o positivo según si `s1` es\n menor, igual o mayor que `s2` en orden lexicográfico.\n\n### Restricciones\n\n- No usar `<string.h>` ni otras funciones de librería para la comparación.\n- Cumplir Norminette.\n- `ft_strlen` no debe leer más allá del `\\0`.\n- `ft_strcmp` debe parar en el primer carácter distinto o en el `\\0`.\n\n### Casos de prueba sugeridos\n\n```text\nCaso 1 (strlen):\nft_strlen(\"hola\") -> 4\nft_strlen(\"\") -> 0\n\nCaso 2 (strcmp):\nft_strcmp(\"abc\", \"abc\") -> 0\nft_strcmp(\"abc\", \"abd\") -> negativo\nft_strcmp(\"abd\", \"abc\") -> positivo\n```\n\n### Dificultad y tags\n\n- Dificultad: easy\n- Tags: cadenas, punteros, fundamentos, Norminette"
+    },
+    {
+      "id": "reto-c00-ft-putchar",
+      "slug": "reto-c00-ft-putchar",
+      "title": "ft_putchar — imprimir un carácter",
+      "module": "c00-intro",
+      "phase": "fase2-c-basico",
+      "difficulty": "easy",
+      "estimated_time_minutes": 15,
+      "tags": [
+        "write",
+        "salida",
+        "fundamentos",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nImplementa `ft_putchar` que imprima un carácter por salida estándar usando\n`write` (sin `printf`):\n\n```c\nvoid ft_putchar(char c);\n```\n\nInspirado en el ex00 de C00 de nataliakzm/School42_Piscine y mlrcbsousa/42piscine.\n\n### Restricciones\n\n- Usar `write(1, &c, 1)`; no `printf` ni `putchar`.\n- Cumplir Norminette.\n\n### Casos de prueba sugeridos\n\n```text\nft_putchar('A') -> imprime \"A\"\n```\n\n### Dificultad y tags\n\n- Dificultad: easy\n- Tags: write, salida, fundamentos, Norminette"
+    },
+    {
+      "id": "reto-c00-ft-print-alphabet",
+      "slug": "reto-c00-ft-print-alphabet",
+      "title": "ft_print_alphabet — imprimir a–z",
+      "module": "c00-intro",
+      "phase": "fase2-c-basico",
+      "difficulty": "easy",
+      "estimated_time_minutes": 20,
+      "tags": [
+        "bucles",
+        "write",
+        "fundamentos",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nImplementa `ft_print_alphabet` que imprima el abecedario en minúsculas\n(`a` a `z`) seguidos de un salto de línea, usando solo `write`:\n\n```c\nvoid ft_print_alphabet(void);\n```\n\nInspirado en el ex01 de C00 de varios repos de Piscine.\n\n### Restricciones\n\n- Bucle de `'a'` a `'z'` con `ft_putchar` (o `write` directo).\n- Cumplir Norminette.\n\n### Casos de prueba sugeridos\n\n```text\nft_print_alphabet() -> \"abcdefghijklmnopqrstuvwxyz\\n\"\n```\n\n### Dificultad y tags\n\n- Dificultad: easy\n- Tags: bucles, write, fundamentos, Norminette"
+    },
+    {
+      "id": "reto-c00-ft-ft",
+      "slug": "reto-c00-ft-ft",
+      "title": "ft_ft — puntero a 42",
+      "module": "c00-intro",
+      "phase": "fase2-c-basico",
+      "difficulty": "easy",
+      "estimated_time_minutes": 15,
+      "tags": [
+        "punteros",
+        "paso por referencia",
+        "fundamentos",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nImplementa `ft_ft` que reciba un puntero a `int` y escriba el valor `42` en\nla variable apuntada:\n\n```c\nvoid ft_ft(int *n);\n```\n\nInspirado en el ex01 de C00 (el clásico \"pointer to 42\").\n\n### Restricciones\n\n- Modificar el valor por referencia (`*n = 42`).\n- Cumplir Norminette.\n\n### Casos de prueba sugeridos\n\n```text\nint x = 0; ft_ft(&x); // x == 42\n```\n\n### Dificultad y tags\n\n- Dificultad: easy\n- Tags: punteros, paso por referencia, fundamentos, Norminette"
+    },
+    {
+      "id": "reto-c01-ft-putstr",
+      "slug": "reto-c01-ft-putstr",
+      "title": "ft_putstr — imprimir una cadena",
+      "module": "c01-punteros",
+      "phase": "fase3-c-intermedio",
+      "difficulty": "easy",
+      "estimated_time_minutes": 20,
+      "tags": [
+        "punteros",
+        "cadenas",
+        "write",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nImplementa `ft_putstr` que imprima una cadena completa (hasta `\\0`) con\n`write`:\n\n```c\nvoid ft_putstr(char *str);\n```\n\nComplementa `ft_putchar` y es base de todas las funciones de impresión.\n\n### Restricciones\n\n- Recorrer con puntero hasta `\\0`; no usar `printf`.\n- Cumplir Norminette.\n\n### Casos de prueba sugeridos\n\n```text\nft_putstr(\"hola\") -> imprime \"hola\"\nft_putstr(\"\") -> no imprime nada\n```\n\n### Dificultad y tags\n\n- Dificultad: easy\n- Tags: punteros, cadenas, write, Norminette"
+    },
+    {
+      "id": "reto-c02-ft-strcpy",
+      "slug": "reto-c02-ft-strcpy",
+      "title": "ft_strcpy — copiar cadena",
+      "module": "c02-c03-cadenas",
+      "phase": "fase3-c-intermedio",
+      "difficulty": "easy",
+      "estimated_time_minutes": 25,
+      "tags": [
+        "cadenas",
+        "punteros",
+        "fundamentos",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nImplementa `ft_strcpy` que copie `src` en `dest` (incluyendo `\\0`) y devuelva\n`dest`:\n\n```c\nchar *ft_strcpy(char *dest, char *src);\n```\n\nInspirado en los ejercicios de C02 de italoholanda/c_42-piscine.\n\n### Restricciones\n\n- Copiar carácter a carácter hasta y con `\\0`.\n- Cumplir Norminette.\n\n### Casos de prueba sugeridos\n\n```text\nft_strcpy(buf, \"abc\") -> buf == \"abc\"\n```\n\n### Dificultad y tags\n\n- Dificultad: easy\n- Tags: cadenas, punteros, fundamentos, Norminette"
+    },
+    {
+      "id": "reto-c04-ft-atoi",
+      "slug": "reto-c04-ft-atoi",
+      "title": "ft_atoi — cadena a entero",
+      "module": "c04-c05-conversion-recursion",
+      "phase": "fase3-c-intermedio",
+      "difficulty": "medium",
+      "estimated_time_minutes": 40,
+      "tags": [
+        "conversión",
+        "cadenas",
+        "punteros",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nImplementa `ft_atoi` que convierta una cadena en un `int`, ignorando\nespacios iniciales y gestionando un signo opcional `+`/`-`:\n\n```c\nint ft_atoi(const char *str);\n```\n\nDebe devolver `0` si no hay dígitos; en caso de desbordamiento, el comportamiento\nde la Piscina suele aceptar el valor obtenido sin `long`, pero se recomienda\nrazonar los límites de `INT_MIN`/`INT_MAX`.\n\n### Restricciones\n\n- No usar funciones de `<stdlib.h>` (`atoi`, `strtol`).\n- Cumplir Norminette.\n- Ignorar espacios/tabulaciones iniciales y un único signo.\n\n### Casos de prueba sugeridos\n\n```text\nft_atoi(\"42\") -> 42\nft_atoi(\" -123\") -> -123\nft_atoi(\"+7abc\") -> 7\nft_atoi(\"no\") -> 0\n```\n\n### Dificultad y tags\n\n- Dificultad: medium\n- Tags: conversión, cadenas, punteros, Norminette"
+    },
+    {
+      "id": "reto-c04-ft-itoa",
+      "slug": "reto-c04-ft-itoa",
+      "title": "ft_itoa — entero a cadena",
+      "module": "c04-c05-conversion-recursion",
+      "phase": "fase3-c-intermedio",
+      "difficulty": "hard",
+      "estimated_time_minutes": 60,
+      "tags": [
+        "conversión",
+        "malloc",
+        "cadenas",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nImplementa `ft_itoa` que convierta un `int` en su representación decimal en\nuna cadena reservada con `malloc` (terminada en `\\0`):\n\n```c\nchar *ft_itoa(int n);\n```\n\nDebe devolver `NULL` si falla la reserva de memoria.\n\n### Restricciones\n\n- Usar `malloc` para la cadena resultado.\n- Cumplir Norminette.\n- Manejar `INT_MIN` (no se puede representar `-INT_MIN` en `int`).\n\n### Casos de prueba sugeridos\n\n```text\nft_itoa(42) -> \"42\" (cadena con malloc)\nft_itoa(-123) -> \"-123\"\nft_itoa(0) -> \"0\"\nft_itoa(-2147483648) -> \"-2147483648\"\n```\n\n### Dificultad y tags\n\n- Dificultad: hard\n- Tags: conversión, malloc, cadenas, Norminette"
+    },
+    {
+      "id": "reto-c05-fibonacci",
+      "slug": "reto-c05-fibonacci",
+      "title": "Fibonacci recursivo",
+      "module": "c04-c05-conversion-recursion",
+      "phase": "fase3-c-intermedio",
+      "difficulty": "easy",
+      "estimated_time_minutes": 20,
+      "tags": [
+        "recursión",
+        "caso base",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nEscribe una función recursiva `ft_fibonacci` que devuelva el n-ésimo término\nde la sucesión de Fibonacci (F(0)=0, F(1)=1):\n\n```c\nint ft_fibonacci(int index);\n```\n\nPara `index < 0`, devolver `-1`.\n\n### Restricciones\n\n- Implementación recursiva con caso base.\n- Cumplir Norminette.\n- No usar variables globales ni bucles (en la versión puramente recursiva).\n\n### Casos de prueba sugeridos\n\n```text\nft_fibonacci(0) -> 0\nft_fibonacci(1) -> 1\nft_fibonacci(7) -> 13\nft_fibonacci(-3) -> -1\n```\n\n### Dificultad y tags\n\n- Dificultad: easy\n- Tags: recursión, caso base, Norminette"
+    },
+    {
+      "id": "reto-c05-factorial",
+      "slug": "reto-c05-factorial",
+      "title": "Factorial recursivo",
+      "module": "c04-c05-conversion-recursion",
+      "phase": "fase3-c-intermedio",
+      "difficulty": "easy",
+      "estimated_time_minutes": 20,
+      "tags": [
+        "recursión",
+        "caso base",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nImplementa `ft_factorial` recursiva que calcule el factorial de `n` (`n!`),\no `0` si `n < 0` o el resultado no cabe en un `int` (según convención del\nsubject de la Piscina):\n\n```c\nint ft_factorial(int nb);\n```\n\n### Restricciones\n\n- Caso base `0! = 1`.\n- Cumplir Norminette.\n- Devolver `0` ante entrada negativa (convención común en la Piscina).\n\n### Casos de prueba sugeridos\n\n```text\nft_factorial(0) -> 1\nft_factorial(5) -> 120\nft_factorial(-1) -> 0\n```\n\n### Dificultad y tags\n\n- Dificultad: easy\n- Tags: recursión, caso base, Norminette"
+    },
+    {
+      "id": "reto-c07-ft-strdup",
+      "slug": "reto-c07-ft-strdup",
+      "title": "ft_strdup — duplicar cadena con malloc",
+      "module": "c07-asignacion-dinamica",
+      "phase": "fase3-c-intermedio",
+      "difficulty": "easy",
+      "estimated_time_minutes": 20,
+      "tags": [
+        "malloc",
+        "cadenas",
+        "memoria dinámica",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nImplementa `ft_strdup` que reserva memoria con `malloc` y copia la cadena\n`src` (incluyendo el `\\0`) en la nueva zona:\n\n```c\nchar *ft_strdup(const char *src);\n```\n\nDevuelve `NULL` si falla la reserva.\n\n### Restricciones\n\n- Usar `malloc` para la copia.\n- Cumplir Norminette.\n- Reservar exactamente `ft_strlen(src) + 1` bytes.\n\n### Casos de prueba sugeridos\n\n```text\nft_strdup(\"hola\") -> nueva cadena \"hola\" (heap), independiente de src\nft_strdup(\"\") -> cadena \"\"\n```\n\n### Dificultad y tags\n\n- Dificultad: easy\n- Tags: malloc, cadenas, memoria dinámica, Norminette"
+    },
+    {
+      "id": "reto-c07-ft-range",
+      "slug": "reto-c07-ft-range",
+      "title": "ft_range — array de enteros en el heap",
+      "module": "c07-asignacion-dinamica",
+      "phase": "fase3-c-intermedio",
+      "difficulty": "medium",
+      "estimated_time_minutes": 30,
+      "tags": [
+        "malloc",
+        "arrays",
+        "memoria dinámica",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nImplementa `ft_range` que devuelve un array de `int` reservado con `malloc`\nque contiene los valores desde `min` hasta `max` (exclusivo):\n\n```c\nint *ft_range(int min, int max);\n```\n\nSi `min >= max`, devuelve `NULL`.\n\n### Restricciones\n\n- Reservar `(max - min) * sizeof(int)` bytes.\n- Cumplir Norminette.\n- El último elemento debe ser `max - 1`.\n\n### Casos de prueba sugeridos\n\n```text\nft_range(1, 4) -> [1, 2, 3]\nft_range(0, 3) -> [0, 1, 2]\nft_range(5, 5) -> NULL\n```\n\n### Dificultad y tags\n\n- Dificultad: medium\n- Tags: malloc, arrays, memoria dinámica, Norminette"
+    },
+    {
+      "id": "reto-c07-ft-ultimate-range",
+      "slug": "reto-c07-ft-ultimate-range",
+      "title": "ft_ultimate_range — rango con errores",
+      "module": "c07-asignacion-dinamica",
+      "phase": "fase3-c-intermedio",
+      "difficulty": "medium",
+      "estimated_time_minutes": 35,
+      "tags": [
+        "malloc",
+        "puntero a puntero",
+        "memoria dinámica",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nVariante de `ft_range` que, además de devolver el array, indica el tamaño\nreal mediante un parámetro de salida y devuelve `NULL` en caso de error:\n\n```c\nint *ft_ultimate_range(int **range, int min, int max);\n```\n\nDevuelve el tamaño del array (o `-1` en error).\n\n### Restricciones\n\n- Reservar el array con `malloc` y asignarlo a `*range`.\n- Cumplir Norminette.\n- Devolver `-1` si `min >= max` o falla `malloc`.\n\n### Casos de prueba sugeridos\n\n```text\nft_ultimate_range(&r, 1, 4) -> r = [1,2,3], retorno 3\nft_ultimate_range(&r, 5, 5) -> retorno -1, r = NULL\n```\n\n### Dificultad y tags\n\n- Dificultad: medium\n- Tags: malloc, puntero a puntero, memoria dinámica, Norminette"
+    },
+    {
+      "id": "reto-c07-ft-strjoin",
+      "slug": "reto-c07-ft-strjoin",
+      "title": "ft_strjoin — concatenar con malloc",
+      "module": "c07-asignacion-dinamica",
+      "phase": "fase3-c-intermedio",
+      "difficulty": "medium",
+      "estimated_time_minutes": 30,
+      "tags": [
+        "malloc",
+        "cadenas",
+        "memoria dinámica",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nImplementa `ft_strjoin` que reserva y devuelve una nueva cadena con la\nconcatenación de `s1` y `s2`:\n\n```c\nchar *ft_strjoin(char const *s1, char const *s2);\n```\n\nDevuelve `NULL` si falla la reserva.\n\n### Restricciones\n\n- Reservar `strlen(s1) + strlen(s2) + 1` bytes.\n- Cumplir Norminette.\n- Si alguno es `NULL`, comportamiento según convención (devolver copia del otro o `NULL`).\n\n### Casos de prueba sugeridos\n\n```text\nft_strjoin(\"hola \", \"mundo\") -> \"hola mundo\"\nft_strjoin(\"\", \"x\") -> \"x\"\n```\n\n### Dificultad y tags\n\n- Dificultad: medium\n- Tags: malloc, cadenas, memoria dinámica, Norminette"
+    },
+    {
+      "id": "reto-c07-ft-split",
+      "slug": "reto-c07-ft-split",
+      "title": "ft_split — partir cadena en array de cadenas",
+      "module": "c07-asignacion-dinamica",
+      "phase": "fase3-c-intermedio",
+      "difficulty": "hard",
+      "estimated_time_minutes": 60,
+      "tags": [
+        "malloc",
+        "array de cadenas",
+        "memoria dinámica",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nImplementa `ft_split` que parte `str` usando el carácter `c` como separador\ny devuelve un array de cadenas (reservado con `malloc`, terminado en `NULL`):\n\n```c\nchar **ft_split(char const *str, char c);\n```\n\nDevuelve `NULL` si falla la reserva.\n\n### Restricciones\n\n- Reservar el array de punteros y cada cadena por separado.\n- Cumplir Norminette.\n- El array final debe terminar en `NULL`; separadores consecutivos se ignoran.\n\n### Casos de prueba sugeridos\n\n```text\nft_split(\"hola,mundo,42\", ',') -> [\"hola\", \"mundo\", \"42\", NULL]\nft_split(\"a,,b\", ',') -> [\"a\", \"b\", NULL]\n```\n\n### Dificultad y tags\n\n- Dificultad: hard\n- Tags: malloc, array de cadenas, memoria dinámica, Norminette"
+    },
+    {
+      "id": "reto-c08-struct-basic",
+      "slug": "reto-c08-struct-basic",
+      "title": "Uso básico de struct",
+      "module": "c08-c09-structs-lib",
+      "phase": "fase3-c-intermedio",
+      "difficulty": "easy",
+      "estimated_time_minutes": 25,
+      "tags": [
+        "struct",
+        "typedef",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nDefine un `struct` sencillo (por ejemplo, `t_point` con `x` e `y` enteros) y\nescribe una función que cree uno, asigne valores y devuelva la suma de sus\ncampos:\n\n```c\ntypedef struct s_point\n{\n int x;\n int y;\n} t_point;\n\nint ft_point_sum(t_point p);\n```\n\n### Restricciones\n\n- Usar `typedef` para el tipo del struct.\n- Cumplir Norminette.\n- Acceder a los campos con el operador `.` (no punteros todavía).\n\n### Casos de prueba sugeridos\n\n```text\np.x = 3, p.y = 4 -> ft_point_sum(p) = 7\np.x = -1, p.y = 1 -> 0\n```\n\n### Dificultad y tags\n\n- Dificultad: easy\n- Tags: struct, typedef, Norminette"
+    },
+    {
+      "id": "reto-c08-ft-list-size",
+      "slug": "reto-c08-ft-list-size",
+      "title": "ft_list_size — tamaño de lista enlazada",
+      "module": "c08-c09-structs-lib",
+      "phase": "fase3-c-intermedio",
+      "difficulty": "medium",
+      "estimated_time_minutes": 25,
+      "tags": [
+        "listas enlazadas",
+        "punteros",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nImplementa `ft_list_size` que devuelva el número de nodos de una lista\nenlazada simple definida por:\n\n```c\ntypedef struct s_list\n{\n void *data;\n struct s_list *next;\n} t_list;\n\nint ft_list_size(t_list *begin_list);\n```\n\nSi la lista es `NULL`, devuelve `0`.\n\n### Restricciones\n\n- Recorrer la lista con un puntero que avanza por `next`.\n- Cumplir Norminette.\n- No modificar la lista, solo contar.\n\n### Casos de prueba sugeridos\n\n```text\nlista vacía -> 0\nlista [a]->[b]->[c] -> 3\n```\n\n### Dificultad y tags\n\n- Dificultad: medium\n- Tags: listas enlazadas, punteros, Norminette"
+    },
+    {
+      "id": "reto-c09-makefile-lib",
+      "slug": "reto-c09-makefile-lib",
+      "title": "Makefile que genera librería estática",
+      "module": "c08-c09-structs-lib",
+      "phase": "fase3-c-intermedio",
+      "difficulty": "medium",
+      "estimated_time_minutes": 40,
+      "tags": [
+        "Makefile",
+        "librería estática",
+        "ar",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nEscribe un `Makefile` que compile varios archivos fuente (`.c`) en objetos\n(`.o`), empaquete la librería estática `libft.a` con `ar rcs`, y ofrezca\nlos objetivos `all`, `clean`, `fclean` y `re`:\n\n```make\nNAME = libft.a\nSRC = ft_atoi.c ft_strdup.c ...\nOBJ = $(SRC:.c=.o)\n```\n\n### Restricciones\n\n- Usar variables y reglas implícitas de `make`.\n- Cumplir la norma de la Piscina para Makefiles (tabuladores, no `.PHONY`\n inventados fuera de lo permitido).\n- `fclean` debe borrar también `$(NAME)`.\n\n### Casos de prueba sugeridos\n\n```text\nmake -> genera libft.a\nmake clean -> borra .o\nmake re -> rebuild completo\n```\n\n### Dificultad y tags\n\n- Dificultad: medium\n- Tags: Makefile, librería estática, ar, Norminette"
+    },
+    {
+      "id": "reto-c03-ft-substr",
+      "slug": "reto-c03-ft-substr",
+      "title": "ft_substr — extraer subcadena",
+      "module": "c02-c03-cadenas",
+      "phase": "fase2-c-basico",
+      "difficulty": "medium",
+      "estimated_time_minutes": 30,
+      "tags": [
+        "cadenas",
+        "malloc",
+        "punteros",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nImplementa `ft_substr` que devuelva una nueva cadena formada por los caracteres de `s`\nempezando en `start` y con longitud `len` (o hasta el final si `len` excede):\n\n```c\nchar *ft_substr(char const *s, unsigned int start, size_t len);\n```\n\nSi `start` supera la longitud de `s`, devuelve una cadena vacía (`\"\"`). Debe usar `malloc`.\nInspirado en los ejercicios de C03 de repos de Piscine.\n\n### Restricciones\n\n- Usar `malloc` para la nueva cadena; devolver `NULL` si falla.\n- No usar funciones de librería salvo las permitidas (implementa `ft_strlen` propia).\n- Cumplir Norminette.\n\n### Casos de prueba sugeridos\n\n```text\nft_substr(\"hola mundo\", 5, 5) -> \"mundo\"\nft_substr(\"hola\", 10, 2) -> \"\"\nft_substr(\"abc\", 1, 1) -> \"b\"\n```\n\n### Dificultad y tags\n\n- Dificultad: medium\n- Tags: cadenas, malloc, punteros, Norminette"
+    },
+    {
+      "id": "reto-c03-ft-strncmp",
+      "slug": "reto-c03-ft-strncmp",
+      "title": "ft_strncmp — comparar n caracteres",
+      "module": "c02-c03-cadenas",
+      "phase": "fase2-c-basico",
+      "difficulty": "easy",
+      "estimated_time_minutes": 25,
+      "tags": [
+        "cadenas",
+        "comparación",
+        "punteros",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nImplementa `ft_strncmp` que compare `s1` y `s2` carácter a carácter hasta `n` caracteres\no hasta `\\0`:\n\n```c\nint ft_strncmp(const char *s1, const char *s2, size_t n);\n```\n\nDevuelve la diferencia del primer carácter distinto (`s1[i] - s2[i]`), o `0` si son iguales\nen los `n` primeros. Inspirado en C03 de la Piscine.\n\n### Restricciones\n\n- No usar `strncmp` de `<string.h>`.\n- Si `n` es `0`, devolver `0`.\n- Cumplir Norminette.\n\n### Casos de prueba sugeridos\n\n```text\nft_strncmp(\"abc\", \"abd\", 3) -> negativo (<0)\nft_strncmp(\"abc\", \"abc\", 3) -> 0\nft_strncmp(\"ab\", \"abc\", 3) -> negativo\n```\n\n### Dificultad y tags\n\n- Dificultad: easy\n- Tags: cadenas, comparación, punteros, Norminette"
+    },
+    {
+      "id": "reto-c05-ft-power",
+      "slug": "reto-c05-ft-power",
+      "title": "ft_power — potencia recursiva",
+      "module": "c04-c05-conversion-recursion",
+      "phase": "fase3-c-intermedio",
+      "difficulty": "easy",
+      "estimated_time_minutes": 20,
+      "tags": [
+        "recursión",
+        "matemáticas",
+        "fundamentos",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nImplementa `ft_power` que calcule `nb` elevado a `power` usando recursión\n(sin `pow` ni bucles):\n\n```c\nint ft_power(int nb, int power);\n```\n\nSi `power` es negativo, devuelve `0`. `ft_power(nb, 0)` devuelve `1`. Práctica de\nrecursión pura.\n\n### Restricciones\n\n- Resolverse de forma recursiva (no bucles `for`/`while`).\n- No usar funciones de `<math.h>`.\n- Cumplir Norminette.\n\n### Casos de prueba sugeridos\n\n```text\nft_power(2, 3) -> 8\nft_power(5, 0) -> 1\nft_power(2, -1) -> 0\n```\n\n### Dificultad y tags\n\n- Dificultad: easy\n- Tags: recursión, matemáticas, fundamentos, Norminette"
+    },
+    {
+      "id": "reto-c06-ft-putstr-tab",
+      "slug": "reto-c06-ft-putstr-tab",
+      "title": "ft_putstr_tab — imprimir argv con tabuladores",
+      "module": "c06-cli-args",
+      "phase": "fase3-c-intermedio",
+      "difficulty": "easy",
+      "estimated_time_minutes": 25,
+      "tags": [
+        "argv",
+        "bucles",
+        "write",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nImplementa `ft_putstr_tab` que imprima todos los argumentos de la línea de comandos\n(`argv`) separados por un tabulador `\\t`, terminando con salto de línea:\n\n```c\nvoid ft_putstr_tab(char **tab);\n```\n\nInspirado en el ejercicio de C06 que recorre `argv`.\n\n### Restricciones\n\n- Recorrer `argv` con un índice; no usar `printf`.\n- Separar con `\\t` y cerrar con `\\n` mediante `write`.\n- Cumplir Norminette.\n\n### Casos de prueba sugeridos\n\n```text\nft_putstr_tab({\"a\",\"b\",\"c\"}) -> \"a\\tb\\tc\\n\"\nft_putstr_tab({}) -> \"\\n\"\n```\n\n### Dificultad y tags\n\n- Dificultad: easy\n- Tags: argv, bucles, write, Norminette"
+    },
+    {
+      "id": "reto-c06-ft-atoi-base",
+      "slug": "reto-c06-ft-atoi-base",
+      "title": "ft_atoi_base — convertir string en base N a entero",
+      "module": "c04-c05-conversion-recursion",
+      "phase": "fase3-c-intermedio",
+      "difficulty": "hard",
+      "estimated_time_minutes": 45,
+      "tags": [
+        "conversión",
+        "bases",
+        "punteros",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nImplementa `ft_atoi_base` que convierta la representación de un número en una `base`\narbitraria a un `int`:\n\n```c\nint ft_atoi_base(char *str, char *base);\n```\n\nLa `base` puede tener entre 2 y 16 caracteres sin repetir y sin signos `+`/`-`.\nDetecta signo opcional delante de `str`. Inspirado en C05 de la Piscine.\n\n### Restricciones\n\n- Validar que `base` sea válida (sin caracteres repetidos ni `+`/`-`, longitud 2–16).\n- No usar `atoi` ni `strtol`.\n- Cumplir Norminette.\n\n### Casos de prueba sugeridos\n\n```text\nft_atoi_base(\"1010\", \"01\") -> 10\nft_atoi_base(\"ff\", \"0123456789abcdef\") -> 255\nft_atoi_base(\"-1a\", \"0123456789abcdef\") -> -26\n```\n\n### Dificultad y tags\n\n- Dificultad: hard\n- Tags: conversión, bases, punteros, Norminette"
+    },
+    {
+      "id": "reto-c08-ft-list-add-back",
+      "slug": "reto-c08-ft-list-add-back",
+      "title": "ft_list_add_back — añadir nodo al final",
+      "module": "c08-c09-structs-lib",
+      "phase": "fase3-c-intermedio",
+      "difficulty": "medium",
+      "estimated_time_minutes": 25,
+      "tags": [
+        "listas enlazadas",
+        "punteros dobles",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nImplementa `ft_list_add_back` que añada un nuevo nodo con `data` al final de una\nlista enlazada simple:\n\n```c\nvoid ft_list_add_back(t_list **begin_list, void *data);\n```\n\nSi la lista está vacía, el nuevo nodo pasa a ser el primero. Usa el `t_list` definido\nen C08.\n\n### Restricciones\n\n- Modificar el puntero al inicio solo si la lista era `NULL`.\n- Recorrer hasta el último nodo y enlazar el nuevo.\n- Cumplir Norminette.\n\n### Casos de prueba sugeridos\n\n```text\nadd_back(NULL, x) -> [x]\nadd_back([a], b) -> [a]->[b]\n```\n\n### Dificultad y tags\n\n- Dificultad: medium\n- Tags: listas enlazadas, punteros dobles, Norminette"
+    },
+    {
+      "id": "reto-c08-ft-list-sort",
+      "slug": "reto-c08-ft-list-sort",
+      "title": "ft_list_sort — ordenar lista enlazada",
+      "module": "c08-c09-structs-lib",
+      "phase": "fase3-c-intermedio",
+      "difficulty": "hard",
+      "estimated_time_minutes": 40,
+      "tags": [
+        "listas enlazadas",
+        "punteros a función",
+        "ordenación",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nImplementa `ft_list_sort` que ordene una lista enlazada por el valor entero apuntado\npor `data`, usando la función de comparación `cmp`:\n\n```c\nvoid ft_list_sort(t_list **begin_list, int (*cmp)(void *, void *));\n```\n\nUsa un algoritmo simple (inserción o intercambio de datos).\n\n### Restricciones\n\n- No crear una lista nueva; reordena la existente.\n- La comparación debe hacerse vía el puntero `cmp`.\n- Cumplir Norminette.\n\n### Casos de prueba sugeridos\n\n```text\nsort([3,1,2]) -> [1,2,3]\nsort([]) -> []\n```\n\n### Dificultad y tags\n\n- Dificultad: hard\n- Tags: listas enlazadas, punteros a función, ordenación, Norminette"
+    },
+    {
+      "id": "reto-c09-ft-btree-basic",
+      "slug": "reto-c09-ft-btree-basic",
+      "title": "ft_btree_basic — insertar en árbol binario",
+      "module": "c08-c09-structs-lib",
+      "phase": "fase3-c-intermedio",
+      "difficulty": "hard",
+      "estimated_time_minutes": 45,
+      "tags": [
+        "árboles",
+        "malloc",
+        "punteros",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nImplementa `ft_btree_create_node` y `ft_btree_insert` para construir un árbol binario\nde búsqueda ordenado por enteros:\n\n```c\nt_btree *ft_btree_create_node(int item);\nvoid ft_btree_insert(t_btree **root, int item, int (*cmp)(int, int));\n```\n\nCada nodo tiene `item`, `left` y `right`.\n\n### Restricciones\n\n- Reservar el nodo con `malloc`; liberar en caso de error.\n- La inserción debe respetar el orden según `cmp`.\n- Cumplir Norminette.\n\n### Casos de prueba sugeridos\n\n```text\ninsert(5), insert(3), insert(8) -> raíz 5, izq 3, der 8\n```\n\n### Dificultad y tags\n\n- Dificultad: hard\n- Tags: árboles, malloc, punteros, Norminette"
+    },
+    {
+      "id": "reto-c10-bst-insert",
+      "slug": "reto-c10-bst-insert",
+      "title": "Inserción en árbol binario de búsqueda",
+      "module": "c10-c13-avanzado",
+      "phase": "fase4-simulacion",
+      "difficulty": "hard",
+      "estimated_time_minutes": 45,
+      "tags": [
+        "BST",
+        "árboles",
+        "punteros",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nImplementa la inserción de un valor entero en un árbol binario de búsqueda\n(BST), devolviendo la raíz actualizada:\n\n```c\nt_node *bst_insert(t_node *root, int value);\n```\n\nSi el valor ya existe, no lo inserta de nuevo (o lo ignora según convención).\n\n### Restricciones\n\n- Usar recursión o iteración con punteros a puntero.\n- Cumplir Norminette.\n- Reservar el nodo con `malloc` y manejar `NULL` en inserción en árbol vacío.\n\n### Casos de prueba sugeridos\n\n```text\ninsert(5); insert(3); insert(7) -> raíz 5, izq 3, der 7\ninsert(3) de nuevo -> sin duplicado\n```\n\n### Dificultad y tags\n\n- Dificultad: hard\n- Tags: BST, árboles, punteros, Norminette"
+    },
+    {
+      "id": "reto-c11-stack",
+      "slug": "reto-c11-stack",
+      "title": "Pila (stack) con push/pop",
+      "module": "c10-c13-avanzado",
+      "phase": "fase4-simulacion",
+      "difficulty": "medium",
+      "estimated_time_minutes": 35,
+      "tags": [
+        "pila",
+        "listas",
+        "malloc",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nImplementa una pila (stack) sobre una lista enlazada con operaciones\n`push` (apilar) y `pop` (desapilar), gestionando memoria con `malloc`/`free`:\n\n```c\nvoid stack_push(t_stack **s, void *data);\nvoid *stack_pop(t_stack **s);\n```\n\n`pop` devuelve `NULL` si la pila está vacía.\n\n### Restricciones\n\n- `push` añade en la cima; `pop` libera el nodo y devuelve su dato.\n- Cumplir Norminette.\n- Sin fugas al vaciar la pila.\n\n### Casos de prueba sugeridos\n\n```text\npush(a); push(b); pop() -> b; pop() -> a; pop() -> NULL\n```\n\n### Dificultad y tags\n\n- Dificultad: medium\n- Tags: pila, listas, malloc, Norminette"
+    },
+    {
+      "id": "reto-c12-templates",
+      "slug": "reto-c12-templates",
+      "title": "Esqueleto de proyecto con headers y Makefile",
+      "module": "c10-c13-avanzado",
+      "phase": "fase4-simulacion",
+      "difficulty": "medium",
+      "estimated_time_minutes": 40,
+      "tags": [
+        "Makefile",
+        "headers",
+        "plantilla",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nCrea el esqueleto de un proyecto C con separación header/implementación\n(`proyecto.h`, `proyecto.c`, `main.c`) y un `Makefile` que compile y enlace\ntodo en un ejecutable:\n\n```make\nNAME = proyecto\nSRC = main.c proyecto.c\nOBJ = $(SRC:.c=.o)\n```\n\n### Restricciones\n\n- Usar `#ifndef PROYECTO_H` en el header (include guard).\n- Cumplir Norminette en el Makefile.\n- `make` genera el ejecutable `$(NAME)`.\n\n### Casos de prueba sugeridos\n\n```text\nmake -> genera ./proyecto\nmake fclean -> borra .o y ejecutable\n```\n\n### Dificultad y tags\n\n- Dificultad: medium\n- Tags: Makefile, headers, plantilla, Norminette"
+    },
+    {
+      "id": "reto-c10-bst-remove",
+      "slug": "reto-c10-bst-remove",
+      "title": "bst_remove — eliminar nodo de BST",
+      "module": "c10-c13-avanzado",
+      "phase": "fase4-simulacion",
+      "difficulty": "hard",
+      "estimated_time_minutes": 50,
+      "tags": [
+        "árboles",
+        "recursión",
+        "memoria",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nImplementa `bst_remove` que elimine el nodo con valor `value` de un árbol binario de\nbúsqueda, manteniendo la propiedad de orden (usa el sucesor in-order para nodos con\ndos hijos):\n\n```c\nt_btree *bst_remove(t_btree *root, int value, int (*cmp)(int, int));\n```\n\nDevuelve la nueva raíz.\n\n### Restricciones\n\n- Manejar los tres casos: hoja, un hijo, dos hijos.\n- Liberar la memoria del nodo eliminado.\n- Cumplir Norminette.\n\n### Casos de prueba sugeridos\n\n```text\nremove(raíz 5 [3,8]) de 3 -> raíz 5 [8]\nremove de hoja -> árbol sin ese nodo\n```\n\n### Dificultad y tags\n\n- Dificultad: hard\n- Tags: árboles, recursión, memoria, Norminette"
+    },
+    {
+      "id": "reto-c11-queue",
+      "slug": "reto-c11-queue",
+      "title": "queue — cola con array circular",
+      "module": "c10-c13-avanzado",
+      "phase": "fase4-simulacion",
+      "difficulty": "medium",
+      "estimated_time_minutes": 35,
+      "tags": [
+        "estructuras de datos",
+        "arrays",
+        "punteros",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nImplementa una cola (FIFO) usando un array circular con operaciones `enqueue`,\n`dequeue` e `is_empty`:\n\n```c\ntypedef struct s_queue { int *buf; int head; int tail; int size; int cap; } t_queue;\n```\n\nGestiona el desbordamiento cuando `size == cap`.\n\n### Restricciones\n\n- Usar aritmética modular (`% cap`) para head/tail.\n- No usar librerías de contenedores.\n- Cumplir Norminette.\n\n### Casos de prueba sugeridos\n\n```text\nenqueue(1), enqueue(2), dequeue() -> 1\ndequeue() en vacía -> error/indefinido\n```\n\n### Dificultad y tags\n\n- Dificultad: medium\n- Tags: estructuras de datos, arrays, punteros, Norminette"
+    },
+    {
+      "id": "reto-c12-hash-map",
+      "slug": "reto-c12-hash-map",
+      "title": "hash_map — tabla hash simple",
+      "module": "c10-c13-avanzado",
+      "phase": "fase4-simulacion",
+      "difficulty": "hard",
+      "estimated_time_minutes": 55,
+      "tags": [
+        "hash",
+        "punteros",
+        "cadenas",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nImplementa una tabla hash con encadenamiento (separate chaining) que permita `insert`\ny `lookup` de pares clave→valor (cadenas):\n\n```c\ntypedef struct s_entry { char *key; char *value; struct s_entry *next; } t_entry;\n```\n\nUsa una función hash simple (suma de caracteres módulo tamaño).\n\n### Restricciones\n\n- Resolver colisiones por lista enlazada en cada cubo.\n- Usar `malloc` para entradas y cubos.\n- Cumplir Norminette.\n\n### Casos de prueba sugeridos\n\n```text\ninsert(\"a\",\"1\"); lookup(\"a\") -> \"1\"\nlookup(\"x\") inexistente -> NULL\n```\n\n### Dificultad y tags\n\n- Dificultad: hard\n- Tags: hash, punteros, cadenas, Norminette"
+    },
+    {
+      "id": "reto-examshell-c01",
+      "slug": "reto-examshell-c01",
+      "title": "Examshell — Punteros (C01)",
+      "module": "c01-punteros",
+      "phase": "fase4-simulacion",
+      "difficulty": "medium",
+      "estimated_time_minutes": 15,
+      "tags": [
+        "punteros",
+        "examen",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nReto de examen corto: implementa una función con punteros (p. ej. intercambio\no recorrido) en menos de 15 minutos, cumpliendo Norminette.\n\n### Restricciones\n\n- Tiempo limitado (estilo Examshell).\n- Cumplir Norminette.\n- Sin acceso a internet ni ayuda.\n\n### Casos de prueba sugeridos\n\n```text\nSimilar a reto-c01-swap-int pero bajo presión de tiempo.\n```\n\n### Dificultad y tags\n\n- Dificultad: medium\n- Tags: punteros, examen, Norminette"
+    },
+    {
+      "id": "reto-examshell-c07",
+      "slug": "reto-examshell-c07",
+      "title": "Examshell — Memoria dinámica (C07)",
+      "module": "c07-asignacion-dinamica",
+      "phase": "fase4-simulacion",
+      "difficulty": "hard",
+      "estimated_time_minutes": 20,
+      "tags": [
+        "malloc",
+        "examen",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nReto de examen corto: implementa una función con `malloc` (p. ej. `ft_strjoin`\no `ft_range`) en menos de 20 minutos, gestionando liberación correcta.\n\n### Restricciones\n\n- Tiempo limitado (estilo Examshell).\n- Cumplir Norminette.\n- Sin fugas de memoria en la solución presentada.\n\n### Casos de prueba sugeridos\n\n```text\nSimilar a reto-c07-ft-strjoin pero bajo presión de tiempo.\n```\n\n### Dificultad y tags\n\n- Dificultad: hard\n- Tags: malloc, examen, Norminette"
+    },
+    {
+      "id": "reto-examshell-c00",
+      "slug": "reto-examshell-c00",
+      "title": "Examshell — Fundamentos (C00)",
+      "module": "c00-intro",
+      "phase": "fase4-simulacion",
+      "difficulty": "easy",
+      "estimated_time_minutes": 12,
+      "tags": [
+        "fundamentos",
+        "examen",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nReto de examen corto: implementa una función básica de C00 (p. ej. imprimir un\npatrón o contar dígitos) en menos de 12 minutos, cumpliendo Norminette.\n\n### Restricciones\n\n- Tiempo limitado (estilo Examshell).\n- Cumplir Norminette.\n- Sin acceso a internet ni ayuda.\n\n### Casos de prueba sugeridos\n\n```text\nSimilar a reto-c00-ft-print-alphabet pero bajo presión de tiempo.\n```\n\n### Dificultad y tags\n\n- Dificultad: easy\n- Tags: fundamentos, examen, Norminette"
+    },
+    {
+      "id": "reto-examshell-c02",
+      "slug": "reto-examshell-c02",
+      "title": "Examshell — Cadenas (C02)",
+      "module": "c02-c03-cadenas",
+      "phase": "fase4-simulacion",
+      "difficulty": "easy",
+      "estimated_time_minutes": 12,
+      "tags": [
+        "cadenas",
+        "examen",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nReto de examen corto: implementa una función de cadenas (p. ej. `ft_strcpy` o\n`ft_strlen`) en menos de 12 minutos, cumpliendo Norminette.\n\n### Restricciones\n\n- Tiempo limitado (estilo Examshell).\n- Cumplir Norminette.\n- Sin ayuda ni internet.\n\n### Casos de prueba sugeridos\n\n```text\nSimilar a reto-c02-ft-strcpy pero bajo presión de tiempo.\n```\n\n### Dificultad y tags\n\n- Dificultad: easy\n- Tags: cadenas, examen, Norminette"
+    },
+    {
+      "id": "reto-examshell-c03",
+      "slug": "reto-examshell-c03",
+      "title": "Examshell — Comparación/extracción (C03)",
+      "module": "c02-c03-cadenas",
+      "phase": "fase4-simulacion",
+      "difficulty": "medium",
+      "estimated_time_minutes": 15,
+      "tags": [
+        "cadenas",
+        "examen",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nReto de examen corto: implementa `ft_strncmp` o `ft_substr` en menos de 15\nminutos, cumpliendo Norminette.\n\n### Restricciones\n\n- Tiempo limitado (estilo Examshell).\n- Cumplir Norminette.\n- Sin ayuda ni internet.\n\n### Casos de prueba sugeridos\n\n```text\nSimilar a reto-c03-ft-strncmp pero bajo presión de tiempo.\n```\n\n### Dificultad y tags\n\n- Dificultad: medium\n- Tags: cadenas, examen, Norminette"
+    },
+    {
+      "id": "reto-examshell-c04",
+      "slug": "reto-examshell-c04",
+      "title": "Examshell — Conversión (C04)",
+      "module": "c04-c05-conversion-recursion",
+      "phase": "fase4-simulacion",
+      "difficulty": "medium",
+      "estimated_time_minutes": 15,
+      "tags": [
+        "conversión",
+        "examen",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nReto de examen corto: implementa `ft_atoi` en menos de 15 minutos, gestionando\nsigno y dígitos, cumpliendo Norminette.\n\n### Restricciones\n\n- Tiempo limitado (estilo Examshell).\n- Cumplir Norminette.\n- Sin ayuda ni internet.\n\n### Casos de prueba sugeridos\n\n```text\nSimilar a reto-c04-ft-atoi pero bajo presión de tiempo.\n```\n\n### Dificultad y tags\n\n- Dificultad: medium\n- Tags: conversión, examen, Norminette"
+    },
+    {
+      "id": "reto-examshell-c05",
+      "slug": "reto-examshell-c05",
+      "title": "Examshell — Recursión (C05)",
+      "module": "c04-c05-conversion-recursion",
+      "phase": "fase4-simulacion",
+      "difficulty": "medium",
+      "estimated_time_minutes": 15,
+      "tags": [
+        "recursión",
+        "examen",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nReto de examen corto: implementa una función recursiva (p. ej. `ft_power` o\n`ft_fibonacci`) en menos de 15 minutos, cumpliendo Norminette.\n\n### Restricciones\n\n- Tiempo limitado (estilo Examshell).\n- Cumplir Norminette.\n- Sin ayuda ni internet.\n\n### Casos de prueba sugeridos\n\n```text\nSimilar a reto-c05-ft-power pero bajo presión de tiempo.\n```\n\n### Dificultad y tags\n\n- Dificultad: medium\n- Tags: recursión, examen, Norminette"
+    },
+    {
+      "id": "reto-examshell-c06",
+      "slug": "reto-examshell-c06",
+      "title": "Examshell — Argumentos (C06)",
+      "module": "c06-cli-args",
+      "phase": "fase4-simulacion",
+      "difficulty": "medium",
+      "estimated_time_minutes": 15,
+      "tags": [
+        "argv",
+        "examen",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nReto de examen corto: implementa una función que recorra `argv` (p. ej.\ncontar argumentos o imprimir con separadores) en menos de 15 minutos, cumpliendo\nNorminette.\n\n### Restricciones\n\n- Tiempo limitado (estilo Examshell).\n- Cumplir Norminette.\n- Sin ayuda ni internet.\n\n### Casos de prueba sugeridos\n\n```text\nSimilar a reto-c06-argv-count pero bajo presión de tiempo.\n```\n\n### Dificultad y tags\n\n- Dificultad: medium\n- Tags: argv, examen, Norminette"
+    },
+    {
+      "id": "reto-examshell-c08",
+      "slug": "reto-examshell-c08",
+      "title": "Examshell — Listas (C08)",
+      "module": "c08-c09-structs-lib",
+      "phase": "fase4-simulacion",
+      "difficulty": "hard",
+      "estimated_time_minutes": 20,
+      "tags": [
+        "listas",
+        "examen",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nReto de examen corto: implementa una operación de lista enlazada (p. ej.\n`ft_list_size` o `ft_list_add_back`) en menos de 20 minutos, cumpliendo\nNorminette.\n\n### Restricciones\n\n- Tiempo limitado (estilo Examshell).\n- Cumplir Norminette.\n- Sin ayuda ni internet.\n\n### Casos de prueba sugeridos\n\n```text\nSimilar a reto-c08-ft-list-size pero bajo presión de tiempo.\n```\n\n### Dificultad y tags\n\n- Dificultad: hard\n- Tags: listas, examen, Norminette"
+    },
+    {
+      "id": "reto-examshell-c09",
+      "slug": "reto-examshell-c09",
+      "title": "Examshell — Makefile/lib (C09)",
+      "module": "c08-c09-structs-lib",
+      "phase": "fase4-simulacion",
+      "difficulty": "hard",
+      "estimated_time_minutes": 20,
+      "tags": [
+        "Makefile",
+        "examen",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nReto de examen corto: escribe un `Makefile` que genere una librería estática o\nun ejecutable en menos de 20 minutos, cumpliendo la norma de 42 para Makefiles.\n\n\n### Restricciones\n\n- Tiempo limitado (estilo Examshell).\n- Cumplir Norminette para el Makefile.\n- Sin ayuda ni internet.\n\n### Casos de prueba sugeridos\n\n```text\nSimilar a reto-c09-makefile-lib pero bajo presión de tiempo.\n```\n\n### Dificultad y tags\n\n- Dificultad: hard\n- Tags: Makefile, examen, Norminette"
+    },
+    {
+      "id": "reto-examshell-c10",
+      "slug": "reto-examshell-c10",
+      "title": "Examshell — Árboles (C10)",
+      "module": "c10-c13-avanzado",
+      "phase": "fase4-simulacion",
+      "difficulty": "hard",
+      "estimated_time_minutes": 25,
+      "tags": [
+        "árboles",
+        "examen",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nReto de examen corto: implementa inserción o recorrido en un árbol binario\n(p. ej. `bst_insert`) en menos de 25 minutos, cumpliendo Norminette.\n\n### Restricciones\n\n- Tiempo limitado (estilo Examshell).\n- Cumplir Norminette.\n- Sin ayuda ni internet.\n\n### Casos de prueba sugeridos\n\n```text\nSimilar a reto-c10-bst-insert pero bajo presión de tiempo.\n```\n\n### Dificultad y tags\n\n- Dificultad: hard\n- Tags: árboles, examen, Norminette"
+    },
+    {
+      "id": "reto-examshell-c12",
+      "slug": "reto-examshell-c12",
+      "title": "Examshell — Estructuras avanzadas (C12)",
+      "module": "c10-c13-avanzado",
+      "phase": "fase4-simulacion",
+      "difficulty": "hard",
+      "estimated_time_minutes": 25,
+      "tags": [
+        "estructuras",
+        "examen",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nReto de examen corto: implementa una estructura de datos (p. ej. cola o tabla\nhash) en menos de 25 minutos, cumpliendo Norminette.\n\n### Restricciones\n\n- Tiempo limitado (estilo Examshell).\n- Cumplir Norminette.\n- Sin ayuda ni internet.\n\n### Casos de prueba sugeridos\n\n```text\nSimilar a reto-c11-queue o reto-c12-hash-map pero bajo presión de tiempo.\n```\n\n### Dificultad y tags\n\n- Dificultad: hard\n- Tags: estructuras, examen, Norminette"
+    },
+    {
+      "id": "reto-c06-argv-count",
+      "slug": "reto-c06-argv-count",
+      "title": "Contar e imprimir argumentos (argv)",
+      "module": "c06-cli-args",
+      "phase": "fase3-c-intermedio",
+      "difficulty": "easy",
+      "estimated_time_minutes": 20,
+      "tags": [
+        "argc",
+        "argv",
+        "main",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nEscribe un programa que reciba argumentos por línea de comandos y, para cada\nuno, los imprima precedidos de su índice (o bien imprima el total de\nargumentos recibidos):\n\n```c\nint main(int argc, char **argv);\n```\n\nIgnora `argv[0]` (nombre del programa) al contar argumentos útiles.\n\n### Restricciones\n\n- Usar `argc` y `argv` en `main`.\n- Cumplir Norminette.\n- No acceder a `argv[i]` para `i >= argc`.\n\n### Casos de prueba sugeridos\n\n```text\n./a.out uno dos tres -> 3 argumentos (o lista: 1:uno 2:dos 3:tres)\n./a.out -> 0 argumentos\n```\n\n### Dificultad y tags\n\n- Dificultad: easy\n- Tags: argc, argv, main, Norminette"
+    },
+    {
+      "id": "reto-rush-team",
+      "slug": "reto-rush-team",
+      "title": "Rush — Proyecto en equipo",
+      "module": "c10-c13-avanzado",
+      "phase": "fase4-simulacion",
+      "difficulty": "hard",
+      "estimated_time_minutes": 2880,
+      "tags": [
+        "equipo",
+        "proyecto",
+        "Makefile",
+        "norminette"
+      ],
+      "norminette_focus": true,
+      "body": "### Enunciado\n\nProyecto en equipo (2–3 personas) que integra varios módulos de C (structs,\nmemoria dinámica, Makefile) y se entrega con defensa técnica ante los\nevaluadores de la Piscina.\n\n### Restricciones\n\n- Trabajo en equipo con reparto de tareas y control de versiones (git).\n- Cumplir Norminette en todo el código entregado.\n- Pasar la Moulinette y la evaluación entre iguales.\n\n### Casos de prueba sugeridos\n\n```text\nEl subject del Rush define los entregables exactos; la defensa evalúa\ncomprensión del código de todo el equipo.\n```\n\n### Dificultad y tags\n\n- Dificultad: hard\n- Tags: equipo, proyecto, Makefile, Norminette"
+    },
+    {
+      "id": "reto-shell00-midls",
+      "slug": "reto-shell00-midls",
+      "title": "midLS (listado tipo Shell00)",
+      "module": "shell00-shell01",
+      "phase": "fase1-entorno",
+      "difficulty": "easy",
+      "estimated_time_minutes": 30,
+      "tags": [
+        "shell",
+        "ls",
+        "permisos",
+        "shell00"
+      ],
+      "norminette_focus": false,
+      "body": "### Enunciado\n\nReproduce el comportamiento del comando `midLS` de Shell00: listar los\narchivos y directorios del árbol actual ordenados por fecha de modificación,\nseparados por comas, respetando el formato exigido por el subject.\n\n### Restricciones\n\n- El script debe ejecutarse con `/bin/sh`.\n- No usar herramientas gráficas; sólo comandos de shell (ls, find, etc.).\n- Cumplir el formato de salida del subject (separadores, orden).\n\n### Casos de prueba sugeridos\n\n```text\nCarpeta con a.txt (mod 10:00), b.txt (mod 09:30):\nmidLS -> \"b.txt, a.txt\" (formato según subject)\n```\n\n### Dificultad y tags\n\n- Dificultad: easy\n- Tags: shell, ls, permisos, Shell00"
+    },
+    {
+      "id": "reto-shell00-git-clean",
+      "slug": "reto-shell00-git-clean",
+      "title": "clean (borrado de basura)",
+      "module": "shell00-shell01",
+      "phase": "fase1-entorno",
+      "difficulty": "easy",
+      "estimated_time_minutes": 20,
+      "tags": [
+        "shell",
+        "find",
+        "limpieza",
+        "shell00"
+      ],
+      "norminette_focus": false,
+      "body": "### Enunciado\n\nCrea un script tipo `clean` que encuentre y borre en el árbol actual los\narchivos de respaldo `*~` y los archivos temporales `#*#`.\n\n### Restricciones\n\n- Una sola línea de `find` con `-name` y `-delete` (o equivalente).\n- No borrar archivos que no coincidan con los patrones.\n\n### Casos de prueba sugeridos\n\n```text\nÁrbol con a.txt~, #b.txt#:\nclean -> elimina a.txt~ y #b.txt#, deja el resto intacto.\n```\n\n### Dificultad y tags\n\n- Dificultad: easy\n- Tags: shell, find, limpieza, Shell00"
+    },
+    {
+      "id": "reto-shell01-find-sh",
+      "slug": "reto-shell01-find-sh",
+      "title": "find_sh (nombres .sh sin extensión)",
+      "module": "shell00-shell01",
+      "phase": "fase1-entorno",
+      "difficulty": "easy",
+      "estimated_time_minutes": 15,
+      "tags": [
+        "shell",
+        "find",
+        "sed",
+        "shell01"
+      ],
+      "norminette_focus": false,
+      "body": "### Enunciado\n\nEscribe una línea de comando que encuentre todos los archivos `.sh` en el\nárbol y muestre sólo el nombre del fichero sin la extensión.\n\n### Restricciones\n\n- Usar `find` y `sed`/`basename` en un pipeline.\n- No listar la ruta completa, sólo el nombre base sin `.sh`.\n\n### Casos de prueba sugeridos\n\n```text\nÁrbol con x/y.sh, z.sh:\nfind_sh -> \"y\", \"z\" (orden según subject)\n```\n\n### Dificultad y tags\n\n- Dificultad: easy\n- Tags: shell, find, sed, Shell01"
+    },
+    {
+      "id": "reto-shell00-hello",
+      "slug": "reto-shell00-hello",
+      "title": "Hello, Shell00",
+      "module": "shell00-shell01",
+      "phase": "fase1-entorno",
+      "difficulty": "easy",
+      "estimated_time_minutes": 10,
+      "tags": [
+        "shell",
+        "echo",
+        "shell00"
+      ],
+      "norminette_focus": false,
+      "body": "### Enunciado\n\nCrea un script que imprima exactamente el texto `Hello, Shell00!` por\nsalida estándar (sin comillas ni saltos extra). Inspirado en el ex00 de\nShell00 de repos como mlrcbsousa/42piscine.\n\n### Restricciones\n\n- El script debe ejecutarse con `/bin/sh`.\n- Sin argumentos; salida literal exacta.\n- Cumplir el formato de entrega del subject.\n\n### Casos de prueba sugeridos\n\n```text\n./hello.sh -> \"Hello, Shell00!\"\n```\n\n### Dificultad y tags\n\n- Dificultad: easy\n- Tags: shell, echo, Shell00"
+    },
+    {
+      "id": "reto-shell00-clean",
+      "slug": "reto-shell00-clean",
+      "title": "clean — borrado de basura",
+      "module": "shell00-shell01",
+      "phase": "fase1-entorno",
+      "difficulty": "easy",
+      "estimated_time_minutes": 15,
+      "tags": [
+        "shell",
+        "find",
+        "limpieza",
+        "shell00"
+      ],
+      "norminette_focus": false,
+      "body": "### Enunciado\n\nEscribe un script `clean` que elimine en el árbol actual todos los archivos\nde respaldo `*~` y temporales `#*#`. Inspirado en el ex08 de Shell00 de\njuancumbeq/42_BCN_C_Piscine_2023.\n\n### Restricciones\n\n- Una sola línea `find` con `-name` y `-delete` (o equivalente).\n- No borrar archivos que no coincidan con los patrones.\n\n### Casos de prueba sugeridos\n\n```text\nÁrbol con a.txt~, #b.txt# -> clean elimina ambos, deja el resto.\n```\n\n### Dificultad y tags\n\n- Dificultad: easy\n- Tags: shell, find, limpieza, Shell00"
+    },
+    {
+      "id": "reto-shell01-ffs",
+      "slug": "reto-shell01-ffs",
+      "title": "ffs — From First to Last Sequence",
+      "module": "shell00-shell01",
+      "phase": "fase1-entorno",
+      "difficulty": "easy",
+      "estimated_time_minutes": 20,
+      "tags": [
+        "shell",
+        "sed",
+        "texto",
+        "shell01"
+      ],
+      "norminette_focus": false,
+      "body": "### Enunciado\n\nEscribe un script que, dado un argumento, imprima la cadena desde el primer\nhasta el último carácter en orden inverso de posiciones (estilo del ex01 de\nShell01). Inspirado en los ejercicios de manipulación de texto de Shell01.\n\n### Restricciones\n\n- Usar `sed`/`rev` o `awk` en un pipeline.\n- No usar lenguajes externos (solo shell).\n\n### Casos de prueba sugeridos\n\n```text\nffs \"hola\" -> \"aloh\"\nffs \"abc\" -> \"cba\"\n```\n\n### Dificultad y tags\n\n- Dificultad: easy\n- Tags: shell, sed, texto, Shell01"
+    },
+    {
+      "id": "reto-shell01-print",
+      "slug": "reto-shell01-print",
+      "title": "print — imprimir argumentos con separador",
+      "module": "shell00-shell01",
+      "phase": "fase1-entorno",
+      "difficulty": "easy",
+      "estimated_time_minutes": 15,
+      "tags": [
+        "shell",
+        "argumentos",
+        "bucles",
+        "shell01"
+      ],
+      "norminette_focus": false,
+      "body": "### Enunciado\n\nEscribe un script que imprima sus argumentos (excepto `$0`) separados por\nsaltos de línea o por un separador dado, en el orden recibido. Basado en el\nex03/ex04 de Shell01 de varios repos de Piscine.\n\n### Restricciones\n\n- Usar un bucle `for`/`while` sobre `$@`.\n- No usar `echo` con flags no POSIX si el subject lo prohíbe.\n\n### Casos de prueba sugeridos\n\n```text\nprint uno dos -> \"uno\\ndos\"\nprint a b c -> \"a\\nb\\nc\"\n```\n\n### Dificultad y tags\n\n- Dificultad: easy\n- Tags: shell, argumentos, bucles, Shell01"
+    }
+  ],
+  "resources": [
+    {
+      "id": "resource-cs50x-week1",
+      "title": "CS50x Week 1 – C",
+      "type": "resource",
+      "url": "https://cs50.harvard.edu/x/weeks/1/",
+      "modules": [
+        "c00-intro"
+      ],
+      "phases": [
+        "fase2-c-basico"
+      ],
+      "language": "en",
+      "cost": "free"
+    },
+    {
+      "id": "resource-cs50x-week5",
+      "title": "CS50x Week 5 – Data Structures",
+      "type": "resource",
+      "url": "https://cs50.harvard.edu/x/2021/weeks/5/",
+      "modules": [
+        "c01-punteros",
+        "c07-asignacion-dinamica",
+        "c08-c09-structs-lib"
+      ],
+      "phases": [
+        "fase3-c-intermedio"
+      ],
+      "language": "en",
+      "cost": "free"
+    },
+    {
+      "id": "resource-cs50x-overview",
+      "title": "CS50 – Overview de cursos y certificaciones",
+      "type": "resource",
+      "url": "https://www.edx.org/cs50",
+      "modules": [
+        "c00-intro",
+        "c01-punteros",
+        "c02-c03-cadenas"
+      ],
+      "phases": [
+        "fase2-c-basico",
+        "fase3-c-intermedio"
+      ],
+      "language": "en",
+      "cost": "free"
+    },
+    {
+      "id": "resource-cs50x-week2",
+      "title": "CS50x Week 2 – Arrays",
+      "type": "course",
+      "url": "https://cs50.harvard.edu/x/weeks/2/",
+      "modules": [
+        "c00-intro",
+        "c02-c03-cadenas"
+      ],
+      "phases": [
+        "fase2-c-basico"
+      ],
+      "language": "en",
+      "cost": "free"
+    },
+    {
+      "id": "resource-cs50x-week4",
+      "title": "CS50x Week 4 – Memory",
+      "type": "course",
+      "url": "https://cs50.harvard.edu/x/weeks/4/",
+      "modules": [
+        "c01-punteros",
+        "c07-asignacion-dinamica"
+      ],
+      "phases": [
+        "fase3-c-intermedio"
+      ],
+      "language": "en",
+      "cost": "free"
+    },
+    {
+      "id": "resource-geeksforgeeks-c",
+      "title": "GeeksforGeeks — C Programming",
+      "type": "article",
+      "url": "https://www.geeksforgeeks.org/c-programming-language/",
+      "modules": [
+        "c00-intro",
+        "c01-punteros",
+        "c02-c03-cadenas"
+      ],
+      "phases": [
+        "fase2-c-basico",
+        "fase3-c-intermedio"
+      ],
+      "language": "en",
+      "cost": "free"
+    },
+    {
+      "id": "resource-cppreference",
+      "title": "cppreference — C reference",
+      "type": "article",
+      "url": "https://en.cppreference.com/w/c",
+      "modules": [
+        "c00-intro",
+        "c02-c03-cadenas"
+      ],
+      "phases": [
+        "fase2-c-basico",
+        "fase3-c-intermedio"
+      ],
+      "language": "en",
+      "cost": "free"
+    },
+    {
+      "id": "resource-bash-basics",
+      "title": "Bash básico (guía/curso)",
+      "type": "course",
+      "url": "",
+      "modules": [
+        "shell00-shell01"
+      ],
+      "phases": [
+        "fase1-entorno"
+      ],
+      "language": "es",
+      "cost": "free"
+    },
+    {
+      "id": "resource-git-basics",
+      "title": "Git básico (tutorial)",
+      "type": "course",
+      "url": "",
+      "modules": [
+        "shell00-shell01"
+      ],
+      "phases": [
+        "fase1-entorno"
+      ],
+      "language": "es",
+      "cost": "free"
+    },
+    {
+      "id": "resource-shell00-subject",
+      "title": "Subject oficial de Shell00",
+      "type": "course",
+      "url": "",
+      "modules": [
+        "shell00-shell01"
+      ],
+      "phases": [
+        "fase1-entorno"
+      ],
+      "language": "en",
+      "cost": "free"
+    },
+    {
+      "id": "resource-shell01-subject",
+      "title": "Subject oficial de Shell01",
+      "type": "course",
+      "url": "",
+      "modules": [
+        "shell00-shell01"
+      ],
+      "phases": [
+        "fase1-entorno"
+      ],
+      "language": "en",
+      "cost": "free"
+    },
+    {
+      "id": "resource-godbolt",
+      "title": "GodBolt Compiler Explorer",
+      "type": "tool",
+      "url": "https://godbolt.org/",
+      "modules": [
+        "c00-intro",
+        "c01-punteros"
+      ],
+      "phases": [
+        "fase2-c-basico",
+        "fase3-c-intermedio"
+      ],
+      "language": "en",
+      "cost": "free"
+    },
+    {
+      "id": "resource-explainshell",
+      "title": "explainshell",
+      "type": "tool",
+      "url": "https://explainshell.com/",
+      "modules": [
+        "shell00-shell01"
+      ],
+      "phases": [
+        "fase1-entorno"
+      ],
+      "language": "en",
+      "cost": "free"
+    },
+    {
+      "id": "resource-cheat-sh",
+      "title": "cheat.sh",
+      "type": "tool",
+      "url": "https://cheat.sh/",
+      "modules": [
+        "shell00-shell01",
+        "c00-intro"
+      ],
+      "phases": [
+        "fase1-entorno",
+        "fase2-c-basico"
+      ],
+      "language": "en",
+      "cost": "free"
+    },
+    {
+      "id": "resource-progit",
+      "title": "Pro Git (libro oficial, gratuito)",
+      "type": "book",
+      "url": "https://git-scm.com/book/es/v2",
+      "modules": [
+        "shell00-shell01"
+      ],
+      "phases": [
+        "fase1-entorno"
+      ],
+      "language": "es",
+      "cost": "free"
+    },
+    {
+      "id": "resource-learnxinyminutes-bash",
+      "title": "Learn X in Y minutes — Bash",
+      "type": "article",
+      "url": "https://learnxinyminutes.com/docs/bash/",
+      "modules": [
+        "shell00-shell01"
+      ],
+      "phases": [
+        "fase1-entorno"
+      ],
+      "language": "en",
+      "cost": "free"
+    },
+    {
+      "id": "resource-deepwiki-exam-practice",
+      "title": "DeepWiki — 42 Piscine exam practice",
+      "type": "article",
+      "url": "https://deepwiki.com/",
+      "modules": [
+        "c00-intro",
+        "c01-punteros",
+        "c07-asignacion-dinamica"
+      ],
+      "phases": [
+        "fase2-c-basico",
+        "fase3-c-intermedio",
+        "fase4-simulacion"
+      ],
+      "language": "en",
+      "cost": "free"
+    },
+    {
+      "id": "resource-1337-exam-repos",
+      "title": "Repos de exámenes 42/1337 (GitHub)",
+      "type": "repository",
+      "url": "https://github.com/topics/42-exam",
+      "modules": [
+        "c00-intro",
+        "c01-punteros",
+        "c02-c03-cadenas",
+        "c04-c05-conversion-recursion",
+        "c06-cli-args",
+        "c07-asignacion-dinamica"
+      ],
+      "phases": [
+        "fase2-c-basico",
+        "fase3-c-intermedio",
+        "fase4-simulacion"
+      ],
+      "language": "en",
+      "cost": "free"
+    },
+    {
+      "id": "resource-exam-study-thread",
+      "title": "Hilo \"What to study for Piscine?\" (r/42_school)",
+      "type": "article",
+      "url": "https://www.reddit.com/r/42_school/",
+      "modules": [
+        "c00-intro",
+        "c01-punteros",
+        "c07-asignacion-dinamica"
+      ],
+      "phases": [
+        "fase2-c-basico",
+        "fase3-c-intermedio"
+      ],
+      "language": "en",
+      "cost": "free"
+    },
+    {
+      "id": "resource-exercism-c-basics",
+      "title": "Exercism — C basics",
+      "type": "resource",
+      "url": "",
+      "modules": [
+        "c01-punteros"
+      ],
+      "phases": [
+        "fase3-c-intermedio"
+      ],
+      "language": "en",
+      "cost": "free"
+    },
+    {
+      "id": "resource-exercism-c-track",
+      "title": "Exercism — C track (página del track)",
+      "type": "course",
+      "url": "https://exercism.org/tracks/c",
+      "modules": [
+        "c00-intro",
+        "c01-punteros",
+        "c02-c03-cadenas",
+        "c07-asignacion-dinamica"
+      ],
+      "phases": [
+        "fase2-c-basico",
+        "fase3-c-intermedio"
+      ],
+      "language": "en",
+      "cost": "free"
+    },
+    {
+      "id": "resource-pointers-article",
+      "title": "A `git`-style tutorial on C pointers",
+      "type": "article",
+      "url": "https://www.codingunit.com/c-tutorial-pointers",
+      "modules": [
+        "c01-punteros"
+      ],
+      "phases": [
+        "fase3-c-intermedio"
+      ],
+      "language": "en",
+      "cost": "free"
+    },
+    {
+      "id": "resource-norminette-overview",
+      "title": "Norminette — guía de estilo 42",
+      "type": "course",
+      "url": "",
+      "modules": [
+        "c01-punteros"
+      ],
+      "phases": [
+        "fase3-c-intermedio",
+        "fase4-simulacion"
+      ],
+      "language": "en",
+      "cost": "free"
+    },
+    {
+      "id": "resource-moulinette",
+      "title": "Moulinette — validador automático",
+      "type": "course",
+      "url": "",
+      "modules": [
+        "c10-c13-avanzado"
+      ],
+      "phases": [
+        "fase4-simulacion"
+      ],
+      "language": "en",
+      "cost": "free"
+    },
+    {
+      "id": "resource-norminette-repo",
+      "title": "Norminette — repositorio oficial (GitHub)",
+      "type": "repository",
+      "url": "https://github.com/42School/norminette",
+      "modules": [
+        "c00-intro",
+        "c01-punteros",
+        "c02-c03-cadenas",
+        "c04-c05-conversion-recursion",
+        "c06-cli-args",
+        "c07-asignacion-dinamica",
+        "c08-c09-structs-lib",
+        "c10-c13-avanzado"
+      ],
+      "phases": [
+        "fase2-c-basico",
+        "fase3-c-intermedio",
+        "fase4-simulacion"
+      ],
+      "language": "en",
+      "cost": "free"
+    },
+    {
+      "id": "resource-norminette-rules",
+      "title": "Norminette — resumen de reglas",
+      "type": "article",
+      "url": "https://github.com/42School/norminette/blob/master/README.md",
+      "modules": [
+        "c00-intro",
+        "c01-punteros",
+        "c02-c03-cadenas"
+      ],
+      "phases": [
+        "fase2-c-basico",
+        "fase3-c-intermedio"
+      ],
+      "language": "en",
+      "cost": "free"
+    },
+    {
+      "id": "resource-norminette-python",
+      "title": "norminette.py — validador en Python",
+      "type": "repository",
+      "url": "https://github.com/R4meau/norminette.py",
+      "modules": [
+        "c00-intro",
+        "c01-punteros"
+      ],
+      "phases": [
+        "fase2-c-basico",
+        "fase3-c-intermedio"
+      ],
+      "language": "en",
+      "cost": "free"
+    },
+    {
+      "id": "resource-exercism-c-basics",
+      "title": "Exercism — C basics",
+      "type": "course",
+      "url": "",
+      "modules": [
+        "c01-punteros"
+      ],
+      "phases": [
+        "fase3-c-intermedio"
+      ],
+      "language": "en",
+      "cost": "free"
+    }
+  ],
+  "habits": [
+    {
+      "id": "habit-correction-points-track",
+      "slug": "habit-correction-points-track",
+      "title": "Seguimiento de correction points",
+      "phases": [
+        "fase4-simulacion",
+        "fase3-c-intermedio"
+      ],
+      "metrics": []
+    },
+    {
+      "id": "habit-daily-commit",
+      "slug": "habit-daily-commit",
+      "title": "Commit diario de avance",
+      "phases": [
+        "fase1-entorno",
+        "fase2-c-basico",
+        "fase3-c-intermedio",
+        "fase4-simulacion"
+      ],
+      "metrics": []
+    },
+    {
+      "id": "habit-exam-sim-weekly",
+      "slug": "habit-exam-sim-weekly",
+      "title": "Simulacro de Examshell semanal",
+      "phases": [
+        "fase4-simulacion",
+        "fase3-c-intermedio"
+      ],
+      "metrics": []
+    },
+    {
+      "id": "habit-git-commits-daily",
+      "slug": "habit-git-commits-daily",
+      "title": "Commits semánticos diarios",
+      "phases": [
+        "fase1-entorno"
+      ],
+      "metrics": []
+    },
+    {
+      "id": "habit-meal-routine",
+      "slug": "habit-meal-routine",
+      "title": "Rutina de comidas estables",
+      "phases": [
+        "fase1-entorno",
+        "fase2-c-basico",
+        "fase3-c-intermedio",
+        "fase4-simulacion"
+      ],
+      "metrics": []
+    },
+    {
+      "id": "habit-norminette-daily",
+      "slug": "habit-norminette-daily",
+      "title": "Revisión diaria con Norminette",
+      "phases": [
+        "fase3-c-intermedio"
+      ],
+      "metrics": []
+    },
+    {
+      "id": "habit-peer-daily",
+      "slug": "habit-peer-daily",
+      "title": "Intercambio con compañeros cada día",
+      "phases": [
+        "fase1-entorno",
+        "fase2-c-basico",
+        "fase3-c-intermedio",
+        "fase4-simulacion"
+      ],
+      "metrics": []
+    },
+    {
+      "id": "habit-read-subject-twice",
+      "slug": "habit-read-subject-twice",
+      "title": "Leer el subject dos veces",
+      "phases": [
+        "fase2-c-basico",
+        "fase3-c-intermedio",
+        "fase4-simulacion"
+      ],
+      "metrics": []
+    },
+    {
+      "id": "habit-sleep-7h",
+      "slug": "habit-sleep-7h",
+      "title": "Dormir 7+ horas",
+      "phases": [
+        "fase1-entorno",
+        "fase2-c-basico",
+        "fase3-c-intermedio",
+        "fase4-simulacion"
+      ],
+      "metrics": []
+    },
+    {
+      "id": "habit-stress-reset",
+      "slug": "habit-stress-reset",
+      "title": "Reset de estrés cada tarde",
+      "phases": [
+        "fase2-c-basico",
+        "fase3-c-intermedio",
+        "fase4-simulacion"
+      ],
+      "metrics": []
+    },
+    {
+      "id": "habit-study-block-90m",
+      "slug": "habit-study-block-90m",
+      "title": "Bloque de estudio profundo de 90 minutos",
+      "phases": [
+        "fase1-entorno",
+        "fase2-c-basico",
+        "fase3-c-intermedio",
+        "fase4-simulacion"
+      ],
+      "metrics": []
+    },
+    {
+      "id": "habit-terminal-daily",
+      "slug": "habit-terminal-daily",
+      "title": "Uso diario de la terminal",
+      "phases": [
+        "fase1-entorno"
+      ],
+      "metrics": []
+    },
+    {
+      "id": "habit-valgrind-after-c07",
+      "slug": "habit-valgrind-after-c07",
+      "title": "Pasar Valgrind tras cada reto de memoria",
+      "phases": [
+        "fase3-c-intermedio",
+        "fase4-simulacion"
+      ],
+      "metrics": []
+    }
+  ],
+  "exams": [
+    {
+      "id": "exam-sim-1",
+      "slug": "exam-sim-1",
+      "title": "Simulación Examshell 1 — C00–C02 básico",
+      "phase": "fase4-simulacion",
+      "duration_minutes": 120,
+      "levels": [
+        "reto-examshell-c00",
+        "reto-examshell-c02",
+        "reto-examshell-c03"
+      ],
+      "rules": [
+        "Ventana de 120 minutos para los 3 retos.",
+        "Sin internet, sin ayuda de peers.",
+        "Cada reto debe pasar Norminette antes de darse por bueno.",
+        "Se permite reintentar dentro de la ventana, pero el último intento cuenta."
+      ]
+    },
+    {
+      "id": "exam-sim-2",
+      "slug": "exam-sim-2",
+      "title": "Simulación Examshell 2 — Punteros y conversión",
+      "phase": "fase4-simulacion",
+      "duration_minutes": 120,
+      "levels": [
+        "reto-examshell-c01",
+        "reto-examshell-c04",
+        "reto-examshell-c05"
+      ],
+      "rules": [
+        "Ventana de 120 minutos para los 3 retos.",
+        "Sin internet, sin ayuda de peers.",
+        "Cada reto debe pasar Norminette.",
+        "Valgrind opcional pero recomendado en C05."
+      ]
+    },
+    {
+      "id": "exam-sim-3",
+      "slug": "exam-sim-3",
+      "title": "Simulación Examshell 3 — Memoria y argumentos",
+      "phase": "fase4-simulacion",
+      "duration_minutes": 150,
+      "levels": [
+        "reto-examshell-c06",
+        "reto-examshell-c07",
+        "reto-examshell-c08"
+      ],
+      "rules": [
+        "Ventana de 150 minutos.",
+        "Sin internet, sin ayuda.",
+        "Obligatorio pasar Valgrind sin fugas en reto-examshell-c07.",
+        "Cada reto debe pasar Norminette."
+      ]
+    },
+    {
+      "id": "exam-sim-4",
+      "slug": "exam-sim-4",
+      "title": "Simulación Examshell 4 — Estructuras y lib",
+      "phase": "fase4-simulacion",
+      "duration_minutes": 150,
+      "levels": [
+        "reto-examshell-c09",
+        "reto-examshell-c10",
+        "reto-examshell-c12"
+      ],
+      "rules": [
+        "Ventana de 150 minutos.",
+        "Sin internet, sin ayuda.",
+        "Makefile debe generar el binario/lib pedido sin errores.",
+        "Cada reto debe pasar Norminette."
+      ]
+    },
+    {
+      "id": "exam-sim-5",
+      "slug": "exam-sim-5",
+      "title": "Mini-Piscina fin de semana — bloque completo",
+      "phase": "fase4-simulacion",
+      "duration_minutes": 480,
+      "levels": [
+        "reto-examshell-c00",
+        "reto-examshell-c01",
+        "reto-examshell-c02",
+        "reto-examshell-c04",
+        "reto-examshell-c06",
+        "reto-examshell-c07",
+        "reto-examshell-c08",
+        "reto-examshell-c10"
+      ],
+      "rules": [
+        "Jornada de 8 horas con descansos (tipo Examshell de fin de semana).",
+        "Mezcla retos de todos los niveles; el orden lo decides tú.",
+        "Sin internet ni ayuda salvo la documentación oficial permitida.",
+        "Al final, todos los retos entregados deben pasar Norminette y (en C07) Valgrind."
+      ]
+    },
+    {
+      "id": "exam-sim-6",
+      "slug": "exam-sim-6",
+      "title": "ExamSimulation de defensa Rush",
+      "phase": "fase4-simulacion",
+      "duration_minutes": 60,
+      "levels": [
+        "reto-rush-team"
+      ],
+      "rules": [
+        "Sesión de 60 minutos simulando la defensa técnica del Rush.",
+        "Un compañero hace de evaluador y pregunta sobre cualquier parte del código.",
+        "El objetivo es explicar todo el proyecto, no solo la parte implementada.",
+        "Norminette debe estar limpia en todo el entregable."
+      ]
+    }
+  ]
+}

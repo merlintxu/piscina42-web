@@ -4,6 +4,10 @@
 # Código de la web (app/) aún no desarrollado en esta fase de contenido.
 /app/
 
+# Dependencias y build del script de pipeline (scripts/).
+/scripts/node_modules/
+/scripts/dist/
+
 # Artefactos de entorno / SO
 .DS_Store
 Thumbs.db

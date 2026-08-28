@@ -1,4 +1,4 @@
-﻿---
+---
 id: c-retos-basicos
 type: challenge-collection
 title: Retos de C básicos (C00–C02)
@@ -10,12 +10,18 @@ source: piscina42-web
 ---
 id: reto-c01-swap-int
 type: challenge
+slug: reto-c01-swap-int
 title: Intercambio de enteros con punteros
 source: piscina42-web
 module: c01-punteros
 phase: fase3-c-intermedio
 difficulty: medium
 estimated_time_minutes: 30
+tags:
+  - punteros
+  - fundamentos
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -66,12 +72,18 @@ valores grandes, combinación de positivos/negativos.
 ---
 id: reto-c01-pointer-arithmetic
 type: challenge
+slug: reto-c01-pointer-arithmetic
 title: Recorrido de array con aritmética de punteros
 source: piscina42-web
 module: c01-punteros
 phase: fase3-c-intermedio
 difficulty: medium
 estimated_time_minutes: 45
+tags:
+  - punteros
+  - arrays
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -117,12 +129,19 @@ arr = [], n = 0 -> resultado 0
 ---
 id: reto-c02-strlen-strcmp
 type: challenge
+slug: reto-c02-strlen-strcmp
 title: Implementación manual de strlen y strcmp
 source: piscina42-web
 module: c02-c03-cadenas
 phase: fase3-c-intermedio
 difficulty: easy
 estimated_time_minutes: 25
+tags:
+  - cadenas
+  - punteros
+  - fundamentos
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -169,12 +188,19 @@ ft_strcmp("abd", "abc") -> positivo
 ---
 id: reto-c00-ft-putchar
 type: challenge
+slug: reto-c00-ft-putchar
 title: ft_putchar — imprimir un carácter
 source: piscina42-web
 module: c00-intro
 phase: fase2-c-basico
 difficulty: easy
 estimated_time_minutes: 15
+tags:
+  - write
+  - salida
+  - fundamentos
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -210,12 +236,19 @@ ft_putchar('A') -> imprime "A"
 ---
 id: reto-c00-ft-print-alphabet
 type: challenge
+slug: reto-c00-ft-print-alphabet
 title: ft_print_alphabet — imprimir a–z
 source: piscina42-web
 module: c00-intro
 phase: fase2-c-basico
 difficulty: easy
 estimated_time_minutes: 20
+tags:
+  - bucles
+  - write
+  - fundamentos
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -251,12 +284,19 @@ ft_print_alphabet() -> "abcdefghijklmnopqrstuvwxyz\n"
 ---
 id: reto-c00-ft-ft
 type: challenge
+slug: reto-c00-ft-ft
 title: ft_ft — puntero a 42
 source: piscina42-web
 module: c00-intro
 phase: fase2-c-basico
 difficulty: easy
 estimated_time_minutes: 15
+tags:
+  - punteros
+  - paso por referencia
+  - fundamentos
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -292,12 +332,19 @@ int x = 0; ft_ft(&x); // x == 42
 ---
 id: reto-c01-ft-putstr
 type: challenge
+slug: reto-c01-ft-putstr
 title: ft_putstr — imprimir una cadena
 source: piscina42-web
 module: c01-punteros
 phase: fase3-c-intermedio
 difficulty: easy
 estimated_time_minutes: 20
+tags:
+  - punteros
+  - cadenas
+  - write
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -334,12 +381,19 @@ ft_putstr("") -> no imprime nada
 ---
 id: reto-c02-ft-strcpy
 type: challenge
+slug: reto-c02-ft-strcpy
 title: ft_strcpy — copiar cadena
 source: piscina42-web
 module: c02-c03-cadenas
 phase: fase3-c-intermedio
 difficulty: easy
 estimated_time_minutes: 25
+tags:
+  - cadenas
+  - punteros
+  - fundamentos
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado

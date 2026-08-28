@@ -89,3 +89,34 @@
   `## {{id}}` de las plantillas (plantillas desactualizadas; se anota para revisión futura).
 - Research vía web_search / web_extract; adaptar ideas, no copiar texto largo; citar inspiración.
 - Tras cada fase: sincronizar vault (espejo) y verificar 0 wikilinks rotos.
+
+---
+
+## ANEXO · Cambio de modelo (FASE A, feature/schema-and-app, 2026-08-27)
+
+Para el pipeline Markdown→JSON y la app React, el schema conceptual es:
+
+- **Phase**: id, slug, title, summary, order, modules[], challenges[], resources[], habits[], body
+- **Module**: id, slug, title, phase, order, level, concepts[], cognitive_difficulties[], challenges[], resources[], body
+- **Challenge**: id, slug, title, module, phase?, difficulty, estimated_time_minutes?, tags[], norminette_focus?, body
+- **Resource**: id, title, type (subtipo: course|article|repository|tool|book), url, description, modules[], phases[], language?, cost?
+- **Habit**: id, slug, title, description, phases[], frequency?, metrics[]
+- **ExamSimulation**: id, slug, title, description, phase?, duration_minutes, levels[], rules[]
+
+### Reglas adoptadas (resuelven ambigüedades reales del repo)
+1. **`type` de Resource = subtipo.** No se repite la clave `type`. La entidad Resource se
+   infiere por estar en `content/recursos/`. Antes había archivos con `type: resource` y
+   luego `type: course/article` (colisión YAML) → normalizado a un único `type` subtipo.
+2. **Colecciones multi-entidad.** `challenge-collection` y `resource-collection` contienen
+   varios bloques `--- ... ---` con su propio frontmatter; el script los expande.
+3. **`exam-simulations.md`** es una colección de 6 `ExamSimulation` sin frontmatter de
+   envoltura; el script la parsea como bloques consecutivos.
+4. **Campos derivados del body** cuando faltan en frontmatter (p.ej. `summary` de una
+   fase, `description` de un recurso) se extraen del primer párrafo/sección en el pipeline.
+
+### Slugs asignados
+- Phase: fase1-entorno, fase2-c-basico, fase3-c-intermedio, fase4-simulacion (id = slug).
+- Module: shell00-shell01, c00-intro, c01-punteros, c02-c03-cadenas,
+  c04-c05-conversion-recursion, c06-cli-args, c07-asignacion-dinamica,
+  c08-c09-structs-lib, c10-c13-avanzado (id = slug).
+- Challenge/Habit/ExamSimulation: `slug` = `id` en todos los casos (estables para URLs).

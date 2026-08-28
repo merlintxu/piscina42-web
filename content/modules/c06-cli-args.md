@@ -1,10 +1,21 @@
 ---
 id: c06-cli-args
 type: module
+slug: c06-cli-args
+order: 6
 title: C06: Argumentos de línea de comandos
 source: piscina42-web
 phase: fase3-c-intermedio
 level: intermediate
+concepts:
+  - main con argc y argv
+  - argv[0] es el nombre del programa
+  - argv como array de punteros a char
+  - validar argc antes de acceder a argv[i]
+cognitive_difficulties:
+  - entender que argv es char** (no array bidimensional)
+  - distinguir conteo argc del índice útil
+  - argumentos con espacios (depende del shell)
 challenges:
   - reto-c06-argv-count
 resources:

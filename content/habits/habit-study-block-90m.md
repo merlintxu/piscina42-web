@@ -1,6 +1,7 @@
 ---
 id: habit-study-block-90m
 type: habit
+slug: habit-study-block-90m
 title: Bloque de estudio profundo de 90 minutos
 phases:
   - fase1-entorno

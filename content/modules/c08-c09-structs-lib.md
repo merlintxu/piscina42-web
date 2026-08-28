@@ -1,10 +1,22 @@
-﻿---
+---
 id: c08-c09-structs-lib
 type: module
+slug: c08-c09-structs-lib
+order: 8
 title: C08–C09: Structs, macros y librerías estáticas
 source: piscina42-web
 phase: fase3-c-intermedio
 level: intermediate
+concepts:
+  - struct (agrupar variables, acceso . y ->)
+  - punteros a struct
+  - macros con #define
+  - librerías estáticas (.a) con ar y Makefile
+  - listas enlazadas simples
+cognitive_difficulties:
+  - entender struct como plantilla de memoria contigua
+  - manejar punteros a struct sin perder referencia
+  - separar responsabilidades en un Makefile
 challenges:
   - reto-c08-struct-basic
   - reto-c08-ft-list-size

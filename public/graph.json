@@ -1,0 +1,2740 @@
+{
+  "nodes": [
+    {
+      "id": "fase1-entorno",
+      "type": "phase",
+      "label": "Fase 1: Entorno, terminal, Bash y Git",
+      "slug": "fase1-entorno"
+    },
+    {
+      "id": "fase2-c-basico",
+      "type": "phase",
+      "label": "Fase 2: Fundamentos de C (C00–C02)",
+      "slug": "fase2-c-basico"
+    },
+    {
+      "id": "fase3-c-intermedio",
+      "type": "phase",
+      "label": "Fase 3: C intermedio, memoria y estilo 42",
+      "slug": "fase3-c-intermedio"
+    },
+    {
+      "id": "fase4-simulacion",
+      "type": "phase",
+      "label": "Fase 4: Simulación de la Piscina (Examshell + Rush)",
+      "slug": "fase4-simulacion"
+    },
+    {
+      "id": "c00-intro",
+      "type": "module",
+      "label": "C00: Introducción a C",
+      "slug": "c00-intro"
+    },
+    {
+      "id": "c01-punteros",
+      "type": "module",
+      "label": "C01: Punteros",
+      "slug": "c01-punteros"
+    },
+    {
+      "id": "c02-c03-cadenas",
+      "type": "module",
+      "label": "C02–C03: Cadenas y funciones de <string.h>",
+      "slug": "c02-c03-cadenas"
+    },
+    {
+      "id": "c04-c05-conversion-recursion",
+      "type": "module",
+      "label": "C04–C05: Conversión de datos y recursión",
+      "slug": "c04-c05-conversion-recursion"
+    },
+    {
+      "id": "c06-cli-args",
+      "type": "module",
+      "label": "C06: Argumentos de línea de comandos",
+      "slug": "c06-cli-args"
+    },
+    {
+      "id": "c07-asignacion-dinamica",
+      "type": "module",
+      "label": "C07: Asignación dinámica de memoria",
+      "slug": "c07-asignacion-dinamica"
+    },
+    {
+      "id": "c08-c09-structs-lib",
+      "type": "module",
+      "label": "C08–C09: Structs, macros y librerías estáticas",
+      "slug": "c08-c09-structs-lib"
+    },
+    {
+      "id": "c10-c13-avanzado",
+      "type": "module",
+      "label": "C10–C13: Estructuras avanzadas y proyecto final",
+      "slug": "c10-c13-avanzado"
+    },
+    {
+      "id": "shell00-shell01",
+      "type": "module",
+      "label": "Shell00–Shell01: Fundamentos de Unix, Git y shell scripting",
+      "slug": "shell00-shell01"
+    },
+    {
+      "id": "reto-c01-swap-int",
+      "type": "challenge",
+      "label": "Intercambio de enteros con punteros",
+      "slug": "reto-c01-swap-int"
+    },
+    {
+      "id": "reto-c01-pointer-arithmetic",
+      "type": "challenge",
+      "label": "Recorrido de array con aritmética de punteros",
+      "slug": "reto-c01-pointer-arithmetic"
+    },
+    {
+      "id": "reto-c02-strlen-strcmp",
+      "type": "challenge",
+      "label": "Implementación manual de strlen y strcmp",
+      "slug": "reto-c02-strlen-strcmp"
+    },
+    {
+      "id": "reto-c00-ft-putchar",
+      "type": "challenge",
+      "label": "ft_putchar — imprimir un carácter",
+      "slug": "reto-c00-ft-putchar"
+    },
+    {
+      "id": "reto-c00-ft-print-alphabet",
+      "type": "challenge",
+      "label": "ft_print_alphabet — imprimir a–z",
+      "slug": "reto-c00-ft-print-alphabet"
+    },
+    {
+      "id": "reto-c00-ft-ft",
+      "type": "challenge",
+      "label": "ft_ft — puntero a 42",
+      "slug": "reto-c00-ft-ft"
+    },
+    {
+      "id": "reto-c01-ft-putstr",
+      "type": "challenge",
+      "label": "ft_putstr — imprimir una cadena",
+      "slug": "reto-c01-ft-putstr"
+    },
+    {
+      "id": "reto-c02-ft-strcpy",
+      "type": "challenge",
+      "label": "ft_strcpy — copiar cadena",
+      "slug": "reto-c02-ft-strcpy"
+    },
+    {
+      "id": "reto-c04-ft-atoi",
+      "type": "challenge",
+      "label": "ft_atoi — cadena a entero",
+      "slug": "reto-c04-ft-atoi"
+    },
+    {
+      "id": "reto-c04-ft-itoa",
+      "type": "challenge",
+      "label": "ft_itoa — entero a cadena",
+      "slug": "reto-c04-ft-itoa"
+    },
+    {
+      "id": "reto-c05-fibonacci",
+      "type": "challenge",
+      "label": "Fibonacci recursivo",
+      "slug": "reto-c05-fibonacci"
+    },
+    {
+      "id": "reto-c05-factorial",
+      "type": "challenge",
+      "label": "Factorial recursivo",
+      "slug": "reto-c05-factorial"
+    },
+    {
+      "id": "reto-c07-ft-strdup",
+      "type": "challenge",
+      "label": "ft_strdup — duplicar cadena con malloc",
+      "slug": "reto-c07-ft-strdup"
+    },
+    {
+      "id": "reto-c07-ft-range",
+      "type": "challenge",
+      "label": "ft_range — array de enteros en el heap",
+      "slug": "reto-c07-ft-range"
+    },
+    {
+      "id": "reto-c07-ft-ultimate-range",
+      "type": "challenge",
+      "label": "ft_ultimate_range — rango con errores",
+      "slug": "reto-c07-ft-ultimate-range"
+    },
+    {
+      "id": "reto-c07-ft-strjoin",
+      "type": "challenge",
+      "label": "ft_strjoin — concatenar con malloc",
+      "slug": "reto-c07-ft-strjoin"
+    },
+    {
+      "id": "reto-c07-ft-split",
+      "type": "challenge",
+      "label": "ft_split — partir cadena en array de cadenas",
+      "slug": "reto-c07-ft-split"
+    },
+    {
+      "id": "reto-c08-struct-basic",
+      "type": "challenge",
+      "label": "Uso básico de struct",
+      "slug": "reto-c08-struct-basic"
+    },
+    {
+      "id": "reto-c08-ft-list-size",
+      "type": "challenge",
+      "label": "ft_list_size — tamaño de lista enlazada",
+      "slug": "reto-c08-ft-list-size"
+    },
+    {
+      "id": "reto-c09-makefile-lib",
+      "type": "challenge",
+      "label": "Makefile que genera librería estática",
+      "slug": "reto-c09-makefile-lib"
+    },
+    {
+      "id": "reto-c03-ft-substr",
+      "type": "challenge",
+      "label": "ft_substr — extraer subcadena",
+      "slug": "reto-c03-ft-substr"
+    },
+    {
+      "id": "reto-c03-ft-strncmp",
+      "type": "challenge",
+      "label": "ft_strncmp — comparar n caracteres",
+      "slug": "reto-c03-ft-strncmp"
+    },
+    {
+      "id": "reto-c05-ft-power",
+      "type": "challenge",
+      "label": "ft_power — potencia recursiva",
+      "slug": "reto-c05-ft-power"
+    },
+    {
+      "id": "reto-c06-ft-putstr-tab",
+      "type": "challenge",
+      "label": "ft_putstr_tab — imprimir argv con tabuladores",
+      "slug": "reto-c06-ft-putstr-tab"
+    },
+    {
+      "id": "reto-c06-ft-atoi-base",
+      "type": "challenge",
+      "label": "ft_atoi_base — convertir string en base N a entero",
+      "slug": "reto-c06-ft-atoi-base"
+    },
+    {
+      "id": "reto-c08-ft-list-add-back",
+      "type": "challenge",
+      "label": "ft_list_add_back — añadir nodo al final",
+      "slug": "reto-c08-ft-list-add-back"
+    },
+    {
+      "id": "reto-c08-ft-list-sort",
+      "type": "challenge",
+      "label": "ft_list_sort — ordenar lista enlazada",
+      "slug": "reto-c08-ft-list-sort"
+    },
+    {
+      "id": "reto-c09-ft-btree-basic",
+      "type": "challenge",
+      "label": "ft_btree_basic — insertar en árbol binario",
+      "slug": "reto-c09-ft-btree-basic"
+    },
+    {
+      "id": "reto-c10-bst-insert",
+      "type": "challenge",
+      "label": "Inserción en árbol binario de búsqueda",
+      "slug": "reto-c10-bst-insert"
+    },
+    {
+      "id": "reto-c11-stack",
+      "type": "challenge",
+      "label": "Pila (stack) con push/pop",
+      "slug": "reto-c11-stack"
+    },
+    {
+      "id": "reto-c12-templates",
+      "type": "challenge",
+      "label": "Esqueleto de proyecto con headers y Makefile",
+      "slug": "reto-c12-templates"
+    },
+    {
+      "id": "reto-c10-bst-remove",
+      "type": "challenge",
+      "label": "bst_remove — eliminar nodo de BST",
+      "slug": "reto-c10-bst-remove"
+    },
+    {
+      "id": "reto-c11-queue",
+      "type": "challenge",
+      "label": "queue — cola con array circular",
+      "slug": "reto-c11-queue"
+    },
+    {
+      "id": "reto-c12-hash-map",
+      "type": "challenge",
+      "label": "hash_map — tabla hash simple",
+      "slug": "reto-c12-hash-map"
+    },
+    {
+      "id": "reto-examshell-c01",
+      "type": "challenge",
+      "label": "Examshell — Punteros (C01)",
+      "slug": "reto-examshell-c01"
+    },
+    {
+      "id": "reto-examshell-c07",
+      "type": "challenge",
+      "label": "Examshell — Memoria dinámica (C07)",
+      "slug": "reto-examshell-c07"
+    },
+    {
+      "id": "reto-examshell-c00",
+      "type": "challenge",
+      "label": "Examshell — Fundamentos (C00)",
+      "slug": "reto-examshell-c00"
+    },
+    {
+      "id": "reto-examshell-c02",
+      "type": "challenge",
+      "label": "Examshell — Cadenas (C02)",
+      "slug": "reto-examshell-c02"
+    },
+    {
+      "id": "reto-examshell-c03",
+      "type": "challenge",
+      "label": "Examshell — Comparación/extracción (C03)",
+      "slug": "reto-examshell-c03"
+    },
+    {
+      "id": "reto-examshell-c04",
+      "type": "challenge",
+      "label": "Examshell — Conversión (C04)",
+      "slug": "reto-examshell-c04"
+    },
+    {
+      "id": "reto-examshell-c05",
+      "type": "challenge",
+      "label": "Examshell — Recursión (C05)",
+      "slug": "reto-examshell-c05"
+    },
+    {
+      "id": "reto-examshell-c06",
+      "type": "challenge",
+      "label": "Examshell — Argumentos (C06)",
+      "slug": "reto-examshell-c06"
+    },
+    {
+      "id": "reto-examshell-c08",
+      "type": "challenge",
+      "label": "Examshell — Listas (C08)",
+      "slug": "reto-examshell-c08"
+    },
+    {
+      "id": "reto-examshell-c09",
+      "type": "challenge",
+      "label": "Examshell — Makefile/lib (C09)",
+      "slug": "reto-examshell-c09"
+    },
+    {
+      "id": "reto-examshell-c10",
+      "type": "challenge",
+      "label": "Examshell — Árboles (C10)",
+      "slug": "reto-examshell-c10"
+    },
+    {
+      "id": "reto-examshell-c12",
+      "type": "challenge",
+      "label": "Examshell — Estructuras avanzadas (C12)",
+      "slug": "reto-examshell-c12"
+    },
+    {
+      "id": "reto-c06-argv-count",
+      "type": "challenge",
+      "label": "Contar e imprimir argumentos (argv)",
+      "slug": "reto-c06-argv-count"
+    },
+    {
+      "id": "reto-rush-team",
+      "type": "challenge",
+      "label": "Rush — Proyecto en equipo",
+      "slug": "reto-rush-team"
+    },
+    {
+      "id": "reto-shell00-midls",
+      "type": "challenge",
+      "label": "midLS (listado tipo Shell00)",
+      "slug": "reto-shell00-midls"
+    },
+    {
+      "id": "reto-shell00-git-clean",
+      "type": "challenge",
+      "label": "clean (borrado de basura)",
+      "slug": "reto-shell00-git-clean"
+    },
+    {
+      "id": "reto-shell01-find-sh",
+      "type": "challenge",
+      "label": "find_sh (nombres .sh sin extensión)",
+      "slug": "reto-shell01-find-sh"
+    },
+    {
+      "id": "reto-shell00-hello",
+      "type": "challenge",
+      "label": "Hello, Shell00",
+      "slug": "reto-shell00-hello"
+    },
+    {
+      "id": "reto-shell00-clean",
+      "type": "challenge",
+      "label": "clean — borrado de basura",
+      "slug": "reto-shell00-clean"
+    },
+    {
+      "id": "reto-shell01-ffs",
+      "type": "challenge",
+      "label": "ffs — From First to Last Sequence",
+      "slug": "reto-shell01-ffs"
+    },
+    {
+      "id": "reto-shell01-print",
+      "type": "challenge",
+      "label": "print — imprimir argumentos con separador",
+      "slug": "reto-shell01-print"
+    },
+    {
+      "id": "resource-cs50x-week1",
+      "type": "resource",
+      "label": "CS50x Week 1 – C",
+      "slug": "resource-cs50x-week1"
+    },
+    {
+      "id": "resource-cs50x-week5",
+      "type": "resource",
+      "label": "CS50x Week 5 – Data Structures",
+      "slug": "resource-cs50x-week5"
+    },
+    {
+      "id": "resource-cs50x-overview",
+      "type": "resource",
+      "label": "CS50 – Overview de cursos y certificaciones",
+      "slug": "resource-cs50x-overview"
+    },
+    {
+      "id": "resource-cs50x-week2",
+      "type": "resource",
+      "label": "CS50x Week 2 – Arrays",
+      "slug": "resource-cs50x-week2"
+    },
+    {
+      "id": "resource-cs50x-week4",
+      "type": "resource",
+      "label": "CS50x Week 4 – Memory",
+      "slug": "resource-cs50x-week4"
+    },
+    {
+      "id": "resource-geeksforgeeks-c",
+      "type": "resource",
+      "label": "GeeksforGeeks — C Programming",
+      "slug": "resource-geeksforgeeks-c"
+    },
+    {
+      "id": "resource-cppreference",
+      "type": "resource",
+      "label": "cppreference — C reference",
+      "slug": "resource-cppreference"
+    },
+    {
+      "id": "resource-bash-basics",
+      "type": "resource",
+      "label": "Bash básico (guía/curso)",
+      "slug": "resource-bash-basics"
+    },
+    {
+      "id": "resource-git-basics",
+      "type": "resource",
+      "label": "Git básico (tutorial)",
+      "slug": "resource-git-basics"
+    },
+    {
+      "id": "resource-shell00-subject",
+      "type": "resource",
+      "label": "Subject oficial de Shell00",
+      "slug": "resource-shell00-subject"
+    },
+    {
+      "id": "resource-shell01-subject",
+      "type": "resource",
+      "label": "Subject oficial de Shell01",
+      "slug": "resource-shell01-subject"
+    },
+    {
+      "id": "resource-godbolt",
+      "type": "resource",
+      "label": "GodBolt Compiler Explorer",
+      "slug": "resource-godbolt"
+    },
+    {
+      "id": "resource-explainshell",
+      "type": "resource",
+      "label": "explainshell",
+      "slug": "resource-explainshell"
+    },
+    {
+      "id": "resource-cheat-sh",
+      "type": "resource",
+      "label": "cheat.sh",
+      "slug": "resource-cheat-sh"
+    },
+    {
+      "id": "resource-progit",
+      "type": "resource",
+      "label": "Pro Git (libro oficial, gratuito)",
+      "slug": "resource-progit"
+    },
+    {
+      "id": "resource-learnxinyminutes-bash",
+      "type": "resource",
+      "label": "Learn X in Y minutes — Bash",
+      "slug": "resource-learnxinyminutes-bash"
+    },
+    {
+      "id": "resource-deepwiki-exam-practice",
+      "type": "resource",
+      "label": "DeepWiki — 42 Piscine exam practice",
+      "slug": "resource-deepwiki-exam-practice"
+    },
+    {
+      "id": "resource-1337-exam-repos",
+      "type": "resource",
+      "label": "Repos de exámenes 42/1337 (GitHub)",
+      "slug": "resource-1337-exam-repos"
+    },
+    {
+      "id": "resource-exam-study-thread",
+      "type": "resource",
+      "label": "Hilo \"What to study for Piscine?\" (r/42_school)",
+      "slug": "resource-exam-study-thread"
+    },
+    {
+      "id": "resource-exercism-c-basics",
+      "type": "resource",
+      "label": "Exercism — C basics",
+      "slug": "resource-exercism-c-basics"
+    },
+    {
+      "id": "resource-exercism-c-track",
+      "type": "resource",
+      "label": "Exercism — C track (página del track)",
+      "slug": "resource-exercism-c-track"
+    },
+    {
+      "id": "resource-pointers-article",
+      "type": "resource",
+      "label": "A `git`-style tutorial on C pointers",
+      "slug": "resource-pointers-article"
+    },
+    {
+      "id": "resource-norminette-overview",
+      "type": "resource",
+      "label": "Norminette — guía de estilo 42",
+      "slug": "resource-norminette-overview"
+    },
+    {
+      "id": "resource-moulinette",
+      "type": "resource",
+      "label": "Moulinette — validador automático",
+      "slug": "resource-moulinette"
+    },
+    {
+      "id": "resource-norminette-repo",
+      "type": "resource",
+      "label": "Norminette — repositorio oficial (GitHub)",
+      "slug": "resource-norminette-repo"
+    },
+    {
+      "id": "resource-norminette-rules",
+      "type": "resource",
+      "label": "Norminette — resumen de reglas",
+      "slug": "resource-norminette-rules"
+    },
+    {
+      "id": "resource-norminette-python",
+      "type": "resource",
+      "label": "norminette.py — validador en Python",
+      "slug": "resource-norminette-python"
+    },
+    {
+      "id": "habit-correction-points-track",
+      "type": "habit",
+      "label": "Seguimiento de correction points",
+      "slug": "habit-correction-points-track"
+    },
+    {
+      "id": "habit-daily-commit",
+      "type": "habit",
+      "label": "Commit diario de avance",
+      "slug": "habit-daily-commit"
+    },
+    {
+      "id": "habit-exam-sim-weekly",
+      "type": "habit",
+      "label": "Simulacro de Examshell semanal",
+      "slug": "habit-exam-sim-weekly"
+    },
+    {
+      "id": "habit-git-commits-daily",
+      "type": "habit",
+      "label": "Commits semánticos diarios",
+      "slug": "habit-git-commits-daily"
+    },
+    {
+      "id": "habit-meal-routine",
+      "type": "habit",
+      "label": "Rutina de comidas estables",
+      "slug": "habit-meal-routine"
+    },
+    {
+      "id": "habit-norminette-daily",
+      "type": "habit",
+      "label": "Revisión diaria con Norminette",
+      "slug": "habit-norminette-daily"
+    },
+    {
+      "id": "habit-peer-daily",
+      "type": "habit",
+      "label": "Intercambio con compañeros cada día",
+      "slug": "habit-peer-daily"
+    },
+    {
+      "id": "habit-read-subject-twice",
+      "type": "habit",
+      "label": "Leer el subject dos veces",
+      "slug": "habit-read-subject-twice"
+    },
+    {
+      "id": "habit-sleep-7h",
+      "type": "habit",
+      "label": "Dormir 7+ horas",
+      "slug": "habit-sleep-7h"
+    },
+    {
+      "id": "habit-stress-reset",
+      "type": "habit",
+      "label": "Reset de estrés cada tarde",
+      "slug": "habit-stress-reset"
+    },
+    {
+      "id": "habit-study-block-90m",
+      "type": "habit",
+      "label": "Bloque de estudio profundo de 90 minutos",
+      "slug": "habit-study-block-90m"
+    },
+    {
+      "id": "habit-terminal-daily",
+      "type": "habit",
+      "label": "Uso diario de la terminal",
+      "slug": "habit-terminal-daily"
+    },
+    {
+      "id": "habit-valgrind-after-c07",
+      "type": "habit",
+      "label": "Pasar Valgrind tras cada reto de memoria",
+      "slug": "habit-valgrind-after-c07"
+    },
+    {
+      "id": "exam-sim-1",
+      "type": "exam",
+      "label": "Simulación Examshell 1 — C00–C02 básico",
+      "slug": "exam-sim-1"
+    },
+    {
+      "id": "exam-sim-2",
+      "type": "exam",
+      "label": "Simulación Examshell 2 — Punteros y conversión",
+      "slug": "exam-sim-2"
+    },
+    {
+      "id": "exam-sim-3",
+      "type": "exam",
+      "label": "Simulación Examshell 3 — Memoria y argumentos",
+      "slug": "exam-sim-3"
+    },
+    {
+      "id": "exam-sim-4",
+      "type": "exam",
+      "label": "Simulación Examshell 4 — Estructuras y lib",
+      "slug": "exam-sim-4"
+    },
+    {
+      "id": "exam-sim-5",
+      "type": "exam",
+      "label": "Mini-Piscina fin de semana — bloque completo",
+      "slug": "exam-sim-5"
+    },
+    {
+      "id": "exam-sim-6",
+      "type": "exam",
+      "label": "ExamSimulation de defensa Rush",
+      "slug": "exam-sim-6"
+    }
+  ],
+  "edges": [
+    {
+      "source": "fase1-entorno",
+      "target": "shell00-shell01",
+      "rel": "has-module"
+    },
+    {
+      "source": "fase1-entorno",
+      "target": "reto-shell00-midls",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "fase1-entorno",
+      "target": "reto-shell00-git-clean",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "fase1-entorno",
+      "target": "reto-shell01-find-sh",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "fase1-entorno",
+      "target": "resource-shell00-subject",
+      "rel": "has-resource"
+    },
+    {
+      "source": "fase1-entorno",
+      "target": "resource-shell01-subject",
+      "rel": "has-resource"
+    },
+    {
+      "source": "fase1-entorno",
+      "target": "resource-bash-basics",
+      "rel": "has-resource"
+    },
+    {
+      "source": "fase1-entorno",
+      "target": "resource-git-basics",
+      "rel": "has-resource"
+    },
+    {
+      "source": "fase1-entorno",
+      "target": "habit-terminal-daily",
+      "rel": "has-habit"
+    },
+    {
+      "source": "fase1-entorno",
+      "target": "habit-git-commits-daily",
+      "rel": "has-habit"
+    },
+    {
+      "source": "fase2-c-basico",
+      "target": "c00-intro",
+      "rel": "has-module"
+    },
+    {
+      "source": "fase2-c-basico",
+      "target": "c01-punteros",
+      "rel": "has-module"
+    },
+    {
+      "source": "fase2-c-basico",
+      "target": "c02-c03-cadenas",
+      "rel": "has-module"
+    },
+    {
+      "source": "fase2-c-basico",
+      "target": "reto-c02-strlen-strcmp",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "fase2-c-basico",
+      "target": "resource-cs50x-week1",
+      "rel": "has-resource"
+    },
+    {
+      "source": "fase2-c-basico",
+      "target": "resource-cs50x-overview",
+      "rel": "has-resource"
+    },
+    {
+      "source": "fase2-c-basico",
+      "target": "resource-bash-basics",
+      "rel": "has-resource"
+    },
+    {
+      "source": "fase2-c-basico",
+      "target": "resource-git-basics",
+      "rel": "has-resource"
+    },
+    {
+      "source": "fase2-c-basico",
+      "target": "habit-terminal-daily",
+      "rel": "has-habit"
+    },
+    {
+      "source": "fase2-c-basico",
+      "target": "habit-git-commits-daily",
+      "rel": "has-habit"
+    },
+    {
+      "source": "fase3-c-intermedio",
+      "target": "c01-punteros",
+      "rel": "has-module"
+    },
+    {
+      "source": "fase3-c-intermedio",
+      "target": "c02-c03-cadenas",
+      "rel": "has-module"
+    },
+    {
+      "source": "fase3-c-intermedio",
+      "target": "c04-c05-conversion-recursion",
+      "rel": "has-module"
+    },
+    {
+      "source": "fase3-c-intermedio",
+      "target": "c06-cli-args",
+      "rel": "has-module"
+    },
+    {
+      "source": "fase3-c-intermedio",
+      "target": "c07-asignacion-dinamica",
+      "rel": "has-module"
+    },
+    {
+      "source": "fase3-c-intermedio",
+      "target": "c08-c09-structs-lib",
+      "rel": "has-module"
+    },
+    {
+      "source": "fase3-c-intermedio",
+      "target": "reto-c01-swap-int",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "fase3-c-intermedio",
+      "target": "reto-c01-pointer-arithmetic",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "fase3-c-intermedio",
+      "target": "reto-c02-strlen-strcmp",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "fase3-c-intermedio",
+      "target": "reto-c04-ft-atoi",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "fase3-c-intermedio",
+      "target": "reto-c04-ft-itoa",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "fase3-c-intermedio",
+      "target": "reto-c05-fibonacci",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "fase3-c-intermedio",
+      "target": "reto-c05-factorial",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "fase3-c-intermedio",
+      "target": "reto-c06-argv-count",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "fase3-c-intermedio",
+      "target": "reto-c07-ft-strdup",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "fase3-c-intermedio",
+      "target": "reto-c07-ft-range",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "fase3-c-intermedio",
+      "target": "reto-c07-ft-ultimate-range",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "fase3-c-intermedio",
+      "target": "reto-c07-ft-strjoin",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "fase3-c-intermedio",
+      "target": "reto-c07-ft-split",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "fase3-c-intermedio",
+      "target": "resource-cs50x-week5",
+      "rel": "has-resource"
+    },
+    {
+      "source": "fase3-c-intermedio",
+      "target": "resource-exercism-c-basics",
+      "rel": "has-resource"
+    },
+    {
+      "source": "fase3-c-intermedio",
+      "target": "resource-norminette-overview",
+      "rel": "has-resource"
+    },
+    {
+      "source": "fase3-c-intermedio",
+      "target": "habit-norminette-daily",
+      "rel": "has-habit"
+    },
+    {
+      "source": "fase4-simulacion",
+      "target": "c10-c13-avanzado",
+      "rel": "has-module"
+    },
+    {
+      "source": "fase4-simulacion",
+      "target": "reto-examshell-c01",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "fase4-simulacion",
+      "target": "reto-examshell-c07",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "fase4-simulacion",
+      "target": "reto-examshell-c00",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "fase4-simulacion",
+      "target": "reto-examshell-c02",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "fase4-simulacion",
+      "target": "reto-examshell-c03",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "fase4-simulacion",
+      "target": "reto-examshell-c04",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "fase4-simulacion",
+      "target": "reto-examshell-c05",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "fase4-simulacion",
+      "target": "reto-examshell-c06",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "fase4-simulacion",
+      "target": "reto-examshell-c08",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "fase4-simulacion",
+      "target": "reto-examshell-c09",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "fase4-simulacion",
+      "target": "reto-examshell-c10",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "fase4-simulacion",
+      "target": "reto-examshell-c12",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "fase4-simulacion",
+      "target": "reto-rush-team",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "fase4-simulacion",
+      "target": "resource-norminette-overview",
+      "rel": "has-resource"
+    },
+    {
+      "source": "fase4-simulacion",
+      "target": "resource-moulinette",
+      "rel": "has-resource"
+    },
+    {
+      "source": "fase4-simulacion",
+      "target": "resource-1337-exam-repos",
+      "rel": "has-resource"
+    },
+    {
+      "source": "fase4-simulacion",
+      "target": "resource-deepwiki-exam-practice",
+      "rel": "has-resource"
+    },
+    {
+      "source": "fase4-simulacion",
+      "target": "resource-exam-study-thread",
+      "rel": "has-resource"
+    },
+    {
+      "source": "fase4-simulacion",
+      "target": "habit-norminette-daily",
+      "rel": "has-habit"
+    },
+    {
+      "source": "fase4-simulacion",
+      "target": "habit-exam-sim-weekly",
+      "rel": "has-habit"
+    },
+    {
+      "source": "fase4-simulacion",
+      "target": "habit-correction-points-track",
+      "rel": "has-habit"
+    },
+    {
+      "source": "fase4-simulacion",
+      "target": "habit-read-subject-twice",
+      "rel": "has-habit"
+    },
+    {
+      "source": "fase4-simulacion",
+      "target": "habit-valgrind-after-c07",
+      "rel": "has-habit"
+    },
+    {
+      "source": "fase4-simulacion",
+      "target": "habit-peer-daily",
+      "rel": "has-habit"
+    },
+    {
+      "source": "c00-intro",
+      "target": "fase2-c-basico",
+      "rel": "in-phase"
+    },
+    {
+      "source": "c00-intro",
+      "target": "resource-cs50x-week1",
+      "rel": "has-resource"
+    },
+    {
+      "source": "c00-intro",
+      "target": "resource-cs50x-overview",
+      "rel": "has-resource"
+    },
+    {
+      "source": "c00-intro",
+      "target": "resource-cs50x-week2",
+      "rel": "has-resource"
+    },
+    {
+      "source": "c00-intro",
+      "target": "resource-geeksforgeeks-c",
+      "rel": "has-resource"
+    },
+    {
+      "source": "c00-intro",
+      "target": "resource-cppreference",
+      "rel": "has-resource"
+    },
+    {
+      "source": "c00-intro",
+      "target": "resource-cheat-sh",
+      "rel": "has-resource"
+    },
+    {
+      "source": "c01-punteros",
+      "target": "fase3-c-intermedio",
+      "rel": "in-phase"
+    },
+    {
+      "source": "c01-punteros",
+      "target": "reto-c01-swap-int",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "c01-punteros",
+      "target": "reto-c01-pointer-arithmetic",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "c01-punteros",
+      "target": "resource-cs50x-week5",
+      "rel": "has-resource"
+    },
+    {
+      "source": "c01-punteros",
+      "target": "resource-exercism-c-basics",
+      "rel": "has-resource"
+    },
+    {
+      "source": "c01-punteros",
+      "target": "resource-exercism-c-track",
+      "rel": "has-resource"
+    },
+    {
+      "source": "c01-punteros",
+      "target": "resource-pointers-article",
+      "rel": "has-resource"
+    },
+    {
+      "source": "c01-punteros",
+      "target": "resource-godbolt",
+      "rel": "has-resource"
+    },
+    {
+      "source": "c01-punteros",
+      "target": "resource-cppreference",
+      "rel": "has-resource"
+    },
+    {
+      "source": "c02-c03-cadenas",
+      "target": "fase3-c-intermedio",
+      "rel": "in-phase"
+    },
+    {
+      "source": "c02-c03-cadenas",
+      "target": "reto-c02-strlen-strcmp",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "c02-c03-cadenas",
+      "target": "resource-cs50x-overview",
+      "rel": "has-resource"
+    },
+    {
+      "source": "c02-c03-cadenas",
+      "target": "resource-cs50x-week2",
+      "rel": "has-resource"
+    },
+    {
+      "source": "c02-c03-cadenas",
+      "target": "resource-geeksforgeeks-c",
+      "rel": "has-resource"
+    },
+    {
+      "source": "c02-c03-cadenas",
+      "target": "resource-cppreference",
+      "rel": "has-resource"
+    },
+    {
+      "source": "c04-c05-conversion-recursion",
+      "target": "fase3-c-intermedio",
+      "rel": "in-phase"
+    },
+    {
+      "source": "c04-c05-conversion-recursion",
+      "target": "reto-c04-ft-atoi",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "c04-c05-conversion-recursion",
+      "target": "reto-c04-ft-itoa",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "c04-c05-conversion-recursion",
+      "target": "reto-c05-fibonacci",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "c04-c05-conversion-recursion",
+      "target": "reto-c05-factorial",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "c04-c05-conversion-recursion",
+      "target": "resource-cs50x-overview",
+      "rel": "has-resource"
+    },
+    {
+      "source": "c04-c05-conversion-recursion",
+      "target": "resource-cs50x-week4",
+      "rel": "has-resource"
+    },
+    {
+      "source": "c04-c05-conversion-recursion",
+      "target": "resource-godbolt",
+      "rel": "has-resource"
+    },
+    {
+      "source": "c06-cli-args",
+      "target": "fase3-c-intermedio",
+      "rel": "in-phase"
+    },
+    {
+      "source": "c06-cli-args",
+      "target": "reto-c06-argv-count",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "c06-cli-args",
+      "target": "resource-cs50x-overview",
+      "rel": "has-resource"
+    },
+    {
+      "source": "c06-cli-args",
+      "target": "resource-cs50x-week4",
+      "rel": "has-resource"
+    },
+    {
+      "source": "c06-cli-args",
+      "target": "resource-cheat-sh",
+      "rel": "has-resource"
+    },
+    {
+      "source": "c07-asignacion-dinamica",
+      "target": "fase3-c-intermedio",
+      "rel": "in-phase"
+    },
+    {
+      "source": "c07-asignacion-dinamica",
+      "target": "reto-c07-ft-strdup",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "c07-asignacion-dinamica",
+      "target": "reto-c07-ft-range",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "c07-asignacion-dinamica",
+      "target": "reto-c07-ft-ultimate-range",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "c07-asignacion-dinamica",
+      "target": "reto-c07-ft-strjoin",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "c07-asignacion-dinamica",
+      "target": "reto-c07-ft-split",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "c07-asignacion-dinamica",
+      "target": "resource-cs50x-week5",
+      "rel": "has-resource"
+    },
+    {
+      "source": "c07-asignacion-dinamica",
+      "target": "resource-cs50x-week4",
+      "rel": "has-resource"
+    },
+    {
+      "source": "c07-asignacion-dinamica",
+      "target": "resource-exercism-c-track",
+      "rel": "has-resource"
+    },
+    {
+      "source": "c08-c09-structs-lib",
+      "target": "fase3-c-intermedio",
+      "rel": "in-phase"
+    },
+    {
+      "source": "c08-c09-structs-lib",
+      "target": "reto-c08-struct-basic",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "c08-c09-structs-lib",
+      "target": "reto-c08-ft-list-size",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "c08-c09-structs-lib",
+      "target": "reto-c09-makefile-lib",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "c08-c09-structs-lib",
+      "target": "resource-cs50x-week5",
+      "rel": "has-resource"
+    },
+    {
+      "source": "c08-c09-structs-lib",
+      "target": "resource-exercism-c-track",
+      "rel": "has-resource"
+    },
+    {
+      "source": "c10-c13-avanzado",
+      "target": "fase4-simulacion",
+      "rel": "in-phase"
+    },
+    {
+      "source": "c10-c13-avanzado",
+      "target": "reto-c10-bst-insert",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "c10-c13-avanzado",
+      "target": "reto-c11-stack",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "c10-c13-avanzado",
+      "target": "reto-c12-templates",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "c10-c13-avanzado",
+      "target": "resource-cs50x-week5",
+      "rel": "has-resource"
+    },
+    {
+      "source": "c10-c13-avanzado",
+      "target": "resource-norminette-repo",
+      "rel": "has-resource"
+    },
+    {
+      "source": "c10-c13-avanzado",
+      "target": "resource-1337-exam-repos",
+      "rel": "has-resource"
+    },
+    {
+      "source": "shell00-shell01",
+      "target": "fase1-entorno",
+      "rel": "in-phase"
+    },
+    {
+      "source": "shell00-shell01",
+      "target": "reto-shell00-midls",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "shell00-shell01",
+      "target": "reto-shell00-git-clean",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "shell00-shell01",
+      "target": "reto-shell01-find-sh",
+      "rel": "has-challenge"
+    },
+    {
+      "source": "shell00-shell01",
+      "target": "resource-shell00-subject",
+      "rel": "has-resource"
+    },
+    {
+      "source": "shell00-shell01",
+      "target": "resource-shell01-subject",
+      "rel": "has-resource"
+    },
+    {
+      "source": "shell00-shell01",
+      "target": "resource-bash-basics",
+      "rel": "has-resource"
+    },
+    {
+      "source": "shell00-shell01",
+      "target": "resource-git-basics",
+      "rel": "has-resource"
+    },
+    {
+      "source": "reto-c01-swap-int",
+      "target": "c01-punteros",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c01-swap-int",
+      "target": "fase3-c-intermedio",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-c01-pointer-arithmetic",
+      "target": "c01-punteros",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c01-pointer-arithmetic",
+      "target": "fase3-c-intermedio",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-c02-strlen-strcmp",
+      "target": "c02-c03-cadenas",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c02-strlen-strcmp",
+      "target": "fase3-c-intermedio",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-c00-ft-putchar",
+      "target": "c00-intro",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c00-ft-putchar",
+      "target": "fase2-c-basico",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-c00-ft-print-alphabet",
+      "target": "c00-intro",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c00-ft-print-alphabet",
+      "target": "fase2-c-basico",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-c00-ft-ft",
+      "target": "c00-intro",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c00-ft-ft",
+      "target": "fase2-c-basico",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-c01-ft-putstr",
+      "target": "c01-punteros",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c01-ft-putstr",
+      "target": "fase3-c-intermedio",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-c02-ft-strcpy",
+      "target": "c02-c03-cadenas",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c02-ft-strcpy",
+      "target": "fase3-c-intermedio",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-c04-ft-atoi",
+      "target": "c04-c05-conversion-recursion",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c04-ft-atoi",
+      "target": "fase3-c-intermedio",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-c04-ft-itoa",
+      "target": "c04-c05-conversion-recursion",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c04-ft-itoa",
+      "target": "fase3-c-intermedio",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-c05-fibonacci",
+      "target": "c04-c05-conversion-recursion",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c05-fibonacci",
+      "target": "fase3-c-intermedio",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-c05-factorial",
+      "target": "c04-c05-conversion-recursion",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c05-factorial",
+      "target": "fase3-c-intermedio",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-c07-ft-strdup",
+      "target": "c07-asignacion-dinamica",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c07-ft-strdup",
+      "target": "fase3-c-intermedio",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-c07-ft-range",
+      "target": "c07-asignacion-dinamica",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c07-ft-range",
+      "target": "fase3-c-intermedio",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-c07-ft-ultimate-range",
+      "target": "c07-asignacion-dinamica",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c07-ft-ultimate-range",
+      "target": "fase3-c-intermedio",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-c07-ft-strjoin",
+      "target": "c07-asignacion-dinamica",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c07-ft-strjoin",
+      "target": "fase3-c-intermedio",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-c07-ft-split",
+      "target": "c07-asignacion-dinamica",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c07-ft-split",
+      "target": "fase3-c-intermedio",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-c08-struct-basic",
+      "target": "c08-c09-structs-lib",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c08-struct-basic",
+      "target": "fase3-c-intermedio",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-c08-ft-list-size",
+      "target": "c08-c09-structs-lib",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c08-ft-list-size",
+      "target": "fase3-c-intermedio",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-c09-makefile-lib",
+      "target": "c08-c09-structs-lib",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c09-makefile-lib",
+      "target": "fase3-c-intermedio",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-c03-ft-substr",
+      "target": "c02-c03-cadenas",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c03-ft-substr",
+      "target": "fase2-c-basico",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-c03-ft-strncmp",
+      "target": "c02-c03-cadenas",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c03-ft-strncmp",
+      "target": "fase2-c-basico",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-c05-ft-power",
+      "target": "c04-c05-conversion-recursion",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c05-ft-power",
+      "target": "fase3-c-intermedio",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-c06-ft-putstr-tab",
+      "target": "c06-cli-args",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c06-ft-putstr-tab",
+      "target": "fase3-c-intermedio",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-c06-ft-atoi-base",
+      "target": "c04-c05-conversion-recursion",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c06-ft-atoi-base",
+      "target": "fase3-c-intermedio",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-c08-ft-list-add-back",
+      "target": "c08-c09-structs-lib",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c08-ft-list-add-back",
+      "target": "fase3-c-intermedio",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-c08-ft-list-sort",
+      "target": "c08-c09-structs-lib",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c08-ft-list-sort",
+      "target": "fase3-c-intermedio",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-c09-ft-btree-basic",
+      "target": "c08-c09-structs-lib",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c09-ft-btree-basic",
+      "target": "fase3-c-intermedio",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-c10-bst-insert",
+      "target": "c10-c13-avanzado",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c10-bst-insert",
+      "target": "fase4-simulacion",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-c11-stack",
+      "target": "c10-c13-avanzado",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c11-stack",
+      "target": "fase4-simulacion",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-c12-templates",
+      "target": "c10-c13-avanzado",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c12-templates",
+      "target": "fase4-simulacion",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-c10-bst-remove",
+      "target": "c10-c13-avanzado",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c10-bst-remove",
+      "target": "fase4-simulacion",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-c11-queue",
+      "target": "c10-c13-avanzado",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c11-queue",
+      "target": "fase4-simulacion",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-c12-hash-map",
+      "target": "c10-c13-avanzado",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c12-hash-map",
+      "target": "fase4-simulacion",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-examshell-c01",
+      "target": "c01-punteros",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-examshell-c01",
+      "target": "fase4-simulacion",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-examshell-c07",
+      "target": "c07-asignacion-dinamica",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-examshell-c07",
+      "target": "fase4-simulacion",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-examshell-c00",
+      "target": "c00-intro",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-examshell-c00",
+      "target": "fase4-simulacion",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-examshell-c02",
+      "target": "c02-c03-cadenas",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-examshell-c02",
+      "target": "fase4-simulacion",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-examshell-c03",
+      "target": "c02-c03-cadenas",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-examshell-c03",
+      "target": "fase4-simulacion",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-examshell-c04",
+      "target": "c04-c05-conversion-recursion",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-examshell-c04",
+      "target": "fase4-simulacion",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-examshell-c05",
+      "target": "c04-c05-conversion-recursion",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-examshell-c05",
+      "target": "fase4-simulacion",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-examshell-c06",
+      "target": "c06-cli-args",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-examshell-c06",
+      "target": "fase4-simulacion",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-examshell-c08",
+      "target": "c08-c09-structs-lib",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-examshell-c08",
+      "target": "fase4-simulacion",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-examshell-c09",
+      "target": "c08-c09-structs-lib",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-examshell-c09",
+      "target": "fase4-simulacion",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-examshell-c10",
+      "target": "c10-c13-avanzado",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-examshell-c10",
+      "target": "fase4-simulacion",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-examshell-c12",
+      "target": "c10-c13-avanzado",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-examshell-c12",
+      "target": "fase4-simulacion",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-c06-argv-count",
+      "target": "c06-cli-args",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-c06-argv-count",
+      "target": "fase3-c-intermedio",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-rush-team",
+      "target": "c10-c13-avanzado",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-rush-team",
+      "target": "fase4-simulacion",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-shell00-midls",
+      "target": "shell00-shell01",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-shell00-midls",
+      "target": "fase1-entorno",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-shell00-git-clean",
+      "target": "shell00-shell01",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-shell00-git-clean",
+      "target": "fase1-entorno",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-shell01-find-sh",
+      "target": "shell00-shell01",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-shell01-find-sh",
+      "target": "fase1-entorno",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-shell00-hello",
+      "target": "shell00-shell01",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-shell00-hello",
+      "target": "fase1-entorno",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-shell00-clean",
+      "target": "shell00-shell01",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-shell00-clean",
+      "target": "fase1-entorno",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-shell01-ffs",
+      "target": "shell00-shell01",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-shell01-ffs",
+      "target": "fase1-entorno",
+      "rel": "in-phase"
+    },
+    {
+      "source": "reto-shell01-print",
+      "target": "shell00-shell01",
+      "rel": "in-module"
+    },
+    {
+      "source": "reto-shell01-print",
+      "target": "fase1-entorno",
+      "rel": "in-phase"
+    },
+    {
+      "source": "resource-cs50x-week1",
+      "target": "c00-intro",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-cs50x-week1",
+      "target": "fase2-c-basico",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-cs50x-week5",
+      "target": "c01-punteros",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-cs50x-week5",
+      "target": "c07-asignacion-dinamica",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-cs50x-week5",
+      "target": "c08-c09-structs-lib",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-cs50x-week5",
+      "target": "fase3-c-intermedio",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-cs50x-overview",
+      "target": "c00-intro",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-cs50x-overview",
+      "target": "c01-punteros",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-cs50x-overview",
+      "target": "c02-c03-cadenas",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-cs50x-overview",
+      "target": "fase2-c-basico",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-cs50x-overview",
+      "target": "fase3-c-intermedio",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-cs50x-week2",
+      "target": "c00-intro",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-cs50x-week2",
+      "target": "c02-c03-cadenas",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-cs50x-week2",
+      "target": "fase2-c-basico",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-cs50x-week4",
+      "target": "c01-punteros",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-cs50x-week4",
+      "target": "c07-asignacion-dinamica",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-cs50x-week4",
+      "target": "fase3-c-intermedio",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-geeksforgeeks-c",
+      "target": "c00-intro",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-geeksforgeeks-c",
+      "target": "c01-punteros",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-geeksforgeeks-c",
+      "target": "c02-c03-cadenas",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-geeksforgeeks-c",
+      "target": "fase2-c-basico",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-geeksforgeeks-c",
+      "target": "fase3-c-intermedio",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-cppreference",
+      "target": "c00-intro",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-cppreference",
+      "target": "c02-c03-cadenas",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-cppreference",
+      "target": "fase2-c-basico",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-cppreference",
+      "target": "fase3-c-intermedio",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-bash-basics",
+      "target": "shell00-shell01",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-bash-basics",
+      "target": "fase1-entorno",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-git-basics",
+      "target": "shell00-shell01",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-git-basics",
+      "target": "fase1-entorno",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-shell00-subject",
+      "target": "shell00-shell01",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-shell00-subject",
+      "target": "fase1-entorno",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-shell01-subject",
+      "target": "shell00-shell01",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-shell01-subject",
+      "target": "fase1-entorno",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-godbolt",
+      "target": "c00-intro",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-godbolt",
+      "target": "c01-punteros",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-godbolt",
+      "target": "fase2-c-basico",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-godbolt",
+      "target": "fase3-c-intermedio",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-explainshell",
+      "target": "shell00-shell01",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-explainshell",
+      "target": "fase1-entorno",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-cheat-sh",
+      "target": "shell00-shell01",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-cheat-sh",
+      "target": "c00-intro",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-cheat-sh",
+      "target": "fase1-entorno",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-cheat-sh",
+      "target": "fase2-c-basico",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-progit",
+      "target": "shell00-shell01",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-progit",
+      "target": "fase1-entorno",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-learnxinyminutes-bash",
+      "target": "shell00-shell01",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-learnxinyminutes-bash",
+      "target": "fase1-entorno",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-deepwiki-exam-practice",
+      "target": "c00-intro",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-deepwiki-exam-practice",
+      "target": "c01-punteros",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-deepwiki-exam-practice",
+      "target": "c07-asignacion-dinamica",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-deepwiki-exam-practice",
+      "target": "fase2-c-basico",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-deepwiki-exam-practice",
+      "target": "fase3-c-intermedio",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-deepwiki-exam-practice",
+      "target": "fase4-simulacion",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-1337-exam-repos",
+      "target": "c00-intro",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-1337-exam-repos",
+      "target": "c01-punteros",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-1337-exam-repos",
+      "target": "c02-c03-cadenas",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-1337-exam-repos",
+      "target": "c04-c05-conversion-recursion",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-1337-exam-repos",
+      "target": "c06-cli-args",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-1337-exam-repos",
+      "target": "c07-asignacion-dinamica",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-1337-exam-repos",
+      "target": "fase2-c-basico",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-1337-exam-repos",
+      "target": "fase3-c-intermedio",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-1337-exam-repos",
+      "target": "fase4-simulacion",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-exam-study-thread",
+      "target": "c00-intro",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-exam-study-thread",
+      "target": "c01-punteros",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-exam-study-thread",
+      "target": "c07-asignacion-dinamica",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-exam-study-thread",
+      "target": "fase2-c-basico",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-exam-study-thread",
+      "target": "fase3-c-intermedio",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-exercism-c-basics",
+      "target": "c01-punteros",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-exercism-c-basics",
+      "target": "fase3-c-intermedio",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-exercism-c-track",
+      "target": "c00-intro",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-exercism-c-track",
+      "target": "c01-punteros",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-exercism-c-track",
+      "target": "c02-c03-cadenas",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-exercism-c-track",
+      "target": "c07-asignacion-dinamica",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-exercism-c-track",
+      "target": "fase2-c-basico",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-exercism-c-track",
+      "target": "fase3-c-intermedio",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-pointers-article",
+      "target": "c01-punteros",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-pointers-article",
+      "target": "fase3-c-intermedio",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-norminette-overview",
+      "target": "c01-punteros",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-norminette-overview",
+      "target": "fase3-c-intermedio",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-norminette-overview",
+      "target": "fase4-simulacion",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-moulinette",
+      "target": "c10-c13-avanzado",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-moulinette",
+      "target": "fase4-simulacion",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-norminette-repo",
+      "target": "c00-intro",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-norminette-repo",
+      "target": "c01-punteros",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-norminette-repo",
+      "target": "c02-c03-cadenas",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-norminette-repo",
+      "target": "c04-c05-conversion-recursion",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-norminette-repo",
+      "target": "c06-cli-args",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-norminette-repo",
+      "target": "c07-asignacion-dinamica",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-norminette-repo",
+      "target": "c08-c09-structs-lib",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-norminette-repo",
+      "target": "c10-c13-avanzado",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-norminette-repo",
+      "target": "fase2-c-basico",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-norminette-repo",
+      "target": "fase3-c-intermedio",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-norminette-repo",
+      "target": "fase4-simulacion",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-norminette-rules",
+      "target": "c00-intro",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-norminette-rules",
+      "target": "c01-punteros",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-norminette-rules",
+      "target": "c02-c03-cadenas",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-norminette-rules",
+      "target": "fase2-c-basico",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-norminette-rules",
+      "target": "fase3-c-intermedio",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-norminette-python",
+      "target": "c00-intro",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-norminette-python",
+      "target": "c01-punteros",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-norminette-python",
+      "target": "fase2-c-basico",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-norminette-python",
+      "target": "fase3-c-intermedio",
+      "rel": "for-phase"
+    },
+    {
+      "source": "resource-exercism-c-basics",
+      "target": "c01-punteros",
+      "rel": "for-module"
+    },
+    {
+      "source": "resource-exercism-c-basics",
+      "target": "fase3-c-intermedio",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-correction-points-track",
+      "target": "fase4-simulacion",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-correction-points-track",
+      "target": "fase3-c-intermedio",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-daily-commit",
+      "target": "fase1-entorno",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-daily-commit",
+      "target": "fase2-c-basico",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-daily-commit",
+      "target": "fase3-c-intermedio",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-daily-commit",
+      "target": "fase4-simulacion",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-exam-sim-weekly",
+      "target": "fase4-simulacion",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-exam-sim-weekly",
+      "target": "fase3-c-intermedio",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-git-commits-daily",
+      "target": "fase1-entorno",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-meal-routine",
+      "target": "fase1-entorno",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-meal-routine",
+      "target": "fase2-c-basico",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-meal-routine",
+      "target": "fase3-c-intermedio",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-meal-routine",
+      "target": "fase4-simulacion",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-norminette-daily",
+      "target": "fase3-c-intermedio",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-peer-daily",
+      "target": "fase1-entorno",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-peer-daily",
+      "target": "fase2-c-basico",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-peer-daily",
+      "target": "fase3-c-intermedio",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-peer-daily",
+      "target": "fase4-simulacion",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-read-subject-twice",
+      "target": "fase2-c-basico",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-read-subject-twice",
+      "target": "fase3-c-intermedio",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-read-subject-twice",
+      "target": "fase4-simulacion",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-sleep-7h",
+      "target": "fase1-entorno",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-sleep-7h",
+      "target": "fase2-c-basico",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-sleep-7h",
+      "target": "fase3-c-intermedio",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-sleep-7h",
+      "target": "fase4-simulacion",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-stress-reset",
+      "target": "fase2-c-basico",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-stress-reset",
+      "target": "fase3-c-intermedio",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-stress-reset",
+      "target": "fase4-simulacion",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-study-block-90m",
+      "target": "fase1-entorno",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-study-block-90m",
+      "target": "fase2-c-basico",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-study-block-90m",
+      "target": "fase3-c-intermedio",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-study-block-90m",
+      "target": "fase4-simulacion",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-terminal-daily",
+      "target": "fase1-entorno",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-valgrind-after-c07",
+      "target": "fase3-c-intermedio",
+      "rel": "for-phase"
+    },
+    {
+      "source": "habit-valgrind-after-c07",
+      "target": "fase4-simulacion",
+      "rel": "for-phase"
+    },
+    {
+      "source": "exam-sim-1",
+      "target": "fase4-simulacion",
+      "rel": "for-phase"
+    },
+    {
+      "source": "exam-sim-1",
+      "target": "reto-examshell-c00",
+      "rel": "uses-challenge"
+    },
+    {
+      "source": "exam-sim-1",
+      "target": "reto-examshell-c02",
+      "rel": "uses-challenge"
+    },
+    {
+      "source": "exam-sim-1",
+      "target": "reto-examshell-c03",
+      "rel": "uses-challenge"
+    },
+    {
+      "source": "exam-sim-2",
+      "target": "fase4-simulacion",
+      "rel": "for-phase"
+    },
+    {
+      "source": "exam-sim-2",
+      "target": "reto-examshell-c01",
+      "rel": "uses-challenge"
+    },
+    {
+      "source": "exam-sim-2",
+      "target": "reto-examshell-c04",
+      "rel": "uses-challenge"
+    },
+    {
+      "source": "exam-sim-2",
+      "target": "reto-examshell-c05",
+      "rel": "uses-challenge"
+    },
+    {
+      "source": "exam-sim-3",
+      "target": "fase4-simulacion",
+      "rel": "for-phase"
+    },
+    {
+      "source": "exam-sim-3",
+      "target": "reto-examshell-c06",
+      "rel": "uses-challenge"
+    },
+    {
+      "source": "exam-sim-3",
+      "target": "reto-examshell-c07",
+      "rel": "uses-challenge"
+    },
+    {
+      "source": "exam-sim-3",
+      "target": "reto-examshell-c08",
+      "rel": "uses-challenge"
+    },
+    {
+      "source": "exam-sim-4",
+      "target": "fase4-simulacion",
+      "rel": "for-phase"
+    },
+    {
+      "source": "exam-sim-4",
+      "target": "reto-examshell-c09",
+      "rel": "uses-challenge"
+    },
+    {
+      "source": "exam-sim-4",
+      "target": "reto-examshell-c10",
+      "rel": "uses-challenge"
+    },
+    {
+      "source": "exam-sim-4",
+      "target": "reto-examshell-c12",
+      "rel": "uses-challenge"
+    },
+    {
+      "source": "exam-sim-5",
+      "target": "fase4-simulacion",
+      "rel": "for-phase"
+    },
+    {
+      "source": "exam-sim-5",
+      "target": "reto-examshell-c00",
+      "rel": "uses-challenge"
+    },
+    {
+      "source": "exam-sim-5",
+      "target": "reto-examshell-c01",
+      "rel": "uses-challenge"
+    },
+    {
+      "source": "exam-sim-5",
+      "target": "reto-examshell-c02",
+      "rel": "uses-challenge"
+    },
+    {
+      "source": "exam-sim-5",
+      "target": "reto-examshell-c04",
+      "rel": "uses-challenge"
+    },
+    {
+      "source": "exam-sim-5",
+      "target": "reto-examshell-c06",
+      "rel": "uses-challenge"
+    },
+    {
+      "source": "exam-sim-5",
+      "target": "reto-examshell-c07",
+      "rel": "uses-challenge"
+    },
+    {
+      "source": "exam-sim-5",
+      "target": "reto-examshell-c08",
+      "rel": "uses-challenge"
+    },
+    {
+      "source": "exam-sim-5",
+      "target": "reto-examshell-c10",
+      "rel": "uses-challenge"
+    },
+    {
+      "source": "exam-sim-6",
+      "target": "fase4-simulacion",
+      "rel": "for-phase"
+    },
+    {
+      "source": "exam-sim-6",
+      "target": "reto-rush-team",
+      "rel": "uses-challenge"
+    }
+  ]
+}

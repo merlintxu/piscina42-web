@@ -1,4 +1,4 @@
-﻿# Glosario: Norminette, Moulinette, Vogsphere, Examshell, Rush, etc.
+# Glosario: Norminette, Moulinette, Vogsphere, Examshell, Rush, etc.
 
 Mini-handbook de términos de la cultura 42 y la Piscina de 42 Madrid. Cada
 entrada: definición breve + cuándo importa + módulos/fases relacionados.

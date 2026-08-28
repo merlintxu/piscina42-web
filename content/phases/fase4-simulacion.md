@@ -1,8 +1,14 @@
-﻿---
+---
 id: fase4-simulacion
 type: phase
+slug: fase4-simulacion
+order: 4
 title: Fase 4: Simulación de la Piscina (Examshell + Rush)
 source: piscina42-web
+summary: >
+  Réplica de la Piscina real bajo cronómetro: simulacros de Examshell, mini-Piscina
+  de fin de semana y defensa de Rush en equipo. El objetivo es habituarse al ritmo,
+  controlar fugas de memoria y explicar el código completo ante un evaluador.
 modules:
   - c10-c13-avanzado
 challenges:

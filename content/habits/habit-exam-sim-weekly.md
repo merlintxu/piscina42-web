@@ -1,6 +1,7 @@
 ---
 id: habit-exam-sim-weekly
 type: habit
+slug: habit-exam-sim-weekly
 title: Simulacro de Examshell semanal
 phases:
   - fase4-simulacion

@@ -1,4 +1,4 @@
-﻿---
+---
 id: c-retos-intermedios
 type: challenge-collection
 title: Retos de C intermedios (C04–C09)
@@ -19,12 +19,19 @@ dinámica).
 ---
 id: reto-c04-ft-atoi
 type: challenge
+slug: reto-c04-ft-atoi
 title: ft_atoi — cadena a entero
 source: piscina42-web
 module: c04-c05-conversion-recursion
 phase: fase3-c-intermedio
 difficulty: medium
 estimated_time_minutes: 40
+tags:
+  - conversión
+  - cadenas
+  - punteros
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -66,12 +73,19 @@ ft_atoi("no") -> 0
 ---
 id: reto-c04-ft-itoa
 type: challenge
+slug: reto-c04-ft-itoa
 title: ft_itoa — entero a cadena
 source: piscina42-web
 module: c04-c05-conversion-recursion
 phase: fase3-c-intermedio
 difficulty: hard
 estimated_time_minutes: 60
+tags:
+  - conversión
+  - malloc
+  - cadenas
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -111,12 +125,18 @@ ft_itoa(-2147483648) -> "-2147483648"
 ---
 id: reto-c05-fibonacci
 type: challenge
+slug: reto-c05-fibonacci
 title: Fibonacci recursivo
 source: piscina42-web
 module: c04-c05-conversion-recursion
 phase: fase3-c-intermedio
 difficulty: easy
 estimated_time_minutes: 20
+tags:
+  - recursión
+  - caso base
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -156,12 +176,18 @@ ft_fibonacci(-3) -> -1
 ---
 id: reto-c05-factorial
 type: challenge
+slug: reto-c05-factorial
 title: Factorial recursivo
 source: piscina42-web
 module: c04-c05-conversion-recursion
 phase: fase3-c-intermedio
 difficulty: easy
 estimated_time_minutes: 20
+tags:
+  - recursión
+  - caso base
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -199,12 +225,19 @@ ft_factorial(-1) -> 0
 ---
 id: reto-c07-ft-strdup
 type: challenge
+slug: reto-c07-ft-strdup
 title: ft_strdup — duplicar cadena con malloc
 source: piscina42-web
 module: c07-asignacion-dinamica
 phase: fase3-c-intermedio
 difficulty: easy
 estimated_time_minutes: 20
+tags:
+  - malloc
+  - cadenas
+  - memoria dinámica
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -242,12 +275,19 @@ ft_strdup("") -> cadena ""
 ---
 id: reto-c07-ft-range
 type: challenge
+slug: reto-c07-ft-range
 title: ft_range — array de enteros en el heap
 source: piscina42-web
 module: c07-asignacion-dinamica
 phase: fase3-c-intermedio
 difficulty: medium
 estimated_time_minutes: 30
+tags:
+  - malloc
+  - arrays
+  - memoria dinámica
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -286,12 +326,19 @@ ft_range(5, 5) -> NULL
 ---
 id: reto-c07-ft-ultimate-range
 type: challenge
+slug: reto-c07-ft-ultimate-range
 title: ft_ultimate_range — rango con errores
 source: piscina42-web
 module: c07-asignacion-dinamica
 phase: fase3-c-intermedio
 difficulty: medium
 estimated_time_minutes: 35
+tags:
+  - malloc
+  - puntero a puntero
+  - memoria dinámica
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -329,12 +376,19 @@ ft_ultimate_range(&r, 5, 5) -> retorno -1, r = NULL
 ---
 id: reto-c07-ft-strjoin
 type: challenge
+slug: reto-c07-ft-strjoin
 title: ft_strjoin — concatenar con malloc
 source: piscina42-web
 module: c07-asignacion-dinamica
 phase: fase3-c-intermedio
 difficulty: medium
 estimated_time_minutes: 30
+tags:
+  - malloc
+  - cadenas
+  - memoria dinámica
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -372,12 +426,19 @@ ft_strjoin("", "x") -> "x"
 ---
 id: reto-c07-ft-split
 type: challenge
+slug: reto-c07-ft-split
 title: ft_split — partir cadena en array de cadenas
 source: piscina42-web
 module: c07-asignacion-dinamica
 phase: fase3-c-intermedio
 difficulty: hard
 estimated_time_minutes: 60
+tags:
+  - malloc
+  - array de cadenas
+  - memoria dinámica
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -415,12 +476,18 @@ ft_split("a,,b", ',') -> ["a", "b", NULL]
 ---
 id: reto-c08-struct-basic
 type: challenge
+slug: reto-c08-struct-basic
 title: Uso básico de struct
 source: piscina42-web
 module: c08-c09-structs-lib
 phase: fase3-c-intermedio
 difficulty: easy
 estimated_time_minutes: 25
+tags:
+  - struct
+  - typedef
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -463,12 +530,18 @@ p.x = -1, p.y = 1 -> 0
 ---
 id: reto-c08-ft-list-size
 type: challenge
+slug: reto-c08-ft-list-size
 title: ft_list_size — tamaño de lista enlazada
 source: piscina42-web
 module: c08-c09-structs-lib
 phase: fase3-c-intermedio
 difficulty: medium
 estimated_time_minutes: 25
+tags:
+  - listas enlazadas
+  - punteros
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -512,12 +585,19 @@ lista [a]->[b]->[c] -> 3
 ---
 id: reto-c09-makefile-lib
 type: challenge
+slug: reto-c09-makefile-lib
 title: Makefile que genera librería estática
 source: piscina42-web
 module: c08-c09-structs-lib
 phase: fase3-c-intermedio
 difficulty: medium
 estimated_time_minutes: 40
+tags:
+  - Makefile
+  - librería estática
+  - ar
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -558,12 +638,19 @@ make re    -> rebuild completo
 ---
 id: reto-c03-ft-substr
 type: challenge
+slug: reto-c03-ft-substr
 title: ft_substr — extraer subcadena
 source: piscina42-web
 module: c02-c03-cadenas
 phase: fase2-c-basico
 difficulty: medium
 estimated_time_minutes: 30
+tags:
+  - cadenas
+  - malloc
+  - punteros
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -603,12 +690,19 @@ ft_substr("abc", 1, 1) -> "b"
 ---
 id: reto-c03-ft-strncmp
 type: challenge
+slug: reto-c03-ft-strncmp
 title: ft_strncmp — comparar n caracteres
 source: piscina42-web
 module: c02-c03-cadenas
 phase: fase2-c-basico
 difficulty: easy
 estimated_time_minutes: 25
+tags:
+  - cadenas
+  - comparación
+  - punteros
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -648,12 +742,19 @@ ft_strncmp("ab", "abc", 3) -> negativo
 ---
 id: reto-c05-ft-power
 type: challenge
+slug: reto-c05-ft-power
 title: ft_power — potencia recursiva
 source: piscina42-web
 module: c04-c05-conversion-recursion
 phase: fase3-c-intermedio
 difficulty: easy
 estimated_time_minutes: 20
+tags:
+  - recursión
+  - matemáticas
+  - fundamentos
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -693,12 +794,19 @@ ft_power(2, -1) -> 0
 ---
 id: reto-c06-ft-putstr-tab
 type: challenge
+slug: reto-c06-ft-putstr-tab
 title: ft_putstr_tab — imprimir argv con tabuladores
 source: piscina42-web
 module: c06-cli-args
 phase: fase3-c-intermedio
 difficulty: easy
 estimated_time_minutes: 25
+tags:
+  - argv
+  - bucles
+  - write
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -736,12 +844,19 @@ ft_putstr_tab({}) -> "\n"
 ---
 id: reto-c06-ft-atoi-base
 type: challenge
+slug: reto-c06-ft-atoi-base
 title: ft_atoi_base — convertir string en base N a entero
 source: piscina42-web
 module: c04-c05-conversion-recursion
 phase: fase3-c-intermedio
 difficulty: hard
 estimated_time_minutes: 45
+tags:
+  - conversión
+  - bases
+  - punteros
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -781,12 +896,18 @@ ft_atoi_base("-1a", "0123456789abcdef") -> -26
 ---
 id: reto-c08-ft-list-add-back
 type: challenge
+slug: reto-c08-ft-list-add-back
 title: ft_list_add_back — añadir nodo al final
 source: piscina42-web
 module: c08-c09-structs-lib
 phase: fase3-c-intermedio
 difficulty: medium
 estimated_time_minutes: 25
+tags:
+  - listas enlazadas
+  - punteros dobles
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -825,12 +946,19 @@ add_back([a], b) -> [a]->[b]
 ---
 id: reto-c08-ft-list-sort
 type: challenge
+slug: reto-c08-ft-list-sort
 title: ft_list_sort — ordenar lista enlazada
 source: piscina42-web
 module: c08-c09-structs-lib
 phase: fase3-c-intermedio
 difficulty: hard
 estimated_time_minutes: 40
+tags:
+  - listas enlazadas
+  - punteros a función
+  - ordenación
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -868,12 +996,19 @@ sort([]) -> []
 ---
 id: reto-c09-ft-btree-basic
 type: challenge
+slug: reto-c09-ft-btree-basic
 title: ft_btree_basic — insertar en árbol binario
 source: piscina42-web
 module: c08-c09-structs-lib
 phase: fase3-c-intermedio
 difficulty: hard
 estimated_time_minutes: 45
+tags:
+  - árboles
+  - malloc
+  - punteros
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado

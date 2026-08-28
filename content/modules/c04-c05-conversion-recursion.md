@@ -1,10 +1,21 @@
-﻿---
+---
 id: c04-c05-conversion-recursion
 type: module
+slug: c04-c05-conversion-recursion
+order: 5
 title: C04–C05: Conversión de datos y recursión
 source: piscina42-web
 phase: fase3-c-intermedio
 level: intermediate
+concepts:
+  - conversión cadena↔entero (atoi/itoa)
+  - dígitos como caracteres y su valor numérico
+  - llamadas recursivas (caso base, caso recursivo, pila)
+  - recursión vs iteración
+cognitive_difficulties:
+  - visualizar la pila de llamadas y el orden de retorno
+  - manejar desbordamiento de int en ft_atoi
+  - reservar memoria exacta en ft_itoa
 challenges:
   - reto-c04-ft-atoi
   - reto-c04-ft-itoa

@@ -1,4 +1,4 @@
-﻿---
+---
 id: exercism-c
 type: resource-collection
 title: Exercism C
@@ -35,10 +35,9 @@ reforzar punteros, cadenas y memoria fuera de la Piscina. Complementa
 
 ---
 id: resource-exercism-c-track
-type: resource
+type: course
 title: Exercism — C track (página del track)
 url: https://exercism.org/tracks/c
-type: course
 modules:
   - c00-intro
   - c01-punteros
@@ -61,10 +60,9 @@ de "Linked List" y "Simple Linked List" son excelentes repasos de C08. [web:33]
 
 ---
 id: resource-pointers-article
-type: resource
+type: article
 title: A `git`-style tutorial on C pointers
 url: https://www.codingunit.com/c-tutorial-pointers
-type: article
 modules:
   - c01-punteros
 phases:

@@ -1,6 +1,7 @@
 ---
 id: habit-read-subject-twice
 type: habit
+slug: habit-read-subject-twice
 title: Leer el subject dos veces
 phases:
   - fase2-c-basico

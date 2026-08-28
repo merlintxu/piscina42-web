@@ -1,4 +1,4 @@
-﻿# Content Model · Piscina42-web
+# Content Model · Piscina42-web
 
 Este documento define los tipos de contenido y campos que se usan en `content/`
 para describir la preparación de la Piscina de 42 Madrid.

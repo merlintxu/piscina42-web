@@ -1,6 +1,7 @@
 ---
 id: habit-stress-reset
 type: habit
+slug: habit-stress-reset
 title: Reset de estrés cada tarde
 phases:
   - fase2-c-basico

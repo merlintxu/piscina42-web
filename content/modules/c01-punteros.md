@@ -1,10 +1,23 @@
-﻿---
+---
 id: c01-punteros
 type: module
+slug: c01-punteros
+order: 3
 title: C01: Punteros
 source: piscina42-web
 phase: fase3-c-intermedio
 level: intermediate
+concepts:
+  - direcciones de memoria y representación en RAM
+  - operadores & y *
+  - paso por referencia
+  - punteros a punteros (doble indirección)
+  - efectos secundarios y aliasing de memoria
+cognitive_difficulties:
+  - visualizar la memoria como celdas con direcciones
+  - comprender el aliasing (varias variables al mismo dato)
+  - aceptar comportamiento indefinido al desreferenciar punteros inválidos
+  - disciplina de inicializar punteros y comprobar NULL
 challenges:
   - reto-c01-swap-int
   - reto-c01-pointer-arithmetic

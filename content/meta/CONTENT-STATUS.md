@@ -68,6 +68,76 @@ Colecciones:
 > FASE 6 COMPLETADA: vault sincronizado (79 notas, 0 wikilinks rotos), MOC regenerado,
 > SYNC-LOG y CONTENT-STATUS actualizados. **CONTENT-PLAN 100% ejecutado.**
 
+---
+
+## FASE A · Adopción del schema refinado (rama feature/schema-and-app) — 2026-08-27
+
+**Estado:** ✅ APLICADO en `content/`. Pendiente de regenerar el vault espejo (mismo grafo de ids).
+
+Campos añadidos sin alterar el significado de las notas:
+
+- **Phase** (4): `slug` (= id), `order` (1–4), `summary` (2–3 frases).
+- **Module** (9): `slug` (= id), `order` (1–9 según progresión Shell→C→avanzado),
+  `concepts[]` y `cognitive_difficulties[]` extraídos de las secciones del body.
+- **Challenge** (35 en total): `slug` (= id), `tags[]` (de la sección "Tags:" del body),
+  `norminette_focus` (`true` para retos de C; `false` para los de Shell).
+- **Habit** (13): `slug` (= id).
+- **ExamSimulation** (6): `slug` (= id). `duration_minutes`, `levels[]`, `rules[]` ya presentes.
+- **Resource**: normalización de `type`. Antes había colisión (repetían `type: resource`
+  y luego el subtipo). Ahora `type` es el subtipo único (course/article/repository/tool/book)
+  y la entidad Resource se infiere por directorio en el pipeline. Ver `meta/CONTENT-PLAN.md`.
+
+**Decisión de modelo:** la entidad se deriva de la carpeta (`phases/`, `modules/`,
+`retos/`, `recursos/`, `habits/`) + tipo de frontmatter; `exam-simulations.md` se parsea
+como colección de 6 `ExamSimulation` sin envoltura.
+
+**Siguiente fase:** FASE B (script `scripts/md-to-json.ts` alineado al schema → `app/public/content.json`).
+
+---
+
+## FASE B · Pipeline Markdown→JSON (feature/schema-and-app) — 2026-08-27
+
+**Estado:** ✅ IMPLEMENTADO y verificado (build OK).
+
+- `scripts/md-to-json.ts`: recorre `content/`, parsea frontmatter (parser propio,
+  tolerante a BOM/CRLF y `:` en valores), expande colecciones
+  (`challenge-collection`/`resource-collection`) y `exam-simulations.md`.
+- Salida: `app/public/content.json` con `ContentJSON = { phases, modules,
+  challenges, resources, habits, exams }`.
+- Conteo real generado: **4 phases, 9 modules, 55 challenges, 28 resources,
+  13 habits, 6 exams**.
+- `docs/CONTENT-JSON.md`: schema + instrucciones de ejecución.
+- `.gitignore`: añadidos `/scripts/node_modules/` y `/scripts/dist/`.
+
+**Nota:** `app/` sigue excluido en `.gitignore`; `app/public/content.json` se
+regenera con el script tras cualquier cambio en `content/`.
+
+---
+
+## FASE C · Esqueleto de la web en React (feature/schema-and-app) — 2026-08-27
+
+**Estado:** ✅ IMPLEMENTADO y verificado (`npm run build` → 206 módulos, sin errores).
+
+- Stack: **Vite + React + TypeScript** (SPA de datos estáticos).
+- `app/package.json`, `app/vite.config.ts`, `app/tsconfig.json`, `app/index.html`.
+- `app/src/models/index.ts`: tipos TS equivalentes al schema.
+- `app/src/services/contentLoader.ts`: carga `content.json` y helpers
+  (`getPhases`, `getPhaseById`, `getModulesByPhase`, `getModuleById`,
+  `getChallengesByModule`, `getResourcesByModule`, `getHabitsByPhase`,
+  `getExamSimulationsByPhase`, + extras).
+- `app/src/pages/Home.tsx`: grid de `PhaseCard` con título, summary y CTA.
+- `app/src/pages/PhasePage.tsx`: objetivos (react-markdown), módulos, hábitos,
+  simulaciones y recursos de la fase.
+- `app/src/pages/ModulePage.tsx`: conceptos, dificultades, body (react-markdown),
+  retos y recursos del módulo.
+- Componentes: `PhaseCard`, `ModuleCard`, `HabitCard`, `ResourceCard`,
+  `ChallengeCard`; estilos mínimos en `styles.css`.
+- Verificado: el bundle embebe datos reales (`fase1-entorno`, `reto-c01-swap-int`,
+  `exam-sim-1` presentes en el build).
+
+**Nota:** `app/` está gitignoreado; este commit NO incluye el código de la web,
+solo el registro de estado. El código vive en el working tree local.
+
 ### Habits (hábitos)
 Existen 3 iniciales: habit-terminal-daily, habit-git-commits-daily, habit-norminette-daily.
 > FASE 3 debe ampliar a 10–15 hábitos basados en testimonios reales.
