@@ -10,6 +10,12 @@ import {
   saveHabitNote,
   saveExamResult 
 } from "./lib/storage";
+import { TrainingState } from "./training/types";
+import { 
+  loadTrainingState, 
+  syncSkillsWithUserProgress 
+} from "./training/trainingStorage";
+import { calculateReadiness } from "./training/skillEngine";
 import { Navbar } from "./components/Navbar";
 import { HomeView } from "./views/HomeView";
 import { PhaseView } from "./views/PhaseView";
@@ -21,6 +27,8 @@ import { HabitsView } from "./views/HabitsView";
 import { ExamsView } from "./views/ExamsView";
 import { GraphView } from "./views/GraphView";
 import { ProgressView } from "./views/ProgressView";
+import { TrainingDashboardView } from "./views/TrainingDashboardView";
+import { DiagnosticView } from "./views/DiagnosticView";
 import { NorminetteChecker } from "./components/NorminetteChecker";
 import { PeerEvalGuide } from "./components/PeerEvalGuide";
 import { AiMentorModal } from "./components/AiMentorModal";
@@ -42,6 +50,16 @@ export function App() {
 
   // User persistent progress
   const [progress, setProgress] = useState<UserProgress>(loadUserProgress());
+
+  // Training OS persistent state
+  const [trainingState, setTrainingState] = useState<TrainingState>(loadTrainingState());
+
+  // Sync Training OS skills whenever content or progress updates
+  useEffect(() => {
+    if (content && progress) {
+      setTrainingState((prev) => syncSkillsWithUserProgress(prev, progress, content));
+    }
+  }, [content, progress]);
 
   // Global keyboard shortcuts for Command Palette (Cmd+K / Ctrl+K)
   useEffect(() => {
@@ -205,32 +223,60 @@ export function App() {
     );
   }
 
-  return (
-    <div className="min-h-screen bg-[#0b0f19] text-[#ECEFF4] flex flex-col">
-      {/* Top Navigation */}
-      <Navbar
-        progress={progress}
-        totalChallengesCount={content.challenges.length}
-        onOpenSearch={() => setIsSearchOpen(true)}
-        onOpenAiMentor={() => setIsAiMentorOpen(true)}
-      />
+    const readiness = calculateReadiness(trainingState, content, progress);
 
-      {/* Main Container View Area using React Router */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        <Routes>
-          {/* / → HomeView */}
-          <Route
-            path="/"
-            element={
-              <HomeView
-                content={content}
-                progress={progress}
-                onToggleHabitActive={handleToggleHabitActive}
-                onIncrementHabitDay={handleIncrementHabitDay}
-                onSaveHabitNote={handleSaveHabitNote}
-              />
-            }
-          />
+    return (
+      <div className="min-h-screen bg-[#0b0f19] text-[#ECEFF4] flex flex-col">
+        {/* Top Navigation */}
+        <Navbar
+          progress={progress}
+          totalChallengesCount={content.challenges.length}
+          readinessScore={readiness.overallScore}
+          onOpenSearch={() => setIsSearchOpen(true)}
+          onOpenAiMentor={() => setIsAiMentorOpen(true)}
+        />
+
+        {/* Main Container View Area using React Router */}
+        <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+          <Routes>
+            {/* /training → TrainingDashboardView (Training OS Phase 2.1) */}
+            <Route
+              path="/training"
+              element={
+                <TrainingDashboardView
+                  content={content}
+                  progress={progress}
+                  trainingState={trainingState}
+                  onUpdateTrainingState={setTrainingState}
+                />
+              }
+            />
+
+            {/* /diagnostic → DiagnosticView */}
+            <Route
+              path="/diagnostic"
+              element={
+                <DiagnosticView
+                  trainingState={trainingState}
+                  onUpdateTrainingState={setTrainingState}
+                />
+              }
+            />
+
+            {/* / → HomeView */}
+            <Route
+              path="/"
+              element={
+                <HomeView
+                  content={content}
+                  progress={progress}
+                  trainingState={trainingState}
+                  onToggleHabitActive={handleToggleHabitActive}
+                  onIncrementHabitDay={handleIncrementHabitDay}
+                  onSaveHabitNote={handleSaveHabitNote}
+                />
+              }
+            />
 
           {/* /phase/:slug → PhaseView */}
           <Route

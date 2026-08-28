@@ -11,13 +11,15 @@ import {
   CheckCircle2, 
   ShieldCheck,
   Flame,
-  Users
+  Users,
+  Target
 } from "lucide-react";
 import { UserProgress } from "../types";
 
 interface NavbarProps {
   progress: UserProgress;
   totalChallengesCount: number;
+  readinessScore?: number;
   onOpenSearch: () => void;
   onOpenAiMentor: () => void;
 }
@@ -25,6 +27,7 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({
   progress,
   totalChallengesCount,
+  readinessScore,
   onOpenSearch,
   onOpenAiMentor
 }) => {
@@ -35,12 +38,13 @@ export const Navbar: React.FC<NavbarProps> = ({
   const pct = totalChallengesCount > 0 ? Math.round((completedCount / totalChallengesCount) * 100) : 0;
 
   const navItems = [
+    { path: "/training", label: "Entrenamiento OS", icon: Target, match: (p: string) => p.startsWith("/training") || p.startsWith("/diagnostic") },
     { path: "/", label: "Fases & Ruta", icon: BookOpen, match: (p: string) => p === "/" || p.startsWith("/phase") },
     { path: "/modules", label: "Módulos (C & Shell)", icon: Terminal, match: (p: string) => p.startsWith("/modules") || p.startsWith("/module") },
     { path: "/challenges", label: "Retos de Código", icon: Code2, match: (p: string) => p.startsWith("/challenges") || p.startsWith("/challenge") },
     { path: "/exams", label: "Simulador Exámenes", icon: Clock, match: (p: string) => p.startsWith("/exams") },
-    { path: "/habits", label: "Hábitos Piscineros", icon: Flame, match: (p: string) => p.startsWith("/habits") },
-    { path: "/graph", label: "Grafo Obsidian", icon: Share2, match: (p: string) => p.startsWith("/graph") },
+    { path: "/habits", label: "Hábitos", icon: Flame, match: (p: string) => p.startsWith("/habits") },
+    { path: "/graph", label: "Grafo", icon: Share2, match: (p: string) => p.startsWith("/graph") },
     { path: "/norminette", label: "Norminette", icon: ShieldCheck, match: (p: string) => p.startsWith("/norminette") },
     { path: "/peer-eval", label: "Peer-Eval", icon: Users, match: (p: string) => p.startsWith("/peer-eval") || p.startsWith("/peereval") },
   ];
@@ -124,6 +128,24 @@ export const Navbar: React.FC<NavbarProps> = ({
               <Sparkles className="w-3.5 h-3.5 text-[#4CAF50] group-hover:rotate-12 transition-transform" />
               <span className="hidden md:inline">Tutor IA</span>
             </button>
+
+            {/* Training Readiness Badge */}
+            <div 
+              id="readiness-badge"
+              onClick={() => navigate("/training")}
+              className="flex items-center gap-2 px-3 py-1.5 bg-[#141927] border border-[#2A2F3C] hover:border-[#4CAF50]/50 hover:bg-[#182035] rounded-lg cursor-pointer transition-all"
+              title="Piscina42 Training OS: Panel de Entrenamiento y Readiness"
+            >
+              <div className="relative w-4 h-4 flex items-center justify-center">
+                <Target className="w-4 h-4 text-[#03A9F4]" />
+              </div>
+              <div className="hidden sm:flex flex-col">
+                <span className="text-[10px] text-[#9FA7B8] leading-none font-mono">Readiness</span>
+                <span className="text-xs font-bold text-[#03A9F4] font-mono leading-none mt-0.5">
+                  {readinessScore !== undefined ? `${readinessScore}%` : "OS"}
+                </span>
+              </div>
+            </div>
 
             {/* Progress Badge */}
             <div 

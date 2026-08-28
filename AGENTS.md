@@ -12,12 +12,21 @@ y sólo tocar código en `app/` cuando se le pida explícitamente.
 
 ## Estructura del proyecto
 
-- `docs/` — documentación general (README, visión, roadmap Google).
+- `docs/` — documentación general (README, visión, roadmap Google, TRAINING-OS-PHASE2.md).
 - `design/` — sistema visual (DESIGN.md exportado desde Stitch, mapa de componentes).
 - `content/` — conocimiento estructurado (phases, modules, retos, recursos, meta).
-- `app/` — código de la web (models, pages, components, services, public).
+- `src/` (y `app/`) — código de la aplicación web (views, components, lib, training).
+- `src/training/` — Piscina42 Training OS (Skill Matrix, Diagnóstico, Misiones Diarias, Readiness, persistence).
 - `agent/` — definiciones de agentes específicos (content-agent, code-agent, eval-agent).
 - `scripts/` — scripts para md→JSON, sincronización, etc.
+
+## Módulo Training OS (Fase 2.1)
+
+- Gestiona el entrenamiento adaptativo diario con fecha objetivo por defecto `2026-10-26`.
+- El estado de entrenamiento persiste en `localStorage` bajo la clave `piscina42_training_v1`.
+- La evaluación diagnóstica consta de 24 preguntas deterministas que calibran la matriz de competencias (escala 0-5).
+- El cálculo del Readiness Score es determinista y no depende de APIs externas de IA.
+- Se mantiene sincronizado con los retos completados en `piscina42_progress_v1` sin mutarlo.
 
 ## Convenciones de contenido
 
