@@ -1,3 +1,5 @@
+import { Module } from "../types";
+
 export type SkillCategory = "terminal" | "git" | "c_prog" | "engineering" | "meta";
 
 export type SkillLevel = 0 | 1 | 2 | 3 | 4 | 5;
@@ -142,4 +144,39 @@ export interface TrainingState {
   streakDays: number;
   readinessScore: number;
   totalMissionsCompleted: number;
+}
+
+export type TrainingPlanStage =
+  | "FOUNDATION"
+  | "CORE_C"
+  | "POINTERS_STRINGS"
+  | "MEMORY"
+  | "ADVANCED"
+  | "SIMULATION"
+  | "FINAL_REVIEW";
+
+export interface Milestone {
+  id: string;
+  stage: TrainingPlanStage;
+  title: string;
+  description: string;
+  targetCriteria: string;
+  isCompleted: boolean;
+}
+
+export interface TrainingPlan {
+  currentStage: TrainingPlanStage;
+  stageTitle: string;
+  stageDescription: string;
+  currentWeek: number;
+  totalWeeks: number;
+  daysRemaining: number;
+  weeklyObjectives: string[];
+  prioritySkills: SkillDefinition[];
+  recommendedModules: Module[];
+  nextMilestone: Milestone;
+  allMilestones: Milestone[];
+  trainingIntensity: "relaxed" | "standard" | "intensive";
+  isBlockedByWeakPointersOrMemory: boolean;
+  blockerReason?: string;
 }
