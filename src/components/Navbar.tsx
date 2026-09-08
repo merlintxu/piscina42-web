@@ -39,6 +39,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const navItems = [
     { path: "/training", label: "Entrenamiento OS", icon: Target, match: (p: string) => p.startsWith("/training") || p.startsWith("/diagnostic") },
+    { path: "/workstation", label: "Workstation", icon: Terminal, match: (p: string) => p.startsWith("/workstation") },
     { path: "/", label: "Fases & Ruta", icon: BookOpen, match: (p: string) => p === "/" || p.startsWith("/phase") },
     { path: "/modules", label: "Módulos (C & Shell)", icon: Terminal, match: (p: string) => p.startsWith("/modules") || p.startsWith("/module") },
     { path: "/challenges", label: "Retos de Código", icon: Code2, match: (p: string) => p.startsWith("/challenges") || p.startsWith("/challenge") },
