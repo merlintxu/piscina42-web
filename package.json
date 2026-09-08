@@ -4,6 +4,8 @@
   "type": "module",
   "scripts": {
     "dev": "tsx server.ts",
+    "bridge:dev": "tsx local-bridge/server.ts",
+    "bridge:start": "tsx local-bridge/server.ts",
     "build": "tsx scripts/build-content.ts && vite build && esbuild server.ts --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs",
     "start": "node dist/server.cjs",
     "build:content": "tsx scripts/build-content.ts",
