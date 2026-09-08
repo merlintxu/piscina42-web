@@ -106,3 +106,11 @@ export function runJqVersionProbe(): Promise<ProbeExecution> {
 export function runRipgrepVersionProbe(): Promise<ProbeExecution> {
   return runFixedProbe("rg", ["--version"]);
 }
+
+export function runDockerVersionProbe(): Promise<ProbeExecution> {
+  return runFixedProbe("docker", ["--version"]);
+}
+
+export function runDockerInfoProbe(): Promise<ProbeExecution> {
+  return runFixedProbe("docker", ["info", "--format", "{{json .}}"]);
+}

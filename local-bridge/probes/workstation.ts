@@ -31,10 +31,10 @@ export async function probeWorkstation(): Promise<WorkstationSnapshot> {
     shell.tools,
     [git],
     compilerTools,
-    tooling,
+    tooling.tools,
     node,
     python,
-    [unknownOptionalTool("docker", "Docker"), unknownOptionalTool("ollama", "Ollama")],
+    [tooling.docker.tool, unknownOptionalTool("ollama", "Ollama")],
   ].flat();
   const snapshotBase = {
     generatedAt: new Date().toISOString(),
