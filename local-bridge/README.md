@@ -17,6 +17,10 @@ machine without exposing a new network service. Its port defaults to `4242` in
 The bridge currently uses mocks. It does not inspect the host machine or run
 system commands.
 
+The browser client calls the bridge directly from the local Vite development
+origin. CORS is restricted to `http://localhost:3000` and
+`http://127.0.0.1:3000`; wildcard origins are not enabled.
+
 ## Explicitly prohibited endpoints
 
 The bridge must not expose generic execution endpoints such as `/exec`,

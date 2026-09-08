@@ -3,16 +3,24 @@ import {
   AlertTriangle,
   CheckCircle2,
   HelpCircle,
+  Loader2,
+  RefreshCw,
   ShieldAlert,
   Terminal,
+  Wifi,
+  WifiOff,
   XCircle,
 } from "lucide-react";
 import {
-  mockWorkstationSnapshot,
   WorkstationToolCategory,
   WorkstationToolState,
   WorkstationToolStatus,
+  WorkstationSnapshot,
 } from "../workstation";
+import {
+  fetchWorkstationSnapshot,
+  WorkstationClientError,
+} from "../workstation/client";
 
 interface ToolGroup {
   category: WorkstationToolCategory;
@@ -113,7 +121,52 @@ function WorkstationToolCard({ tool }: { tool: WorkstationToolStatus }) {
 }
 
 export const WorkstationView: React.FC = () => {
-  const snapshot = mockWorkstationSnapshot;
+  const [snapshot, setSnapshot] = React.useState<WorkstationSnapshot | null>(null);
+  const [bridgeStatus, setBridgeStatus] = React.useState<"loading" | "online" | "degraded" | "offline">("loading");
+  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+  const [isRefreshing, setIsRefreshing] = React.useState(false);
+
+  const loadSnapshot = async () => {
+    setIsRefreshing(true);
+    try {
+      const result = await fetchWorkstationSnapshot();
+      setSnapshot(result.snapshot);
+      setBridgeStatus(result.health.status === "ok" ? "online" : result.health.status);
+      setErrorMessage(null);
+    } catch (error) {
+      setSnapshot(null);
+      if (error instanceof WorkstationClientError && error.kind === "offline") {
+        setBridgeStatus("offline");
+        setErrorMessage("Local Training Bridge no disponible");
+      } else {
+        setBridgeStatus("degraded");
+        setErrorMessage(
+          error instanceof WorkstationClientError
+            ? error.message
+            : "No se pudo interpretar la respuesta del bridge.",
+        );
+      }
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
+
+  React.useEffect(() => {
+    void loadSnapshot();
+  }, []);
+
+  const statusLabel = {
+    loading: "Bridge Loading",
+    online: "Bridge Online",
+    degraded: "Bridge Degraded",
+    offline: "Bridge Offline",
+  }[bridgeStatus];
+  const StatusIcon = bridgeStatus === "offline" ? WifiOff : bridgeStatus === "loading" ? Loader2 : Wifi;
+  const statusClassName = bridgeStatus === "online"
+    ? "border-[#4CAF50]/30 bg-[#4CAF50]/10 text-[#71d174]"
+    : bridgeStatus === "loading"
+      ? "border-[#03A9F4]/30 bg-[#03A9F4]/10 text-[#7dd3fc]"
+      : "border-amber-400/30 bg-amber-400/10 text-amber-300";
 
   return (
     <div className="space-y-8 pb-16">
@@ -132,56 +185,110 @@ export const WorkstationView: React.FC = () => {
             </p>
           </div>
 
-          <div className="flex items-center gap-4 rounded-xl border border-[#4CAF50]/30 bg-[#4CAF50]/10 px-5 py-4">
-            <div>
-              <div className="font-mono text-3xl font-bold text-[#71d174]">
-                {snapshot.readinessPercent}%
-              </div>
-              <p className="text-xs font-medium text-[#C6CDDA]">Required readiness</p>
-            </div>
-            <div className="border-l border-[#4CAF50]/30 pl-4 font-mono">
-              <div className="text-lg font-bold text-[#ECEFF4]">
-                {snapshot.requiredPassed} / {snapshot.requiredTotal}
-              </div>
-              <p className="text-[11px] text-[#9FA7B8]">required passed</p>
+          <div className="flex flex-col items-stretch gap-3 sm:items-end">
+            <span className={`inline-flex items-center gap-2 self-end rounded-full border px-3 py-1.5 text-xs font-bold ${statusClassName}`}>
+              <StatusIcon className={`h-3.5 w-3.5 ${bridgeStatus === "loading" ? "animate-spin" : ""}`} aria-hidden="true" />
+              {statusLabel}
+            </span>
+            <div className="flex items-center gap-4 rounded-xl border border-[#4CAF50]/30 bg-[#4CAF50]/10 px-5 py-4">
+              {snapshot ? (
+                <>
+                  <div>
+                    <div className="font-mono text-3xl font-bold text-[#71d174]">
+                      {snapshot.readinessPercent}%
+                    </div>
+                    <p className="text-xs font-medium text-[#C6CDDA]">Required readiness</p>
+                  </div>
+                  <div className="border-l border-[#4CAF50]/30 pl-4 font-mono">
+                    <div className="text-lg font-bold text-[#ECEFF4]">
+                      {snapshot.requiredPassed} / {snapshot.requiredTotal}
+                    </div>
+                    <p className="text-[11px] text-[#9FA7B8]">required passed</p>
+                  </div>
+                </>
+              ) : (
+                <p className="max-w-xs text-sm text-[#C6CDDA]">Esperando datos de la workstation.</p>
+              )}
             </div>
           </div>
         </div>
 
-        <div className="mt-6 flex flex-col gap-1 border-t border-[#2A2F3C] pt-4 text-xs text-[#9FA7B8] sm:flex-row sm:items-center sm:gap-6">
-          <span>
-            Environment: <span className="text-[#C6CDDA]">{snapshot.environment}</span>
-          </span>
-          <span>
-            Generated: <time dateTime={snapshot.generatedAt}>{snapshot.generatedAt}</time>
-          </span>
+        <div className="mt-6 flex flex-col gap-3 border-t border-[#2A2F3C] pt-4 text-xs text-[#9FA7B8] sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+          {snapshot ? (
+            <>
+              <span>
+                Environment: <span className="text-[#C6CDDA]">{snapshot.environment}</span>
+              </span>
+              <span>
+                Generated: <time dateTime={snapshot.generatedAt}>{snapshot.generatedAt}</time>
+              </span>
+            </>
+          ) : (
+            <span>{errorMessage ?? "Conectando con el bridge local..."}</span>
+          )}
+          <button
+            type="button"
+            onClick={() => void loadSnapshot()}
+            disabled={isRefreshing}
+            className="inline-flex items-center gap-2 self-start rounded-lg border border-[#3A4252] bg-[#1B2230] px-3 py-2 font-semibold text-[#ECEFF4] transition-colors hover:border-[#03A9F4]/60 hover:bg-[#202b3d] disabled:cursor-wait disabled:opacity-60 sm:self-auto"
+          >
+            <RefreshCw className={`h-3.5 w-3.5 ${isRefreshing ? "animate-spin" : ""}`} aria-hidden="true" />
+            Actualizar
+          </button>
         </div>
       </section>
 
-      <div className="space-y-6">
-        {TOOL_GROUPS.map((group) => {
-          const tools = snapshot.tools.filter((tool) => tool.category === group.category);
+      {snapshot ? (
+        <div className="space-y-6">
+          {TOOL_GROUPS.map((group) => {
+            const tools = snapshot.tools.filter((tool) => tool.category === group.category);
 
-          return (
-            <section key={group.category} aria-labelledby={`${group.category}-tools-heading`}>
-              <div className="mb-3 flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
-                <h2
-                  id={`${group.category}-tools-heading`}
-                  className="font-mono text-sm font-bold tracking-[0.16em] text-[#ECEFF4]"
-                >
-                  {group.title}
-                </h2>
-                <p className="text-xs text-[#9FA7B8]">{group.description}</p>
-              </div>
-              <ul className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
-                {tools.map((tool) => (
-                  <WorkstationToolCard key={tool.id} tool={tool} />
-                ))}
-              </ul>
-            </section>
-          );
-        })}
-      </div>
+            return (
+              <section key={group.category} aria-labelledby={`${group.category}-tools-heading`}>
+                <div className="mb-3 flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
+                  <h2
+                    id={`${group.category}-tools-heading`}
+                    className="font-mono text-sm font-bold tracking-[0.16em] text-[#ECEFF4]"
+                  >
+                    {group.title}
+                  </h2>
+                  <p className="text-xs text-[#9FA7B8]">{group.description}</p>
+                </div>
+                <ul className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
+                  {tools.map((tool) => (
+                    <WorkstationToolCard key={tool.id} tool={tool} />
+                  ))}
+                </ul>
+              </section>
+            );
+          })}
+        </div>
+      ) : (
+        <section className="rounded-2xl border border-amber-400/30 bg-amber-400/[0.07] p-6 text-[#C6CDDA]">
+          <div className="flex items-start gap-3">
+            {bridgeStatus === "offline" ? (
+              <WifiOff className="mt-0.5 h-5 w-5 shrink-0 text-amber-300" aria-hidden="true" />
+            ) : (
+              <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-amber-300" aria-hidden="true" />
+            )}
+            <div>
+              <h2 className="font-semibold text-[#ECEFF4]">
+                {bridgeStatus === "offline" ? "Local Training Bridge no disponible" : "Respuesta del bridge no válida"}
+              </h2>
+              <p className="mt-1 text-sm">
+                {bridgeStatus === "offline"
+                  ? "Arranca el proceso local para consultar el estado real de tu workstation."
+                  : errorMessage}
+              </p>
+              {bridgeStatus === "offline" && (
+                <code className="mt-3 inline-block rounded bg-[#111722] px-2 py-1 font-mono text-xs text-[#7dd3fc]">
+                  npm run bridge:start
+                </code>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
     </div>
   );
 };
