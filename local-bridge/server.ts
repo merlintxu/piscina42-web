@@ -1,6 +1,6 @@
 import express from "express";
-import { mockWorkstationSnapshot } from "../src/workstation/mocks";
 import { BRIDGE_HOST, BRIDGE_PORT, BRIDGE_VERSION } from "./config";
+import { probeWorkstation } from "./probes";
 
 const app = express();
 
@@ -12,9 +12,9 @@ app.get("/health", (_request, response) => {
   });
 });
 
-app.get("/workstation", (_request, response) => {
+app.get("/workstation", async (_request, response) => {
   response.json({
-    snapshot: mockWorkstationSnapshot,
+    snapshot: await probeWorkstation(),
     health: {
       status: "ok",
       version: BRIDGE_VERSION,
