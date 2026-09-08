@@ -12,3 +12,14 @@
 .DS_Store
 Thumbs.db
 *.tmp
+
+# Entorno local WSL/Node
+node_modules/
+dist/
+.env
+.env.local
+.env.*.local
+*.log
+npm-debug.log*
+.vscode/
+.idea/
