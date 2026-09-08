@@ -1,6 +1,7 @@
 import React from "react";
 import {
   AlertTriangle,
+  Box,
   CheckCircle2,
   HelpCircle,
   Loader2,
@@ -239,7 +240,48 @@ export const WorkstationView: React.FC = () => {
       </section>
 
       {snapshot ? (
-        <div className="space-y-6">
+        <>
+          {(() => {
+            const dockerTool = snapshot.tools.find((tool) => tool.id === "docker");
+            const dockerStatus = dockerTool?.status === "pass"
+              ? "available"
+              : dockerTool?.status === "warn"
+                ? "degraded"
+                : "unavailable";
+            const sandboxStatus = dockerStatus === "available" ? "available" : "unavailable";
+            const dockerReason = dockerTool?.message ?? "Docker runtime not available";
+
+            return (
+              <section className="grid gap-3 rounded-2xl border border-[#2A2F3C] bg-[#101622] p-5 md:grid-cols-2">
+                <div className="flex items-start gap-3">
+                  <Box className="mt-0.5 h-5 w-5 shrink-0 text-[#03A9F4]" aria-hidden="true" />
+                  <div>
+                    <p className="font-mono text-[11px] font-bold tracking-[0.16em] text-[#9FA7B8]">WORKSTATION</p>
+                    <div className="mt-1 flex items-center gap-2">
+                      <h2 className="font-semibold text-[#ECEFF4]">Docker</h2>
+                      <span className="text-xs uppercase text-[#9FA7B8]">Optional / {dockerStatus}</span>
+                    </div>
+                    {dockerTool?.version && <p className="mt-1 font-mono text-xs text-[#9FA7B8]">{dockerTool.version}</p>}
+                  </div>
+                </div>
+                <div className="flex items-start gap-3 border-t border-[#2A2F3C] pt-3 md:border-l md:border-t-0 md:pl-5 md:pt-0">
+                  <ShieldAlert className="mt-0.5 h-5 w-5 shrink-0 text-amber-300" aria-hidden="true" />
+                  <div>
+                    <p className="font-mono text-[11px] font-bold tracking-[0.16em] text-[#9FA7B8]">LOCAL MOULINETTE</p>
+                    <div className="mt-1 flex items-center gap-2">
+                      <h2 className="font-semibold text-[#ECEFF4]">Sandbox</h2>
+                      <span className="text-xs uppercase text-[#9FA7B8]">{sandboxStatus}</span>
+                    </div>
+                    {sandboxStatus !== "available" && (
+                      <p className="mt-1 text-xs text-[#9FA7B8]">Reason: {dockerReason}</p>
+                    )}
+                  </div>
+                </div>
+              </section>
+            );
+          })()}
+
+          <div className="space-y-6">
           {TOOL_GROUPS.map((group) => {
             const tools = snapshot.tools.filter((tool) => tool.category === group.category);
 
@@ -262,7 +304,8 @@ export const WorkstationView: React.FC = () => {
               </section>
             );
           })}
-        </div>
+          </div>
+        </>
       ) : (
         <section className="rounded-2xl border border-amber-400/30 bg-amber-400/[0.07] p-6 text-[#C6CDDA]">
           <div className="flex items-start gap-3">
