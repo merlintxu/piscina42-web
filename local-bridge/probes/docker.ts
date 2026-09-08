@@ -5,6 +5,7 @@ import { runDockerInfoProbe, runDockerVersionProbe } from "./runner";
 interface DockerInfoPayload {
   ServerVersion?: string;
   OperatingSystem?: string;
+  OSType?: string;
   Architecture?: string;
 }
 
@@ -14,16 +15,12 @@ export interface DockerProbeResult {
 }
 
 function parseDockerInfo(output: string): DockerInfoPayload | null {
-  try {
-    const value: unknown = JSON.parse(output);
-    if (typeof value !== "object" || value === null) {
-      return null;
-    }
-
-    return value as DockerInfoPayload;
-  } catch {
+  const [ServerVersion, OperatingSystem, OSType, Architecture] = output.trim().split("|");
+  if (!ServerVersion || !OperatingSystem || !OSType || !Architecture) {
     return null;
   }
+
+  return { ServerVersion, OperatingSystem, OSType, Architecture };
 }
 
 export async function probeDocker(): Promise<DockerProbeResult> {

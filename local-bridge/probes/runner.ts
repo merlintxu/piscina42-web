@@ -5,15 +5,21 @@ import type { ProbeExecution } from "./types";
 const execFileAsync = promisify(execFile);
 const PROBE_TIMEOUT_MS = 3_000;
 const PROBE_MAX_OUTPUT_BYTES = 16 * 1024;
+const DOCKER_INFO_MAX_OUTPUT_BYTES = 64 * 1024;
+
+interface FixedProbeOptions {
+  maxOutputBytes?: number;
+}
 
 async function runFixedProbe(
   executable: string,
   args: readonly string[],
+  options?: FixedProbeOptions,
 ): Promise<ProbeExecution> {
   try {
     const result = await execFileAsync(executable, [...args], {
       encoding: "utf8",
-      maxBuffer: PROBE_MAX_OUTPUT_BYTES,
+      maxBuffer: options?.maxOutputBytes ?? PROBE_MAX_OUTPUT_BYTES,
       shell: false,
       timeout: PROBE_TIMEOUT_MS,
       windowsHide: true,
@@ -112,5 +118,9 @@ export function runDockerVersionProbe(): Promise<ProbeExecution> {
 }
 
 export function runDockerInfoProbe(): Promise<ProbeExecution> {
-  return runFixedProbe("docker", ["info", "--format", "{{json .}}"]);
+  return runFixedProbe(
+    "docker",
+    ["info", "--format", "{{.ServerVersion}}|{{.OperatingSystem}}|{{.OSType}}|{{.Architecture}}"],
+    { maxOutputBytes: DOCKER_INFO_MAX_OUTPUT_BYTES },
+  );
 }
