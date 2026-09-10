@@ -46,3 +46,22 @@ export type {
   MentorGuidanceKind,
   MentorPedagogyPolicy,
 } from "./policy";
+export {
+  buildKnowledgeContextBlock,
+  isKnowledgeContextValid,
+  isKnowledgeDocumentValid,
+  isValidKnowledgeRelativePath,
+  MAX_KNOWLEDGE_CONTEXT_BYTES,
+  MAX_KNOWLEDGE_DOCUMENT_BYTES,
+  MAX_KNOWLEDGE_DOCUMENTS,
+  selectKnowledgeDocuments,
+  UNTRUSTED_KNOWLEDGE_DATA_NOTICE,
+} from "./knowledge";
+export type {
+  KnowledgeDocument,
+  KnowledgeDocumentId,
+  KnowledgeDocumentKind,
+  KnowledgeDocumentSummary,
+  KnowledgeSelectionCriteria,
+  MentorKnowledgeContext,
+} from "./knowledge";
