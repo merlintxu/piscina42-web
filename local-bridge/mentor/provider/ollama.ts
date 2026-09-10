@@ -6,10 +6,13 @@ import type {
   MentorResponse,
 } from "../../../src/mentor/provider";
 import type { LocalAIProviderInfo } from "../../../src/mentor";
+import {
+  buildMentorSystemPrompt,
+  createMentorPedagogyPolicy,
+} from "../../../src/mentor/policy";
 
 const OLLAMA_CHAT_ENDPOINT = "http://127.0.0.1:11434/api/chat";
 const OLLAMA_TIMEOUT_MS = 60_000;
-const SYSTEM_MESSAGE = "You are a local training mentor.";
 
 interface OllamaChatResponse {
   model?: unknown;
@@ -39,7 +42,13 @@ export class MentorProviderException extends Error implements MentorProviderErro
 
 function toOllamaMessages(request: MentorRequest): OllamaMessage[] {
   return [
-    { role: "system", content: SYSTEM_MESSAGE },
+    {
+      role: "system",
+      content: buildMentorSystemPrompt(
+        createMentorPedagogyPolicy(request.mode),
+        request.taskContext,
+      ),
+    },
     ...request.messages.map((message) => ({
       role: message.role === "mentor" ? "assistant" as const : "user" as const,
       content: message.content,

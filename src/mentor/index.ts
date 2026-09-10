@@ -36,3 +36,13 @@ export type {
   MentorResponse,
   MentorRole,
 } from "./provider";
+export {
+  buildMentorSystemPrompt,
+  createMentorPedagogyPolicy,
+  MENTOR_PROMPT_VERSION,
+} from "./policy";
+export type {
+  HintLevel,
+  MentorGuidanceKind,
+  MentorPedagogyPolicy,
+} from "./policy";
