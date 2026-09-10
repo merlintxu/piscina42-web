@@ -5,6 +5,7 @@ import {
   runLocalMoulinetteFixture,
   runLocalMoulinetteSubmission,
 } from "./moulinette";
+import { probeLocalMentorCapabilities } from "./mentor";
 import { probeWorkstation } from "./probes";
 
 const app = express();
@@ -49,6 +50,10 @@ app.get("/workstation", async (_request, response) => {
       generatedAt: new Date().toISOString(),
     },
   });
+});
+
+app.get("/mentor/capabilities", async (_request, response) => {
+  response.json(await probeLocalMentorCapabilities());
 });
 
 app.post("/moulinette/run", async (request, response) => {
