@@ -28,3 +28,5 @@ export type {
   MoulinetteCheckProfileName,
   SandboxEvaluation,
 } from "./evaluation";
+export { runMoulinetteJob } from "./orchestrator";
+export type { MoulinetteRunInput, MoulinetteRunResult } from "./orchestrator";
