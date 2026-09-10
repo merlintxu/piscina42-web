@@ -30,6 +30,7 @@ import { ProgressView } from "./views/ProgressView";
 import { TrainingDashboardView } from "./views/TrainingDashboardView";
 import { DiagnosticView } from "./views/DiagnosticView";
 import { WorkstationView } from "./views/WorkstationView";
+import { MoulinetteView } from "./views/MoulinetteView";
 import { NorminetteChecker } from "./components/NorminetteChecker";
 import { PeerEvalGuide } from "./components/PeerEvalGuide";
 import { AiMentorModal } from "./components/AiMentorModal";
@@ -266,6 +267,8 @@ export function App() {
 
             {/* /workstation → WorkstationView */}
             <Route path="/workstation" element={<WorkstationView />} />
+
+            <Route path="/moulinette" element={<MoulinetteView />} />
 
             {/* / → HomeView */}
             <Route
