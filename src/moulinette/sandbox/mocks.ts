@@ -42,6 +42,30 @@ export const mockUnsafeNetworkSandboxRequest: SandboxRequest = {
   },
 };
 
+export const mockControlledCompileFailSandboxRequest: SandboxRequest = {
+  ...mockValidSandboxRequest,
+  job: {
+    ...mockValidSandboxRequest.job,
+    files: [{ path: "src/main.c", content: "int main(void) { return ; }\n" }],
+  },
+};
+
+export const mockControlledTraversalSandboxRequest: SandboxRequest = {
+  ...mockValidSandboxRequest,
+  job: {
+    ...mockValidSandboxRequest.job,
+    files: [{ path: "../evil.c", content: "int main(void) { return 0; }\n" }],
+  },
+};
+
+export const mockControlledNetworkSandboxRequest: SandboxRequest = {
+  ...mockValidSandboxRequest,
+  limits: {
+    ...mockValidSandboxRequest.limits,
+    networkAllowed: true,
+  },
+};
+
 const successfulProcess: SandboxProcessResult = {
   exitCode: 0,
   stdout: "",

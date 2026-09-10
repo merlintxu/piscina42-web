@@ -5,6 +5,9 @@ export {
 } from "./validation";
 export {
   mockDuplicatePathSandboxRequest,
+  mockControlledCompileFailSandboxRequest,
+  mockControlledNetworkSandboxRequest,
+  mockControlledTraversalSandboxRequest,
   mockSandboxCompileSuccessResult,
   mockSandboxTimeoutResult,
   mockTraversalSandboxRequest,
@@ -19,10 +22,16 @@ export type {
   SandboxProcessResult,
   SandboxRequest,
   SandboxRunResult,
+  SandboxRunError,
+  SandboxRunErrorCode,
   SandboxSourceFile,
   SandboxTestResult,
 } from "./types";
-export { DockerSandboxBackend } from "./backend/docker";
+export {
+  DockerSandboxBackend,
+  dockerBackendInfoFromProbe,
+  runSandboxRequest,
+} from "./backend/docker";
 export {
   canTransitionExecutionStatus,
   createExecutionContext,
@@ -36,6 +45,9 @@ export {
   mockFailedLifecycle,
   mockUnavailableBackend,
 } from "./backend/mocks";
+export type {
+  DockerCapabilityProbe,
+} from "./backend/docker";
 export type {
   ExecutionContextOptions,
 } from "./backend/lifecycle";

@@ -55,10 +55,23 @@ export interface SandboxTestResult {
   message?: string;
 }
 
+export type SandboxRunErrorCode =
+  | "invalid_request"
+  | "workspace_error"
+  | "compile_timeout"
+  | "execution_timeout"
+  | "internal_docker_error";
+
+export interface SandboxRunError {
+  code: SandboxRunErrorCode;
+  message: string;
+}
+
 export interface SandboxRunResult {
   compile: SandboxCompileResult;
   tests: SandboxTestResult[];
   completedAt: string;
+  error?: SandboxRunError;
 }
 
 export type SandboxRequestSourceJob = Pick<
