@@ -51,3 +51,22 @@ export const mockFunctionalFailureSandboxResult: SandboxRunResult = {
   ],
   completedAt: "2026-09-10T10:00:03.000Z",
 };
+
+export const mockNorminettePassSandboxResult: SandboxRunResult = {
+  ...mockValidSandboxResult,
+  norminette: process({ stdout: "OK!", durationMs: 50 }),
+};
+
+export const mockNorminetteFailureSandboxResult: SandboxRunResult = {
+  ...mockValidSandboxResult,
+  norminette: process({
+    exitCode: 1,
+    stderr: "Error: INVALID_HEADER",
+    durationMs: 50,
+  }),
+};
+
+export const mockNorminetteErrorSandboxResult: SandboxRunResult = {
+  ...mockValidSandboxResult,
+  norminette: process({ exitCode: null, stderr: "Norminette container error", durationMs: 50 }),
+};

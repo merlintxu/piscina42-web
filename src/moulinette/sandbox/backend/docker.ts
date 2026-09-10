@@ -350,6 +350,7 @@ const SANDBOX_C_IMAGES = {
   gcc: "gcc:15",
   clang: "clang:18",
 } as const;
+const NORMINETTE_IMAGE = "piscina42/norminette:3.3.60";
 const SANDBOX_OUTPUT_PATH = "/output/program";
 
 interface DockerProcessAttempt {
@@ -453,6 +454,26 @@ async function materializeSandboxSource(
   }
 
   return relativeDestination;
+}
+
+async function createSandboxWorkspace(): Promise<{
+  workspaceDir: string;
+  sourceRoot: string;
+  outputRoot: string;
+}> {
+  const workspaceDir = await mkdtemp(join(tmpdir(), "piscina42-request-"));
+  const sourceRoot = join(workspaceDir, "source");
+  const outputRoot = join(workspaceDir, "output");
+  await mkdir(sourceRoot);
+  await mkdir(outputRoot);
+  await chmod(workspaceDir, 0o755);
+  await chmod(sourceRoot, 0o755);
+  await chmod(outputRoot, 0o733);
+  return { workspaceDir, sourceRoot, outputRoot };
+}
+
+async function removeSandboxWorkspace(workspaceDir: string): Promise<void> {
+  await rm(workspaceDir, { recursive: true, force: true });
 }
 
 async function compileSandboxRequest(
@@ -604,14 +625,9 @@ export async function runSandboxRequest(request: SandboxRequest): Promise<Sandbo
 
   let workspaceDir: string | undefined;
   try {
-    workspaceDir = await mkdtemp(join(tmpdir(), "piscina42-request-"));
-    const sourceRoot = join(workspaceDir, "source");
-    const outputRoot = join(workspaceDir, "output");
-    await mkdir(sourceRoot);
-    await mkdir(outputRoot);
-    await chmod(workspaceDir, 0o755);
-    await chmod(sourceRoot, 0o755);
-    await chmod(outputRoot, 0o733);
+    const workspace = await createSandboxWorkspace();
+    workspaceDir = workspace.workspaceDir;
+    const { sourceRoot, outputRoot } = workspace;
     const sourcePath = await materializeSandboxSource(sourceRoot, request.job.files[0]);
 
     const compileAttempt = await compileSandboxRequest(
@@ -661,7 +677,90 @@ export async function runSandboxRequest(request: SandboxRequest): Promise<Sandbo
     return sandboxResultWithError("workspace_error", message);
   } finally {
     if (workspaceDir) {
-      await rm(workspaceDir, { recursive: true, force: true });
+      await removeSandboxWorkspace(workspaceDir);
+    }
+  }
+}
+
+export async function runNorminetteCheck(
+  request: SandboxRequest,
+): Promise<SandboxProcessResult> {
+  if (!validateSandboxRequest(request)) {
+    return sandboxProcessFailure("Sandbox request is invalid.");
+  }
+
+  let workspaceDir: string | undefined;
+  try {
+    const workspace = await createSandboxWorkspace();
+    workspaceDir = workspace.workspaceDir;
+    const sourcePaths = await Promise.all(
+      request.job.files.map((file) => materializeSandboxSource(workspace.sourceRoot, file)),
+    );
+    const norminettePaths = sourcePaths
+      .filter((path) => path.endsWith(".c") || path.endsWith(".h"))
+      .map((path) => `/workspace/${path}`);
+
+    if (norminettePaths.length === 0) {
+      return sandboxProcessFailure("Sandbox request contains no C or header files.");
+    }
+
+    const startedAt = Date.now();
+    const containerName = `piscina42-norminette-${randomUUID()}`;
+    const args = [
+      "run",
+      "--rm",
+      "--name",
+      containerName,
+      "--network",
+      "none",
+      "--read-only",
+      "--cap-drop",
+      "ALL",
+      "--security-opt",
+      "no-new-privileges",
+      "--pids-limit",
+      String(request.limits.maxProcesses),
+      "--memory",
+      `${request.limits.memoryMb}m`,
+      "--cpus",
+      "0.5",
+      "--user",
+      "65534:65534",
+      "--mount",
+      `type=bind,src=${workspace.sourceRoot},dst=/workspace,readonly`,
+      NORMINETTE_IMAGE,
+      "norminette",
+      ...norminettePaths,
+    ] as const;
+
+    try {
+      const result = await execFileAsync("docker", [...args], {
+        encoding: "utf8",
+        maxBuffer: request.limits.outputBytes,
+        shell: false,
+        timeout: request.limits.executionMs,
+        windowsHide: true,
+      });
+      return {
+        exitCode: 0,
+        stdout: result.stdout,
+        stderr: result.stderr,
+        durationMs: Date.now() - startedAt,
+        timedOut: false,
+      };
+    } catch (error) {
+      const process = processResultFromError(error, startedAt);
+      return isDockerInvocationError(error) ? { ...process, exitCode: null } : process;
+    } finally {
+      await removeControlledContainer(containerName);
+    }
+  } catch (error) {
+    return sandboxProcessFailure(
+      error instanceof Error ? error.message : "Norminette workspace failed.",
+    );
+  } finally {
+    if (workspaceDir) {
+      await removeSandboxWorkspace(workspaceDir);
     }
   }
 }

@@ -71,6 +71,7 @@ export interface SandboxRunResult {
   compile: SandboxCompileResult;
   tests: SandboxTestResult[];
   completedAt: string;
+  norminette?: SandboxProcessResult;
   error?: SandboxRunError;
 }
 

@@ -92,8 +92,25 @@ export function mapSandboxResultToChecks(result: SandboxRunResult): MoulinetteCh
     functionalCheck(result),
     {
       type: "norminette",
-      status: "skipped",
-      message: "Norminette check not executed yet.",
+      status: result.norminette
+        ? result.norminette.timedOut || result.norminette.exitCode === null
+          ? "error"
+          : result.norminette.exitCode === 0
+            ? "pass"
+            : "fail"
+        : "skipped",
+      message: result.norminette
+        ? result.norminette.timedOut
+          ? "Norminette check timed out."
+          : result.norminette.exitCode === null
+            ? "Norminette check returned an internal error."
+            : result.norminette.exitCode === 0
+              ? "Norminette checks passed."
+              : "Norminette violations found."
+        : "Norminette check not executed yet.",
+      ...(result.norminette?.durationMs !== undefined
+        ? { durationMs: result.norminette.durationMs }
+        : {}),
     },
     {
       type: "memory",

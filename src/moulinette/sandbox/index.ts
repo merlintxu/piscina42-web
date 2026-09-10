@@ -5,6 +5,8 @@ export {
 } from "./validation";
 export {
   mockDuplicatePathSandboxRequest,
+  mockNorminetteCompliantSandboxRequest,
+  mockNorminetteViolationSandboxRequest,
   mockControlledCompileFailSandboxRequest,
   mockControlledNetworkSandboxRequest,
   mockControlledTraversalSandboxRequest,
@@ -30,6 +32,7 @@ export type {
 export {
   DockerSandboxBackend,
   dockerBackendInfoFromProbe,
+  runNorminetteCheck,
   runSandboxRequest,
 } from "./backend/docker";
 export {

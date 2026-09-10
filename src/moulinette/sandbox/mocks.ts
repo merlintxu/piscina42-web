@@ -42,6 +42,40 @@ export const mockUnsafeNetworkSandboxRequest: SandboxRequest = {
   },
 };
 
+const norminetteCompliantSource = `/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: a <a@42.fr>                         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/09/10 00:00:00 by a              #+#    #+#             */
+/*   Updated: 2026/09/10 00:00:00 by a             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+int\tmain(void)
+{
+	return (0);
+}
+`;
+
+export const mockNorminetteCompliantSandboxRequest: SandboxRequest = {
+  ...mockValidSandboxRequest,
+  job: {
+    ...mockValidSandboxRequest.job,
+    files: [{ path: "src/main.c", content: norminetteCompliantSource }],
+  },
+};
+
+export const mockNorminetteViolationSandboxRequest: SandboxRequest = {
+  ...mockNorminetteCompliantSandboxRequest,
+  job: {
+    ...mockNorminetteCompliantSandboxRequest.job,
+    files: [{ path: "src/main.c", content: "int main(void){return 0;}\n" }],
+  },
+};
+
 export const mockControlledCompileFailSandboxRequest: SandboxRequest = {
   ...mockValidSandboxRequest,
   job: {
