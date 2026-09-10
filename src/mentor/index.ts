@@ -19,4 +19,5 @@ export type {
   LocalAIProviderInfo,
   LocalAIProviderStatus,
   LocalMentorCapabilities,
+  ModelCapabilityEvidence,
 } from "./types";

@@ -13,11 +13,23 @@ export type LocalAIModelCapability =
   | "embeddings"
   | "vision";
 
+export interface ModelCapabilityEvidence {
+  capability: LocalAIModelCapability;
+  source: string;
+  confidence: "explicit" | "derived";
+  detail?: string;
+}
+
 export interface LocalAIModelInfo {
   id: string;
   provider: LocalAIProvider;
   name: string;
   capabilities: LocalAIModelCapability[];
+  capabilityEvidence?: ModelCapabilityEvidence[];
+  family?: string;
+  families?: string[];
+  format?: string;
+  architecture?: string;
   contextWindow?: number;
   parameterSize?: string;
   quantization?: string;
