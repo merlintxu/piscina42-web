@@ -114,8 +114,29 @@ export function mapSandboxResultToChecks(result: SandboxRunResult): MoulinetteCh
     },
     {
       type: "memory",
-      status: "skipped",
-      message: "Memory check not executed yet.",
+      status: result.memory
+        ? result.memory.timedOut || result.memory.exitCode === null
+          ? "error"
+          : result.memory.exitCode === 0
+            ? "pass"
+            : result.memory.exitCode === 42
+              ? "fail"
+              : "error"
+        : "skipped",
+      message: result.memory
+        ? result.memory.timedOut
+          ? "Memory check timed out."
+          : result.memory.exitCode === null
+            ? "Memory check returned an internal error."
+            : result.memory.exitCode === 0
+              ? "Memory checks passed."
+              : result.memory.exitCode === 42
+                ? "Valgrind reported memory errors."
+                : "Valgrind returned an internal error."
+        : "Memory check not executed yet.",
+      ...(result.memory?.durationMs !== undefined
+        ? { durationMs: result.memory.durationMs }
+        : {}),
     },
   ];
 }

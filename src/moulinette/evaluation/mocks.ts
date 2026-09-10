@@ -70,3 +70,18 @@ export const mockNorminetteErrorSandboxResult: SandboxRunResult = {
   ...mockValidSandboxResult,
   norminette: process({ exitCode: null, stderr: "Norminette container error", durationMs: 50 }),
 };
+
+export const mockMemoryPassSandboxResult: SandboxRunResult = {
+  ...mockNorminettePassSandboxResult,
+  memory: process({ durationMs: 70 }),
+};
+
+export const mockMemoryFailureSandboxResult: SandboxRunResult = {
+  ...mockNorminettePassSandboxResult,
+  memory: process({ exitCode: 42, stderr: "definitely lost: 4 bytes", durationMs: 70 }),
+};
+
+export const mockMemoryErrorSandboxResult: SandboxRunResult = {
+  ...mockNorminettePassSandboxResult,
+  memory: process({ exitCode: null, stderr: "Valgrind container error", durationMs: 70 }),
+};

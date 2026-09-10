@@ -72,6 +72,7 @@ export interface SandboxRunResult {
   tests: SandboxTestResult[];
   completedAt: string;
   norminette?: SandboxProcessResult;
+  memory?: SandboxProcessResult;
   error?: SandboxRunError;
 }
 

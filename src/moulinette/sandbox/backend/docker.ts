@@ -351,6 +351,8 @@ const SANDBOX_C_IMAGES = {
   clang: "clang:18",
 } as const;
 const NORMINETTE_IMAGE = "piscina42/norminette:3.3.60";
+const VALGRIND_IMAGE = "piscina42/valgrind:3.24.0";
+const VALGRIND_ERROR_EXIT_CODE = 42;
 const SANDBOX_OUTPUT_PATH = "/output/program";
 
 interface DockerProcessAttempt {
@@ -758,6 +760,111 @@ export async function runNorminetteCheck(
     return sandboxProcessFailure(
       error instanceof Error ? error.message : "Norminette workspace failed.",
     );
+  } finally {
+    if (workspaceDir) {
+      await removeSandboxWorkspace(workspaceDir);
+    }
+  }
+}
+
+export async function runValgrindCheck(
+  request: SandboxRequest,
+): Promise<SandboxProcessResult | undefined> {
+  if (
+    !validateSandboxRequest(request) ||
+    request.job.files.length !== 1 ||
+    !request.job.files[0].path.endsWith(".c") ||
+    !request.job.files.every((file) => validateSandboxSourcePath(file.path))
+  ) {
+    return undefined;
+  }
+
+  let workspaceDir: string | undefined;
+  try {
+    const workspace = await createSandboxWorkspace();
+    workspaceDir = workspace.workspaceDir;
+    const sourcePath = await materializeSandboxSource(
+      workspace.sourceRoot,
+      request.job.files[0],
+    );
+    const compileAttempt = await compileSandboxRequest(
+      request,
+      workspace.sourceRoot,
+      sourcePath,
+      workspace.outputRoot,
+    );
+    if (
+      compileAttempt.process.timedOut ||
+      compileAttempt.dockerError ||
+      compileAttempt.process.exitCode !== 0
+    ) {
+      return undefined;
+    }
+
+    const startedAt = Date.now();
+    const containerName = `piscina42-valgrind-${randomUUID()}`;
+    const args = [
+      "run",
+      "--rm",
+      "--name",
+      containerName,
+      "--network",
+      "none",
+      "--read-only",
+      "--cap-drop",
+      "ALL",
+      "--security-opt",
+      "no-new-privileges",
+      "--pids-limit",
+      String(request.limits.maxProcesses),
+      "--memory",
+      `${request.limits.memoryMb}m`,
+      "--cpus",
+      "0.5",
+      "--user",
+      "65534:65534",
+      "--tmpfs",
+      "/tmp:rw,noexec,nosuid,nodev,size=16m",
+      "--mount",
+      `type=bind,src=${workspace.outputRoot},dst=/output,readonly`,
+      VALGRIND_IMAGE,
+      "valgrind",
+      "--leak-check=full",
+      "--show-leak-kinds=all",
+      "--errors-for-leak-kinds=all",
+      `--error-exitcode=${VALGRIND_ERROR_EXIT_CODE}`,
+      "/output/program",
+    ] as const;
+
+    try {
+      const result = await execFileAsync("docker", [...args], {
+        encoding: "utf8",
+        maxBuffer: request.limits.outputBytes,
+        shell: false,
+        timeout: request.limits.executionMs,
+        windowsHide: true,
+      });
+      return {
+        exitCode: 0,
+        stdout: result.stdout,
+        stderr: result.stderr,
+        durationMs: Date.now() - startedAt,
+        timedOut: false,
+      };
+    } catch (error) {
+      const process = processResultFromError(error, startedAt);
+      return isDockerInvocationError(error) ? { ...process, exitCode: null } : process;
+    } finally {
+      await removeControlledContainer(containerName);
+    }
+  } catch {
+    return {
+      exitCode: null,
+      stdout: "",
+      stderr: "Valgrind workspace or Docker setup failed.",
+      durationMs: 0,
+      timedOut: false,
+    };
   } finally {
     if (workspaceDir) {
       await removeSandboxWorkspace(workspaceDir);

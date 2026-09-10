@@ -34,6 +34,7 @@ export {
   dockerBackendInfoFromProbe,
   runNorminetteCheck,
   runSandboxRequest,
+  runValgrindCheck,
 } from "./backend/docker";
 export {
   canTransitionExecutionStatus,
