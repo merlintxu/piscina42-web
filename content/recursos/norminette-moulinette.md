@@ -1,4 +1,4 @@
-﻿---
+---
 id: norminette-moulinette
 type: resource-collection
 title: Norminette y Moulinette
@@ -15,7 +15,7 @@ individual en el vault.
 
 ---
 id: resource-norminette-overview
-type: resource
+type: course
 title: Norminette — guía de estilo 42
 url: ""
 modules:
@@ -37,7 +37,7 @@ cualquier ejercicio que no pase. Es obligatoria en todos los módulos C. [file:3
 
 ---
 id: resource-moulinette
-type: resource
+type: course
 title: Moulinette — validador automático
 url: ""
 modules:
@@ -59,10 +59,9 @@ aprueba. [file:34]
 
 ---
 id: resource-norminette-repo
-type: resource
+type: repository
 title: Norminette — repositorio oficial (GitHub)
 url: https://github.com/42School/norminette
-type: repository
 modules:
   - c00-intro
   - c01-punteros
@@ -90,10 +89,9 @@ entregar, ahorrando correcciones perdidas por errores de estilo. [file:34]
 
 ---
 id: resource-norminette-rules
-type: resource
+type: article
 title: Norminette — resumen de reglas
 url: https://github.com/42School/norminette/blob/master/README.md
-type: article
 modules:
   - c00-intro
   - c01-punteros
@@ -115,10 +113,9 @@ sin `for` con más de una instrucción, etc. Tenlo a mano mientras programas. [f
 
 ---
 id: resource-norminette-python
-type: resource
+type: repository
 title: norminette.py — validador en Python
 url: https://github.com/R4meau/norminette.py
-type: repository
 modules:
   - c00-intro
   - c01-punteros

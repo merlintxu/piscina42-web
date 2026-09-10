@@ -1,6 +1,7 @@
 ---
 id: habit-meal-routine
 type: habit
+slug: habit-meal-routine
 title: Rutina de comidas estables
 phases:
   - fase1-entorno

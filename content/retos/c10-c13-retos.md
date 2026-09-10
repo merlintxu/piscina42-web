@@ -16,12 +16,19 @@ plantillas). Cada reto tiene su nota individual en el vault.
 ---
 id: reto-c10-bst-insert
 type: challenge
+slug: reto-c10-bst-insert
 title: Inserción en árbol binario de búsqueda
 source: piscina42-web
 module: c10-c13-avanzado
 phase: fase4-simulacion
 difficulty: hard
 estimated_time_minutes: 45
+tags:
+  - BST
+  - árboles
+  - punteros
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -59,12 +66,19 @@ insert(3) de nuevo -> sin duplicado
 ---
 id: reto-c11-stack
 type: challenge
+slug: reto-c11-stack
 title: Pila (stack) con push/pop
 source: piscina42-web
 module: c10-c13-avanzado
 phase: fase4-simulacion
 difficulty: medium
 estimated_time_minutes: 35
+tags:
+  - pila
+  - listas
+  - malloc
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -102,12 +116,19 @@ push(a); push(b); pop() -> b; pop() -> a; pop() -> NULL
 ---
 id: reto-c12-templates
 type: challenge
+slug: reto-c12-templates
 title: Esqueleto de proyecto con headers y Makefile
 source: piscina42-web
 module: c10-c13-avanzado
 phase: fase4-simulacion
 difficulty: medium
 estimated_time_minutes: 40
+tags:
+  - Makefile
+  - headers
+  - plantilla
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -146,12 +167,19 @@ make fclean -> borra .o y ejecutable
 ---
 id: reto-c10-bst-remove
 type: challenge
+slug: reto-c10-bst-remove
 title: bst_remove — eliminar nodo de BST
 source: piscina42-web
 module: c10-c13-avanzado
 phase: fase4-simulacion
 difficulty: hard
 estimated_time_minutes: 50
+tags:
+  - árboles
+  - recursión
+  - memoria
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -190,12 +218,19 @@ remove de hoja -> árbol sin ese nodo
 ---
 id: reto-c11-queue
 type: challenge
+slug: reto-c11-queue
 title: queue — cola con array circular
 source: piscina42-web
 module: c10-c13-avanzado
 phase: fase4-simulacion
 difficulty: medium
 estimated_time_minutes: 35
+tags:
+  - estructuras de datos
+  - arrays
+  - punteros
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado
@@ -233,12 +268,19 @@ dequeue() en vacía -> error/indefinido
 ---
 id: reto-c12-hash-map
 type: challenge
+slug: reto-c12-hash-map
 title: hash_map — tabla hash simple
 source: piscina42-web
 module: c10-c13-avanzado
 phase: fase4-simulacion
 difficulty: hard
 estimated_time_minutes: 55
+tags:
+  - hash
+  - punteros
+  - cadenas
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado

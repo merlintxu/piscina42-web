@@ -4,7 +4,22 @@
 # Código de la web (app/) aún no desarrollado en esta fase de contenido.
 /app/
 
+# Dependencias y build del script de pipeline (scripts/).
+/scripts/node_modules/
+/scripts/dist/
+
 # Artefactos de entorno / SO
 .DS_Store
 Thumbs.db
 *.tmp
+
+# Entorno local WSL/Node
+node_modules/
+dist/
+.env
+.env.local
+.env.*.local
+*.log
+npm-debug.log*
+.vscode/
+.idea/

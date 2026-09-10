@@ -1,6 +1,6 @@
 ---
 id: resource-exercism-c-basics
-type: resource
+type: course
 title: Exercism — C basics
 url: ""
 modules:

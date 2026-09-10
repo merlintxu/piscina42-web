@@ -1,6 +1,7 @@
 ---
 id: habit-valgrind-after-c07
 type: habit
+slug: habit-valgrind-after-c07
 title: Pasar Valgrind tras cada reto de memoria
 phases:
   - fase3-c-intermedio

@@ -15,10 +15,9 @@ individual en el vault.
 
 ---
 id: resource-deepwiki-exam-practice
-type: resource
+type: article
 title: DeepWiki — 42 Piscine exam practice
 url: https://deepwiki.com/
-type: article
 modules:
   - c00-intro
   - c01-punteros
@@ -41,10 +40,9 @@ diferentes campus (42, 1337, etc.). [web:34]
 
 ---
 id: resource-1337-exam-repos
-type: resource
+type: repository
 title: Repos de exámenes 42/1337 (GitHub)
 url: https://github.com/topics/42-exam
-type: repository
 modules:
   - c00-intro
   - c01-punteros
@@ -70,10 +68,9 @@ simular la ventana de 2–3h de la Examshell. [web:34]
 
 ---
 id: resource-exam-study-thread
-type: resource
+type: article
 title: Hilo "What to study for Piscine?" (r/42_school)
 url: https://www.reddit.com/r/42_school/
-type: article
 modules:
   - c00-intro
   - c01-punteros

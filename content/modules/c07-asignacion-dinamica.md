@@ -1,10 +1,23 @@
 ---
 id: c07-asignacion-dinamica
 type: module
+slug: c07-asignacion-dinamica
+order: 7
 title: C07: Asignación dinámica de memoria
 source: piscina42-web
 phase: fase3-c-intermedio
 level: intermediate
+concepts:
+  - malloc y reserva en el heap
+  - free y fugas de memoria
+  - ft_strdup (duplicar cadena en heap)
+  - ft_range / ft_ultimate_range (arrays de int en heap)
+  - ft_strjoin / ft_split (cadenas dinámicas)
+cognitive_difficulties:
+  - diferencia stack (automático) vs heap (manual)
+  - no perder la referencia antes de free
+  - calcular tamaño exacto y comprobar malloc != NULL
+  - liberar correctamente en error parcial
 challenges:
   - reto-c07-ft-strdup
   - reto-c07-ft-range

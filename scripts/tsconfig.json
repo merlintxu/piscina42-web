@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "outDir": "dist",
+    "rootDir": ".",
+    "strict": false,
+    "resolveJsonModule": true
+  },
+  "include": ["md-to-json.ts", "content-graph.ts"]
+}

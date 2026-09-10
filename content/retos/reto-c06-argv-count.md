@@ -1,12 +1,19 @@
 ---
 id: reto-c06-argv-count
 type: challenge
+slug: reto-c06-argv-count
 title: Contar e imprimir argumentos (argv)
 source: piscina42-web
 module: c06-cli-args
 phase: fase3-c-intermedio
 difficulty: easy
 estimated_time_minutes: 20
+tags:
+  - argc
+  - argv
+  - main
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado

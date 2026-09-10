@@ -1,10 +1,21 @@
-﻿---
+---
 id: c10-c13-avanzado
 type: module
+slug: c10-c13-avanzado
+order: 9
 title: C10–C13: Estructuras avanzadas y proyecto final
 source: piscina42-web
 phase: fase4-simulacion
 level: advanced
+concepts:
+  - árboles binarios de búsqueda (BST)
+  - pilas y colas
+  - plantillas de proyecto (header/implementación)
+  - proyecto final integrador
+cognitive_difficulties:
+  - punteros a punteros a struct en inserciones recursivas
+  - liberar memoria en estructuras anidadas
+  - disciplina de Norminette en código extenso
 challenges:
   - reto-c10-bst-insert
   - reto-c11-stack

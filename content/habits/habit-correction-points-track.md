@@ -1,6 +1,7 @@
 ---
 id: habit-correction-points-track
 type: habit
+slug: habit-correction-points-track
 title: Seguimiento de correction points
 phases:
   - fase4-simulacion

@@ -1,6 +1,7 @@
 ---
 id: habit-git-commits-daily
 type: habit
+slug: habit-git-commits-daily
 title: Commits semánticos diarios
 phases:
   - fase1-entorno

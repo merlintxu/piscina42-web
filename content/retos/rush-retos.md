@@ -1,4 +1,4 @@
-﻿---
+---
 id: rush-retos
 type: challenge-collection
 title: Retos de Rush (proyecto en equipo)
@@ -16,12 +16,19 @@ defensa ante evaluadores. Cada reto tiene su nota individual en el vault.
 ---
 id: reto-rush-team
 type: challenge
+slug: reto-rush-team
 title: Rush — Proyecto en equipo
 source: piscina42-web
 module: c10-c13-avanzado
 phase: fase4-simulacion
 difficulty: hard
 estimated_time_minutes: 2880
+tags:
+  - equipo
+  - proyecto
+  - Makefile
+  - norminette
+norminette_focus: true
 ---
 
 ### Enunciado

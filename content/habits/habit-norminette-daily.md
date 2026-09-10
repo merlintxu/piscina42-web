@@ -1,6 +1,7 @@
 ---
 id: habit-norminette-daily
 type: habit
+slug: habit-norminette-daily
 title: Revisión diaria con Norminette
 phases:
   - fase3-c-intermedio

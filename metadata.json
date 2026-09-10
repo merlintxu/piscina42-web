@@ -1,0 +1,8 @@
+{
+  "name": "Piscina 42 Web",
+  "description": "Sistema de entrenamiento adaptativo, readiness diario y preparación integral para la Piscina de 42 Madrid",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
