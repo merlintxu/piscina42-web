@@ -3,6 +3,7 @@ import { BRIDGE_HOST, BRIDGE_PORT, BRIDGE_VERSION } from "./config";
 import {
   MoulinetteServiceError,
   runLocalMoulinetteFixture,
+  runLocalMoulinetteSubmission,
 } from "./moulinette";
 import { probeWorkstation } from "./probes";
 
@@ -28,6 +29,7 @@ app.use((request, response, next) => {
   next();
 });
 
+app.use("/moulinette/submit", express.json({ limit: "128kb" }));
 app.use(express.json({ limit: MOULINETTE_JSON_LIMIT }));
 
 app.get("/health", (_request, response) => {
@@ -88,6 +90,45 @@ app.post("/moulinette/run", async (request, response) => {
         code: "internal_error",
         message: "Moulinette execution failed.",
       },
+    });
+  } finally {
+    moulinetteRunActive = false;
+  }
+});
+
+app.post("/moulinette/submit", async (request, response) => {
+  if (!request.is("application/json")) {
+    response.status(400).json({
+      error: {
+        code: "invalid_content_type",
+        message: "Content-Type must be application/json.",
+      },
+    });
+    return;
+  }
+  if (moulinetteRunActive) {
+    response.status(409).json({
+      error: {
+        code: "moulinette_busy",
+        message: "A Moulinette run is already in progress.",
+      },
+    });
+    return;
+  }
+
+  moulinetteRunActive = true;
+  try {
+    response.status(200).json(await runLocalMoulinetteSubmission(request.body));
+  } catch (error) {
+    if (error instanceof MoulinetteServiceError) {
+      response.status(400).json({
+        error: { code: error.code, message: error.message },
+      });
+      return;
+    }
+    console.error("Moulinette submission failed.", error instanceof Error ? error.message : "unknown error");
+    response.status(500).json({
+      error: { code: "internal_error", message: "Moulinette execution failed." },
     });
   } finally {
     moulinetteRunActive = false;

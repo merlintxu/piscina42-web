@@ -17,6 +17,12 @@ export interface MoulinetteRunRequestBody {
   profile: MoulinetteProfile;
 }
 
+export interface MoulinetteSubmitRequestBody {
+  challengeId: string;
+  profile: MoulinetteProfile;
+  files: Array<{ path: string; content: string }>;
+}
+
 export interface MoulinetteRunResponse {
   job: Pick<
     MoulinetteRunResult["job"],
@@ -25,6 +31,8 @@ export interface MoulinetteRunResponse {
   startedAt: string;
   completedAt: string;
 }
+
+export type MoulinetteSubmitResponse = MoulinetteRunResponse;
 
 export type MoulinetteServiceErrorCode =
   | "invalid_request"
