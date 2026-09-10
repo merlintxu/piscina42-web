@@ -56,6 +56,7 @@ export function validateMoulinettePolicy(
  */
 export function calculateFinalJobResult(
   checks: readonly MoulinetteCheckResult[],
+  requiredCheckTypes: readonly MoulinetteCheckType[] = REQUIRED_CHECK_TYPES,
 ): MoulinetteFinalResult {
   if (checks.some((check) => check.status === "error")) {
     return "error";
@@ -65,10 +66,15 @@ export function calculateFinalJobResult(
     return "fail";
   }
 
-  const hasEveryRequiredCheck = REQUIRED_CHECK_TYPES.every((type) =>
+  const hasEveryRequiredCheck = requiredCheckTypes.every((type) =>
     checks.some((check) => check.type === type && check.status === "pass"),
   );
-  if (!hasEveryRequiredCheck || checks.some((check) => check.status === "skipped")) {
+  if (
+    !hasEveryRequiredCheck ||
+    checks.some(
+      (check) => requiredCheckTypes.includes(check.type) && check.status === "skipped",
+    )
+  ) {
     return "incomplete";
   }
 

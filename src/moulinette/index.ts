@@ -18,3 +18,13 @@ export type {
   MoulinetteJob,
   MoulinetteJobStatus,
 } from "./types";
+export {
+  applySandboxResultToJob,
+  getMoulinetteCheckProfile,
+  mapSandboxResultToChecks,
+} from "./evaluation";
+export type {
+  MoulinetteCheckProfile,
+  MoulinetteCheckProfileName,
+  SandboxEvaluation,
+} from "./evaluation";
