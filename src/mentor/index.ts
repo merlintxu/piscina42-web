@@ -21,3 +21,18 @@ export type {
   LocalMentorCapabilities,
   ModelCapabilityEvidence,
 } from "./types";
+export {
+  isMentorAssistanceAllowed,
+  selectMentorModel,
+} from "./provider";
+export type {
+  MentorCapabilityInventory,
+  MentorMessage,
+  MentorMode,
+  MentorModelSelection,
+  MentorProvider,
+  MentorProviderError,
+  MentorRequest,
+  MentorResponse,
+  MentorRole,
+} from "./provider";
